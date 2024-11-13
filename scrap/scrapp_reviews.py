@@ -7,7 +7,7 @@ list_of_pages_max = []
 list_of_pages_art = []
 
 prefix = 'https://www.diffordsguide.com/cocktails/search?s=1&isrc=browse&ificm=1&ifipp=1&g%5Bdg%5D=1&g%5Bdd%5D=1&gid=all&na=1&so=name&p='
-firstpage = 'https://www.diffordsguide.com/cocktails/search?s=1&isrc=browse&ificm=1&ifipp=1&g%5Bdg%5D=1&g%5Bdd%5D=1&gid=all&na=1&so=name&p=%2Fcocktails%2Fsearch'
+firstpage = 'https://www.diffordsguide.com/cocktails/search?s=1&isrc=browse&ificm=1&ifipp=1&g%5Bdg%5D=1&g%5Bdd%5D=1&gid=all&na=1&so=name'
 list_of_pages_vic.append(firstpage)
 
 for i in range(2, 222):
@@ -21,7 +21,7 @@ for i in range(222, 442):
 for i in range(442, 663):
     page = prefix+str(i)
     list_of_pages_art.append(page)
-    
+
 #print(len(list_of_pages_vic))
 #print(len(list_of_pages_max))
 #print(len(list_of_pages_art))
@@ -47,7 +47,7 @@ for page_url in list_of_pages_vic:
     print(f"Traitement de la page : {page_url}")
     try:
         response = session.get(page_url)
-        response.html.render(sleep=2)
+        response.html.render(sleep=1)
     except Exception as e:
         print(f"Erreur lors de la récupération de la page {page_url} : {e}")
         continue  # Passe à la page suivante en cas d'erreur
@@ -78,7 +78,7 @@ for page_url in list_of_pages_vic:
 
                         # Visite de la page des commentaires
                         comments_response = session.get(comments_url)
-                        comments_response.html.render(sleep=2)
+                        comments_response.html.render(sleep=1)
 
                         # Initialisation de la liste pour stocker les commentaires de ce cocktail
                         user_comments = []
@@ -114,7 +114,7 @@ for page_url in list_of_pages_vic:
                     print(f"Aucune section de commentaires trouvée pour {cocktail_name}")
 
                 # Délai avant la prochaine requête pour éviter le blocage
-                time.sleep(2)
+                time.sleep(1)
 
             else:
                 print("Aucun lien trouvé pour un élément de cocktail")
