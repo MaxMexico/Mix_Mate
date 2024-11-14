@@ -2,6 +2,8 @@ from requests_html import HTMLSession
 import time
 import json
 
+#Il y a 662 pages, on doit partitionner notre scrapping pour lancer en plusieurs fois sinon c'est beaucoup trop long
+#Chaque membre de l'équipe s'occupera de récupérer une partie des pages (220 pages environ/personne)
 list_of_pages_vic_1 = []
 list_of_pages_vic_2 = []
 list_of_pages_max = []
@@ -127,5 +129,5 @@ for page_url in list_of_pages_vic_1:
             continue
 
 # Écriture des données dans un fichier JSON correctement structuré
-with open('cocktails_comments.json', 'w', encoding='utf-8') as f:
+with open('scrap/cocktails_comments_victor.json', 'w', encoding='utf-8') as f:
     json.dump(cocktail_data, f, ensure_ascii=False, indent=4)
