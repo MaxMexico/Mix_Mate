@@ -2,17 +2,22 @@ from requests_html import HTMLSession
 import time
 import json
 
-list_of_pages_vic = []
+list_of_pages_vic_1 = []
+list_of_pages_vic_2 = []
 list_of_pages_max = []
 list_of_pages_art = []
 
 prefix = 'https://www.diffordsguide.com/cocktails/search?s=1&isrc=browse&ificm=1&ifipp=1&g%5Bdg%5D=1&g%5Bdd%5D=1&gid=all&na=1&so=name&p='
 firstpage = 'https://www.diffordsguide.com/cocktails/search?s=1&isrc=browse&ificm=1&ifipp=1&g%5Bdg%5D=1&g%5Bdd%5D=1&gid=all&na=1&so=name'
-list_of_pages_vic.append(firstpage)
+list_of_pages_vic_1.append(firstpage)
 
-for i in range(2, 222):
+for i in range(2, 111):
     page = prefix+str(i)
-    list_of_pages_vic.append(page)
+    list_of_pages_vic_1.append(page)
+
+for i in range(111, 222):
+    page = prefix+str(i)
+    list_of_pages_vic_2.append(page)
 
 for i in range(222, 442):
     page = prefix+str(i)
@@ -30,12 +35,9 @@ for i in range(442, 663):
 #print(list_of_pages_max[0],list_of_pages_max[-1])    
 #print(list_of_pages_art[0],list_of_pages_art[-1])
 
-
-
-
 # Création d'une session
 session = HTMLSession()
-
+ 
 # Initialisation de la liste pour stocker les données de tous les cocktails
 cocktail_data = []
 
@@ -43,7 +45,7 @@ cocktail_data = []
 counter = 0
 
 
-for page_url in list_of_pages_vic:
+for page_url in list_of_pages_vic_1:
     print(f"Traitement de la page : {page_url}")
     try:
         response = session.get(page_url)
