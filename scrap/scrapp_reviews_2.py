@@ -6,16 +6,42 @@ import os
 # Création d'une session
 session = HTMLSession()
 
-# Liste pour stocker les pages à traiter
+#Il y a 662 pages, on doit partitionner notre scrapping pour lancer en plusieurs fois sinon c'est beaucoup trop long
+#Chaque membre de l'équipe s'occupera de récupérer une partie des pages (220 pages environ/personne)
+list_of_pages_vic_1 = []
+list_of_pages_vic_2 = []
+list_of_pages_max = []
 list_of_pages_art = []
 
-# Préparer les URL
 prefix = 'https://www.diffordsguide.com/cocktails/search?s=1&isrc=browse&ificm=1&ifipp=1&g%5Bdg%5D=1&g%5Bdd%5D=1&gid=all&na=1&so=name&p='
-for i in range(509, 663):
+firstpage = 'https://www.diffordsguide.com/cocktails/search?s=1&isrc=browse&ificm=1&ifipp=1&g%5Bdg%5D=1&g%5Bdd%5D=1&gid=all&na=1&so=name'
+list_of_pages_vic_1.append(firstpage)
+
+for i in range(2, 111):
+    page = prefix+str(i)
+    list_of_pages_vic_1.append(page)
+
+for i in range(202, 222):
+    page = prefix+str(i)
+    list_of_pages_vic_2.append(page)
+
+for i in range(222, 442):
+    page = prefix+str(i)
+    list_of_pages_max.append(page)
+
+for i in range(442, 663):
     page = prefix+str(i)
     list_of_pages_art.append(page)
 
+#print(len(list_of_pages_vic))
+#print(len(list_of_pages_max))
+#print(len(list_of_pages_art))
+
+#print(list_of_pages_vic[0],list_of_pages_vic[-1])
+#print(list_of_pages_max[0],list_of_pages_max[-1])    
+#print(list_of_pages_art[0],list_of_pages_art[-1])
 # Charger les données déjà enregistrées pour éviter les doublons
+
 output_file = 'cocktails_comments.json'
 if os.path.exists(output_file):
     with open(output_file, 'r', encoding='utf-8') as f:
@@ -33,7 +59,7 @@ existing_cocktails = {item["cocktail"] for item in cocktail_data}
 counter = len(existing_cocktails)
 
 # Traitement des pages
-for page_url in list_of_pages_art:
+for page_url in list_of_pages_vic_2:
     print(f"Traitement de la page : {page_url}")
     try:
         response = session.get(page_url)
