@@ -1,2 +1,4 @@
 requests_html
 pandas
+numpy
+scikit-learn
