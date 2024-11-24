@@ -1,0 +1,63 @@
+/* Swiper styles */
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/effect-coverflow';
+
+/* Corps de la page */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: #f7f7f7; /* Fond léger */
+}
+
+.swiper-slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1.5rem;
+  transition: transform 0.3s ease-in-out; /* Transition fluide entre slides */
+}
+
+.swiper-slide img {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.swiper-slide h3 {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Pagination */
+.swiper-pagination-bullet {
+  background: #333;
+  width: 10px;
+  height: 10px;
+  opacity: 0.8;
+}
+
+.swiper-pagination-bullet-active {
+  background: #007bff;
+  transform: scale(1.2); /* Agrandit le point actif */
+  opacity: 1;
+}
+
+/* Boutons de navigation */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #007bff;
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  opacity: 1;
+}
