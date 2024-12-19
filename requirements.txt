@@ -2,3 +2,5 @@ requests_html
 pandas
 numpy
 scikit-learn
+keras
+tensorflow==2.16.2
