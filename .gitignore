@@ -2,3 +2,4 @@ MixMate/
 node_modules/
 .cache/
 .cache/
+.DS_Store
