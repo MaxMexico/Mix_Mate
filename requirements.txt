@@ -4,3 +4,6 @@ numpy
 scikit-learn
 keras
 tensorflow==2.16.2
+fractions
+matplotlib
+scikit-surprise
