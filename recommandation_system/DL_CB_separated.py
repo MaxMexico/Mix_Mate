@@ -161,7 +161,7 @@ representations_latent = model.predict(X_normalized)
 # Calculer la similarité cosinus entre les cocktails
 similarities = cosine_similarity(representations_latent, representations_latent)
 
-#fonction de recommandation
+# Fonction de recommandation
 def get_recommendations(cocktail_id, similarities, df, n):
     idx = df[df['idDrink'] == cocktail_id].index
       
