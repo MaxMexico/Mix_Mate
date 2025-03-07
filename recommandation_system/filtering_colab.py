@@ -6,7 +6,7 @@ from surprise import accuracy
 from collections import defaultdict
 
 # Charger le fichier JSON
-with open("../Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
+with open("./Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
     cocktails_data = json.load(file)
 
 # Extraire les avis et structurer les données en DataFrame
@@ -36,7 +36,7 @@ for cocktail in cocktails_data:
 reviews_df = pd.DataFrame(reviews)
 
 # Vérifier la structure des données
-print(reviews_df.head(50))
+print(reviews_df.head(20))
 
 # Définir le lecteur pour Surprise
 reader = Reader(rating_scale=(0, 5))
