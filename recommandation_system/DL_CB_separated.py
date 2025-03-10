@@ -10,7 +10,7 @@ from tensorflow.keras.layers import Dense, Dropout
 from fractions import Fraction 
 from ast import literal_eval
 #Exporter les données
-cocktails_df = pd.read_csv('../api_cocktails/all_cocktails_with_ratings.csv')
+cocktails_df = pd.read_csv('./api_cocktails/all_cocktails_with_ratings.csv')
 
 ########################################### Data  Preparation ###########################################
 def verif_id(x):
@@ -161,7 +161,7 @@ representations_latent = model.predict(X_normalized)
 # Calculer la similarité cosinus entre les cocktails
 similarities = cosine_similarity(representations_latent, representations_latent)
 
-# Fonction de recommandation
+#fonction de recommandation
 def get_recommendations(cocktail_id, similarities, df, n):
     idx = df[df['idDrink'] == cocktail_id].index
       

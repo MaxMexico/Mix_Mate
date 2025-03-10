@@ -7,8 +7,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from ast import literal_eval
+
 #Exporter les données
-cocktails_df = pd.read_csv('../api_cocktails/all_cocktails_with_ratings.csv')
+cocktails_df = pd.read_csv('./api_cocktails/all_cocktails_with_ratings.csv')
 
 ########################################### Data  Preparation ###########################################
 def verif_id(x):

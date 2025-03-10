@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-cocktails_df = pd.read_csv('../api_cocktails/all_cocktails_with_ratings.csv')
+cocktails_df = pd.read_csv('./api_cocktails/all_cocktails_with_ratings.csv')
 
 
 ########################################### Data  Preparation ###########################################
