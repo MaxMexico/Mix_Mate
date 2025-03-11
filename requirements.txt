@@ -1,10 +1,10 @@
-# Pour que les dépendances fonctionnent, il faut un environnement python 3.10
 requests_html
 pandas
 numpy
-scikit-learn==1.5.2
-keras==2.14.0 
-tensorflow==2.14.0
+scikit-learn
+keras
+tensorflow==2.16.2
+fractions
 matplotlib
 scikit-surprise
-scikeras==0.12.0
+keras_tuner
