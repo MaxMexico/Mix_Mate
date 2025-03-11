@@ -1,12 +1,13 @@
 import json
 import pandas as pd
-from surprise import Dataset, Reader, SVD
+import numpy as np
+from surprise import Dataset, Reader, SVD, SVDpp, NMF
 from surprise.model_selection import train_test_split, cross_validate
 from surprise import accuracy
 from collections import defaultdict
 
 # Charger le fichier JSON
-with open("./Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
+with open("../Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
     cocktails_data = json.load(file)
 
 # Extraire les avis et structurer les données en DataFrame
@@ -45,13 +46,40 @@ data = Dataset.load_from_df(reviews_df[["user_id", "cocktail_id", "rating"]], re
 # Séparer en set d'entraînement et de test
 trainset, testset = train_test_split(data, test_size=0.2)
 
-# Entraîner un modèle SVD
-model = SVD()
-model.fit(trainset)
+# Liste des modèles à tester
+models = {
+    "SVD": SVD(),
+    "SVD++": SVDpp(),
+    "NMF": NMF()
+    # "NMF++": Non disponible dans Surprise
+}
 
-# Évaluer le modèle
-predictions = model.test(testset)
-print("RMSE:", accuracy.rmse(predictions))
+# Boucle sur chaque modèle et évaluation
+results = {}
+for model_name, algo in models.items():
+    print(f"\n=== Entraînement du modèle {model_name} ===")
+    algo.fit(trainset)
+    predictions = algo.test(testset)
+    
+    # Calcul des métriques
+    mse_val = np.mean([(true_r - est)**2 for (_, _, true_r, est, _) in predictions])
+    rmse_val = np.sqrt(mse_val)
+    mae_val = np.mean([abs(true_r - est) for (_, _, true_r, est, _) in predictions])
+    
+    results[model_name] = {"MSE": mse_val, "RMSE": rmse_val, "MAE": mae_val}
+    print(f"{model_name} -> MSE: {mse_val:.4f}, RMSE: {rmse_val:.4f}, MAE: {mae_val:.4f}")
+
+print("\n=== Résumé des performances ===")
+for model_name, metrics in results.items():
+    print(f"{model_name}: MSE = {metrics['MSE']:.4f}, RMSE = {metrics['RMSE']:.4f}, MAE = {metrics['MAE']:.4f}")
+
+
+# Sélectionner le meilleur modèle (celui avec le RMSE le plus faible)
+best_model_name = min(results, key=lambda x: results[x]["RMSE"])
+print(f"\nLe meilleur modèle est : {best_model_name} avec RMSE = {results[best_model_name]['RMSE']:.4f}")
+
+# Récupérer le meilleur algorithme
+best_model = models[best_model_name]
 
 # Générer des recommandations
 
@@ -67,9 +95,9 @@ def get_top_n(predictions, n=5):
 
 # Prédire sur tout l’ensemble
 full_trainset = data.build_full_trainset()
-model.fit(full_trainset)
+best_model.fit(full_trainset)
 full_testset = full_trainset.build_testset()
-predictions = model.test(full_testset)
+predictions = best_model.test(full_testset)
 
 # Obtenir les recommandations
 top_n = get_top_n(predictions, n=5)
