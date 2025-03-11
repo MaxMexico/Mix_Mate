@@ -269,16 +269,6 @@ np.save("CB_model/representations_latentes.npy", representations_latent)
 
 # Calculer la similarité cosinus entre les cocktails
 similarities = cosine_similarity(representations_latent, representations_latent)
-# Évaluation du modèle
-y_pred = final_model.predict(X_test)
-mse = mean_squared_error(X_test, y_pred)
-mae = mean_absolute_error(X_test, y_pred)
-rmse = np.sqrt(mse)
-print(f"Performance du modèle - MSE: {mse}, RMSE: {rmse}, MAE: {mae}")
-
-# Sauvegarder le modèle pour éviter de le réentrainer à chaque fois 
-final_model.save("CB_model/Content_Based_DL_Model.h5")
-
 
 # Évaluation du modèle
 y_pred = final_model.predict(X_test)
@@ -316,3 +306,27 @@ print('Le premier ingrédient :', cocktails_df.loc[index, 'strIngredient1'])
 print('Le deuxieme ingrédient :', cocktails_df.loc[index, 'strIngredient2'])
 print("Recommandations :")
 print(recommendations)
+
+def plot_loss(train_loss, val_loss):
+    plt.figure()
+    plt.plot(train_loss)
+    plt.plot(val_loss)
+    plt.title('Loss du modèle separated')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Entraînement', 'Validation'], loc='upper right')
+    plt.show()
+
+def plot_mae(train_mae, val_mae):
+    plt.figure()
+    plt.plot(train_mae)
+    plt.plot(val_mae)
+    plt.title('MAE du modèle separated')
+    plt.ylabel('MAE')
+    plt.xlabel('Epoch')
+    plt.legend(['Entraînement', 'Validation'], loc='upper left')
+    plt.show()
+
+# Tracé des courbes
+plot_loss(final_history.history['loss'], final_history.history['val_loss'])
+plot_mae(final_history.history['mae'], final_history.history['val_mae'])

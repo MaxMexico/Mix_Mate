@@ -11,7 +11,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from ast import literal_eval
 
 #Exporter les données
-cocktails_df = pd.read_csv('./api_cocktails/all_cocktails_with_ratings.csv')
+cocktails_df = pd.read_csv('../api_cocktails/all_cocktails_with_ratings.csv')
 
 ########################################### Data  Preparation ###########################################
 def verif_id(x):
@@ -96,7 +96,7 @@ def plot_loss(train_loss, val_loss):
     plt.figure()
     plt.plot(train_loss)
     plt.plot(val_loss)
-    plt.title('Loss du modèle')
+    plt.title('Loss du modèle merged')
     plt.ylabel('Loss')
     plt.xlabel('Epoch')
     plt.legend(['Entraînement', 'Validation'], loc='upper right')
@@ -106,7 +106,7 @@ def plot_mae(train_mae, val_mae):
     plt.figure()
     plt.plot(train_mae)
     plt.plot(val_mae)
-    plt.title('MAE du modèle')
+    plt.title('MAE du modèle merged')
     plt.ylabel('MAE')
     plt.xlabel('Epoch')
     plt.legend(['Entraînement', 'Validation'], loc='upper left')
