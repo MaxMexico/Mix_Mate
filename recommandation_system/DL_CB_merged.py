@@ -1,11 +1,13 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Dropout
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 from ast import literal_eval
 
 #Exporter les données
@@ -18,7 +20,6 @@ def verif_id(x):
     except:
         return np.nan
 cocktails_df['idDrink']=cocktails_df['idDrink'].apply(verif_id)
-print(cocktails_df.info())
 cocktails_df=cocktails_df[cocktails_df['idDrink'].notnull()] 
 
 cocktails_df.drop(columns=['strDrinkAlternate','strTags','strVideo', 'strDrinkThumb','strImageSource','strImageAttribution','strCreativeCommonsConfirmed','dateModified', 'strIngredient13', 'strIngredient14', 'strIngredient15', 'strMeasure13','strMeasure14', 'strMeasure15'], inplace=True)
@@ -45,20 +46,28 @@ X_train, X_test = train_test_split(X_normalized, test_size=0.2, random_state=42)
 # Créer un modèle de recommandation basé sur le contenu
 model = Sequential()
 model.add(Dense(128, input_shape=(X_train.shape[1],), activation='relu'))
+model.add(Dropout(0.2))  # Ajout d'une couche de Dropout pour régulariser le modèle
 model.add(Dense(64, activation='relu'))
 model.add(Dense(X_train.shape[1], activation='linear'))
-print(X_train.shape[1])
+
 # Compiler le modèle
-model.compile(optimizer='adam', loss='mse')  # Utiliser 'mse' car c'est un problème de régression
+model.compile(optimizer='adam', loss='mse', metrics=['mae'])  # Utiliser 'mse' car c'est un problème de régression
 
 # Entraîner le modèle
-model.fit(X_train, X_train, epochs=3, batch_size=32)
+h = model.fit(X_train, X_train, epochs=30, batch_size=32, verbose = 0, validation_data=(X_test, X_test))
 
 # Obtenir les représentations latentes de films 
 representations_latent = model.predict(X_normalized)
 
 # Calculer la similarité cosinus entre les films
 similarities = cosine_similarity(representations_latent, representations_latent)
+
+# Évaluation du modèle
+y_pred = model.predict(X_test)
+mse = mean_squared_error(X_test, y_pred)
+mae = mean_absolute_error(X_test, y_pred)
+rmse = np.sqrt(mse)
+print(f"Performance du modèle - MSE: {mse}, RMSE: {rmse}, MAE: {mae}")
 
 #fonction de recommandation
 def get_recommendations(cocktail_id, similarities, df, n):
@@ -72,7 +81,8 @@ def get_recommendations(cocktail_id, similarities, df, n):
     return df[['strDrink', 'strIngredient1']].iloc[indices]
  
 # Le cocktail actif
-cocktail_id = 178365 # Gin Tonic
+cocktail_id =  12754 # Sex on the beach
+# Gin Tonic (178365)
 index = cocktails_df[cocktails_df['idDrink'] == cocktail_id].index[0]
 recommendations = get_recommendations(cocktail_id, similarities, cocktails_df, 5)
 
@@ -81,3 +91,27 @@ print('Le nom :', cocktails_df.loc[index, 'strDrink'])
 print('Le premier ingrédient :', cocktails_df.loc[index, 'strIngredient1'])
 print('Le deuxieme ingrédient :', cocktails_df.loc[index, 'strIngredient2'])
 print(recommendations)
+
+def plot_loss(train_loss, val_loss):
+    plt.figure()
+    plt.plot(train_loss)
+    plt.plot(val_loss)
+    plt.title('Loss du modèle')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Entraînement', 'Validation'], loc='upper right')
+    plt.show()
+
+def plot_mae(train_mae, val_mae):
+    plt.figure()
+    plt.plot(train_mae)
+    plt.plot(val_mae)
+    plt.title('MAE du modèle')
+    plt.ylabel('MAE')
+    plt.xlabel('Epoch')
+    plt.legend(['Entraînement', 'Validation'], loc='upper left')
+    plt.show()
+
+# Tracé des courbes
+plot_loss(h.history['loss'], h.history['val_loss'])
+plot_mae(h.history['mae'], h.history['val_mae'])
