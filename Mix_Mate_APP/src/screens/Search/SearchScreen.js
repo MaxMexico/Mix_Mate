@@ -1,76 +1,51 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FlatList, Text, View, Image, TouchableHighlight, Pressable } from "react-native";
-import styles from "./styles";
-import MenuImage from "../../components/MenuImage/MenuImage";
-import { getCategoryName, getRecipesByRecipeName, getRecipesByCategoryName, getRecipesByIngredientName } from "../../data/MockDataAPI";
-import { TextInput } from "react-native-gesture-handler";
+// screens/Search/SearchScreen.js
+import React, { useState } from "react";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import cocktailsData from "../../../assets/all_cocktails.json"; // Assure-toi que le chemin est correct
+import styles from "./styles"; // Importe les styles depuis le fichier séparé
 
-export default function SearchScreen(props) {
-  const { navigation } = props;
+export default function SearchScreen({ navigation }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredCocktails, setFilteredCocktails] = useState([]);
 
-  const [value, setValue] = useState("");
-  const [data, setData] = useState([]);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <MenuImage
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
-      ),
-      headerTitle: () => (
-        <View style={styles.searchContainer}>
-          <Image style={styles.searchIcon} source={require("../../../assets/icons/search.png")} />
-          <TextInput
-            style={styles.searchInput}
-            onChangeText={handleSearch}
-            value={value}
-          />
-          <Pressable onPress={() => handleSearch("")}>
-          <Image style={styles.searchIcon} source={require("../../../assets/icons/close.png")} />
-          </Pressable>
-        </View>
-      ),
-      headerRight: () => <View />,
-    });
-  }, [value]);
-
-  useEffect(() => {}, [value]);
-
-  const handleSearch = (text) => {
-    setValue(text);
-    var recipeArray1 = getRecipesByRecipeName(text);
-    var recipeArray2 = getRecipesByCategoryName(text);
-    var recipeArray3 = getRecipesByIngredientName(text);
-    var aux = recipeArray1.concat(recipeArray2);
-    var recipeArray = [...new Set(aux)];
-
-    if (text == "") {
-      setData([]);
+  // Fonction pour filtrer les cocktails en fonction de la recherche
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtered = cocktailsData.filter((cocktail) =>
+        cocktail.strDrink.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredCocktails(filtered);
     } else {
-      setData(recipeArray);
+      setFilteredCocktails([]); // Réinitialiser si la recherche est vide
     }
   };
 
-  const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
-  };
-
-  const renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
-      <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
-      </View>
-    </TouchableHighlight>
+  // Rendu d'un cocktail dans la liste
+  const renderCocktail = ({ item }) => (
+    <TouchableOpacity
+      style={styles.cocktailItem}
+      onPress={() => navigation.navigate("CocktailDetails", { cocktail: item })}
+    >
+      <Text style={styles.cocktailName}>{item.strDrink}</Text>
+    </TouchableOpacity>
   );
 
   return (
-    <View>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={data} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
+    <View style={styles.container}>
+      {/* Barre de recherche */}
+      <SearchBar onSearch={handleSearch} />
+
+      {/* Liste des cocktails filtrés */}
+      <FlatList
+        data={filteredCocktails}
+        keyExtractor={(item) => item.idDrink}
+        renderItem={renderCocktail}
+        ListEmptyComponent={
+          <Text style={styles.noResults}>Aucun résultat trouvé</Text>
+        }
+      />
     </View>
   );
 }

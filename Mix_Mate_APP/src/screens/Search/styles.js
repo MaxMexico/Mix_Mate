@@ -1,34 +1,27 @@
+// screens/Search/styles.js
 import { StyleSheet } from "react-native";
-import { RecipeCard } from "../../AppStyles";
 
 const styles = StyleSheet.create({
-  container: RecipeCard.container,
-  photo: RecipeCard.photo,
-  title: RecipeCard.title,
-  category: RecipeCard.category,
-  btnIcon: {
-    height: 14,
-    width: 14,
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: "#fff",
   },
-  searchContainer: { 
-    flexDirection: "row", 
-    alignItems: "center", 
-    backgroundColor: "#EDEDED", 
-    borderRadius: 10, 
-    width: 250,
-    justifyContent: "space-around"
+  cocktailItem: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
-  searchIcon: { 
-    width: 20, 
-    height: 20, 
-    tintColor: 'grey' 
+  cocktailName: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
-  searchInput: {
-    backgroundColor: "#EDEDED",
-    color: "black",
-    width: 180,
-    height: 50,
-  }
+  noResults: {
+    textAlign: "center",
+    marginTop: 20,
+    fontSize: 16,
+    color: "#666",
+  },
 });
 
 export default styles;

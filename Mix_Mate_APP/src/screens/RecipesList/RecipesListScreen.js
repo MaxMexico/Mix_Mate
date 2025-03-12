@@ -1,38 +1,32 @@
-import React, { useLayoutEffect } from "react";
-import { FlatList, Text, View, TouchableHighlight, Image } from "react-native";
+import React from "react";
+import { FlatList, Text, View, Image, TouchableHighlight } from "react-native";
 import styles from "./styles";
-import { getRecipes, getCategoryName } from "../../data/MockDataAPI";
 
-export default function RecipesListScreen(props) {
-  const { navigation, route } = props;
-
-  const item = route?.params?.category;
-  const recipesArray = getRecipes(item.id);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: route.params?.title,
-      headerRight: () => <View />,
-    });
-  }, []);
+export default function RecipesList({ route, navigation }) {
+  const { category, title } = route.params;  // Recevoir les cocktails de la catégorie et le titre
 
   const onPressRecipe = (item) => {
     navigation.navigate("Recipe", { item });
   };
 
-  const renderRecipes = ({ item }) => (
+  const renderRecipe = ({ item }) => (
     <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
-      <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
+      <View style={styles.recipeItemContainer}>
+        <Image style={styles.recipeImage} source={{ uri: item.strDrinkThumb }} />
+        <Text style={styles.recipeTitle}>{item.strDrink}</Text>
+        <Text style={styles.recipeCategory}>{item.strCategory}</Text>
       </View>
     </TouchableHighlight>
   );
 
   return (
     <View>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipesArray} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
+      <Text style={styles.categoryTitle}>{title}</Text>
+      <FlatList
+        data={category}  // Afficher les cocktails de la catégorie
+        renderItem={renderRecipe}
+        keyExtractor={(item) => item.idDrink}  // Assurez-vous que chaque cocktail a un identifiant unique
+      />
     </View>
   );
 }

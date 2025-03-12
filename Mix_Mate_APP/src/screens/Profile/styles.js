@@ -6,20 +6,6 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#f5f5f5",
   },
-  headerTitleContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  editButtonText: {
-    fontSize: 16,
-    color: "#007BFF",
-    marginRight: 16,
-  },
   profileHeader: {
     alignItems: "center",
     marginBottom: 24,
@@ -32,15 +18,22 @@ const styles = StyleSheet.create({
   },
   profileInfo: {
     alignItems: "center",
+    width: '100%',
   },
   profileName: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
   },
+  profileUsername: {
+    fontSize: 18,
+    color: "#666",
+    marginBottom: 8,
+  },
   profileEmail: {
     fontSize: 16,
     color: "#666",
+    marginBottom: 16,
   },
   editFields: {
     width: "100%",
@@ -53,27 +46,54 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: 16,
   },
-  saveButton: {
+  editButton: {
     backgroundColor: "#007BFF",
     padding: 12,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 16,
   },
-  saveButtonText: {
+  editButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
+
+  // Styles pour la barre de recherche
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 16,
-    marginTop: 24,
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  searchResult: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  searchText: {
+    fontSize: 16,
+  },
+  noResults: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+    marginTop: 16,
+  },
+
+  // Styles pour les cocktails favoris
+  favoriteItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
   },
   sectionContent: {
     fontSize: 16,
-    color: "#666",
+  },
+  removeText: {
+    color: "red",
+    fontSize: 16,
   },
 });
 

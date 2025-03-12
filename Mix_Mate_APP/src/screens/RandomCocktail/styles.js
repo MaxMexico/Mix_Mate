@@ -28,12 +28,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginBottom: 16,
   },
-  category: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#777",
-    marginBottom: 16,
-  },
   instructionsTitle: {
     fontSize: 20,
     fontWeight: "bold",
