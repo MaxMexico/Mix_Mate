@@ -33,6 +33,14 @@ export default function DrawerContainer(props) {
             navigation.closeDrawer();
           }}
         />
+        <MenuButton
+          title="PROFILE"
+          source={require("../../../assets/icons/profile.png")} // Assurez-vous d'avoir une icône profile.png dans assets/icons
+          onPress={() => {
+            navigation.navigate("Main", { screen: "Profile" }); // Assurez-vous que "Profile" est bien configuré dans AppNavigation.js
+            navigation.closeDrawer();
+          }}
+        />
       </View>
     </View>
   );

@@ -10,6 +10,7 @@ import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen'; // Assurez-vous d'importer ProfileScreen
 
 const Stack = createStackNavigator();
 
@@ -24,12 +25,13 @@ function MainNavigator() {
       }}
     >
       <Stack.Screen name='Home' component={HomeScreen} />
-      <Stack.Screen name='Categories' component={CategoriesScreen}/>
-      <Stack.Screen name='Recipe' component={RecipeScreen}/>
+      <Stack.Screen name='Categories' component={CategoriesScreen} />
+      <Stack.Screen name='Recipe' component={RecipeScreen} />
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />
       <Stack.Screen name='Ingredient' component={IngredientScreen} />
       <Stack.Screen name='Search' component={SearchScreen} />
       <Stack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
+      <Stack.Screen name='Profile' component={ProfileScreen} />
     </Stack.Navigator>
   );
 }
@@ -42,10 +44,10 @@ function DrawerStack() {
       screenOptions={{
         headerShown: false,
         drawerStyle: {
-          width: 250, 
+          width: 250,
         },
       }}
-      drawerContent={({navigation}) => <DrawerContainer navigation={navigation}/>}
+      drawerContent={({ navigation }) => <DrawerContainer navigation={navigation} />}
     >
       <Drawer.Screen name='Main' component={MainNavigator} />
     </Drawer.Navigator>
@@ -55,7 +57,7 @@ function DrawerStack() {
 export default function AppContainer() {
   return (
     <NavigationContainer>
-      <DrawerStack/>
+      <DrawerStack />
     </NavigationContainer>
   );
 }
