@@ -12,11 +12,20 @@
   {
     "name": "Mehats",
     "username": "Arthur",
-    "email": "Arthur\ufffc@gmail.com",
+    "email": "Arthur@gmail.com",
     "favoriteCocktails": [
       "Gin Tonic",
       "Mojito",
       "Blueberry Mojito"
+    ]
+  },
+  {
+    "name": "Brunet",
+    "username": "Maxence",
+    "email": "Max@gmail.com",
+    "favoriteCocktails": [
+      "Cuba Libre",
+      "Moscow Mule"
     ]
   }
 ]

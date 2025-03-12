@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
   Button,
   StyleSheet,
   TouchableOpacity,
@@ -11,50 +10,51 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Stockage local
-import allCocktails from "../../../assets/all_cocktails.json"; // Import de la BDD locale
+import allCocktails from "../../../assets/all_cocktails.json"; // Base des cocktails
 
 export default function RecoScreen({ navigation }) {
-  const [flavorProfile, setFlavorProfile] = useState("");
+  // On supprime flavorProfile et on ajoute l'état pour les profils
   const [preference, setPreference] = useState("");
   const [recommendedCocktails, setRecommendedCocktails] = useState([]);
+  
+  const [profiles, setProfiles] = useState([]);         // Liste des profils récupérés via l'API
+  const [selectedProfile, setSelectedProfile] = useState(null); // Profil choisi
+  const [showDropdown, setShowDropdown] = useState(false);      // Contrôle l'affichage du menu déroulant
 
-  // 📌 Fonction pour envoyer les données du profil à l'API
-  const sendProfileToAPI = async () => {
-    try {
-      // Charger les données du profil depuis AsyncStorage
-      const savedProfile = await AsyncStorage.getItem("userProfile");
-      if (!savedProfile) {
-        console.error("Aucun profil trouvé dans AsyncStorage.");
-        return;
+  // Au chargement, on récupère la liste des profils depuis l'API
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        // Remplacez l'URL par celle de votre endpoint qui renvoie tous les profils
+        const response = await fetch("http://192.168.1.55:5000/api/get_all_profiles");
+        if (response.ok) {
+          const data = await response.json();
+          // On suppose que l'API renvoie { profiles: [ {username: ..., name: ...}, ... ] }
+          setProfiles(data.profiles || []);
+        } else {
+          console.error("Erreur lors de la récupération des profils :", response.status);
+        }
+      } catch (error) {
+        console.error("Erreur réseau lors de la récupération des profils :", error);
       }
+    };
+    fetchProfiles();
+  }, []);
 
-      const profileData = JSON.parse(savedProfile);
-
-      // Préparer les données à envoyer
-      const profileToSend = {
-        name: profileData.name,
-        username: profileData.username,
-        email: profileData.email,
-        favoriteCocktails: profileData.favoriteCocktails,
-      };
-
-      // URL de l'API (remplacez par votre URL réelle)
-      const apiUrl = "https://votre-api.com/profile";
-
-      // Effectuer la requête POST
+  // La fonction pour envoyer le profil à l'API (si besoin) reste inchangée ou peut être adaptée
+  const sendProfileToAPI = async (profileData) => {
+    try {
+      // Exemple d'URL (à adapter)
+      const apiUrl = "http://192.168.1.55:5000/api/get_all_profiles";
       const response = await fetch(apiUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(profileToSend),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profileData),
       });
-
-      // Vérifier la réponse de l'API
       if (response.ok) {
         const result = await response.json();
         console.log("Réponse de l'API :", result);
-        Alert.alert("Succès", "Votre profil a été envoyé avec succès !");
+        Alert.alert("Succès", "Profil envoyé avec succès !");
       } else {
         console.error("Erreur lors de l'envoi du profil :", response.status, response.statusText);
         Alert.alert("Erreur", "Une erreur est survenue lors de l'envoi du profil.");
@@ -65,33 +65,43 @@ export default function RecoScreen({ navigation }) {
     }
   };
 
-  // 📌 Gestion des recommandations
+  // Fonction de demande de recommandations
   const handleRecommendation = async () => {
-    if (!flavorProfile || !preference) {
-      alert("Veuillez renseigner votre profil de saveur et votre préférence.");
+    if (!selectedProfile || !preference) {
+      Alert.alert("Attention", "Veuillez sélectionner un profil et renseigner votre préférence.");
       return;
     }
-
-    // Envoyer les données du profil avant de faire la recommandation
-    await sendProfileToAPI();
-
-    // 🔥 Normalisation de la préférence
+  
+    if (!selectedProfile.favoriteCocktails || selectedProfile.favoriteCocktails.length === 0) {
+      Alert.alert("Attention", "Le profil sélectionné ne contient aucun cocktail favori.");
+      return;
+    }
+  
     const formattedPreference = preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic";
-
+  
+    const payload = {
+      favoriteCocktails: selectedProfile.favoriteCocktails,
+      alcoholicPreference: formattedPreference,
+      desiredCategory: null,
+      topN: 5
+    };
+  
+    console.log("Payload envoyé à /api/recommendations :", payload);
+  
     try {
-      const response = await fetch("https://ton-serveur.com/api/recommendations", {
+      const response = await fetch("http://192.168.1.55:5000/api/recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          flavorProfile,
-          preference: formattedPreference,
-        }),
+        body: JSON.stringify(payload),
       });
-
-      const data = await response.json(); // Récupération de la réponse JSON
-      const recommendedIds = data.recommendedDrinks; // ["17222", "11007", ...]
-
-      // Filtrage des cocktails dans la base locale
+      const data = await response.json();
+      if (data.error) {
+        console.error("Erreur API :", data.error);
+        Alert.alert("Erreur", data.error);
+        return;
+      }
+      console.log("Réponse de l'API :", data);
+      const recommendedIds = data.recommendedDrinks; // Exemple : ["17222", "11007", ...]
       const recommendations = allCocktails.filter((cocktail) =>
         recommendedIds.includes(cocktail.idDrink)
       );
@@ -100,20 +110,42 @@ export default function RecoScreen({ navigation }) {
       console.error("Erreur lors de la récupération des recommandations :", error);
     }
   };
+  
+  
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Recommandations de Cocktails</Text>
-
-      {/* Saisie du profil de saveur */}
-      <Text style={styles.label}>Profil de saveur :</Text>
-      <TextInput
-        style={styles.input}
-        value={flavorProfile}
-        onChangeText={setFlavorProfile}
-        placeholder="Ex. Fruité, épicé, amer..."
-      />
-
+      
+      {/* Dropdown pour sélectionner un profil */}
+      <TouchableOpacity
+        style={styles.dropdown}
+        onPress={() => setShowDropdown(!showDropdown)}
+      >
+        <Text style={styles.dropdownText}>
+          {selectedProfile ? selectedProfile.username : "Sélectionner un profil"}
+        </Text>
+      </TouchableOpacity>
+      {showDropdown && (
+        <FlatList
+          data={profiles}
+          keyExtractor={(item, index) => index.toString()}
+          style={styles.dropdownList}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedProfile(item);
+                setShowDropdown(false);
+              }}
+            >
+              <Text style={styles.dropdownItem}>{item.username}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
+      
+      {/* Suppression de la saisie du profil de saveur */}
+      
       {/* Sélection de la préférence */}
       <Text style={styles.label}>Préférence :</Text>
       <View style={styles.preferenceContainer}>
@@ -124,17 +156,13 @@ export default function RecoScreen({ navigation }) {
           <Text style={styles.preferenceText}>Alcoolisée</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.preferenceButton,
-            preference === "Sans alcool" ? styles.activeButton : null,
-          ]}
+          style={[styles.preferenceButton, preference === "Sans alcool" ? styles.activeButton : null]}
           onPress={() => setPreference("Sans alcool")}
         >
           <Text style={styles.preferenceText}>Sans alcool</Text>
         </TouchableOpacity>
       </View>
-
-      {/* Bouton pour obtenir les recommandations */}
+      
       <Button title="🔍 Trouver des cocktails" onPress={handleRecommendation} />
 
       {/* Affichage des recommandations */}
@@ -170,18 +198,34 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
-  label: {
-    fontSize: 16,
-    marginVertical: 10,
-  },
-  input: {
+  dropdown: {
     width: "100%",
     padding: 10,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    marginBottom: 20,
     backgroundColor: "#fff",
+    marginBottom: 20,
+  },
+  dropdownText: {
+    fontSize: 16,
+  },
+  dropdownList: {
+    width: "100%",
+    maxHeight: 150,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    backgroundColor: "#fff",
+    marginBottom: 20,
+  },
+  dropdownItem: {
+    padding: 10,
+    fontSize: 16,
+  },
+  label: {
+    fontSize: 16,
+    marginVertical: 10,
   },
   preferenceContainer: {
     flexDirection: "row",
