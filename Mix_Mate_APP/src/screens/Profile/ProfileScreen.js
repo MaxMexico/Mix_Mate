@@ -53,15 +53,35 @@ export default function ProfileScreen({ navigation }) {
     loadProfile();
   }, []);
 
-  // 📌 Sauvegarder le profil
-  const saveProfile = async () => {
-    try {
-      await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
-      console.log("Profil sauvegardé :", profile);
-    } catch (error) {
-      console.log("Erreur lors de la sauvegarde :", error);
+  // 📌 Sauvegarder le profil et l'envoyer à l'API Flask
+const saveProfile = async () => {
+  try {
+    // Sauvegarde locale avec AsyncStorage
+    await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
+    console.log("Profil sauvegardé localement :", profile);
+    
+    // URL de l'API Flask (assurez-vous que l'IP et le port sont corrects)
+    const apiUrl = "http://192.168.1.55:5000/api/profile";
+
+    // Envoi du profil à l'API
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profile),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Réponse de l'API :", result);
+      // Vous pouvez afficher une alerte ou mettre à jour l'état ici
+    } else {
+      console.error("Erreur API :", response.status, response.statusText);
     }
-  };
+  } catch (error) {
+    console.log("Erreur lors de la sauvegarde :", error);
+  }
+};
+
 
   // 📌 Ajouter un cocktail aux favoris
   const addFavoriteCocktail = (cocktail) => {

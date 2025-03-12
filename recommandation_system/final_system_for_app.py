@@ -92,7 +92,7 @@ def get_recommendations_for_user(user_cocktail_ids, alcoholic_preference, desire
     return df.loc[recommended_candidate_indices, ['idDrink', 'strDrink', 'strIngredient1']]
 
 ########################################### Exemple d'utilisation ###########################################
-
+"""
 # Supposons que l'utilisateur a aimé les cocktails d'ID 12754 et 178365
 user_liked_ids = [12754, 178365]
 
@@ -110,3 +110,4 @@ reco_df = get_recommendations_for_user(user_liked_ids,alcoholic_preference, desi
 
 print("Recommandations pour l'utilisateur:")
 print(reco_df)
+"""

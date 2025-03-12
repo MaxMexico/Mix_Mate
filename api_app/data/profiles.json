@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Asencio",
+    "username": "Victor",
+    "email": "Vic@gmail.com",
+    "favoriteCocktails": [
+      "Gin Tonic",
+      "Sex on the Beach",
+      "Mojito"
+    ]
+  },
+  {
+    "name": "Mehats",
+    "username": "Arthur",
+    "email": "Arthur\ufffc@gmail.com",
+    "favoriteCocktails": [
+      "Gin Tonic",
+      "Mojito",
+      "Blueberry Mojito"
+    ]
+  }
+]
