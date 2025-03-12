@@ -41,15 +41,15 @@ cocktails_df = cocktails_df[cocktails_df['idDrink'].notnull()]
 
 ########################################### Recommandation System ###########################################
 
-def get_recommendations_for_user(user_cocktail_ids, alcoholic_preference, desired_category, df, latent_reps, top_n):
+def get_recommendations_for_user(user_cocktail_names, alcoholic_preference, desired_category, df, latent_reps, top_n):
     """
     Retourne les top_n recommandations sous forme d'une DataFrame,
     en excluant les cocktails déjà aimés par l'utilisateur.
     """
     # 1. Calcul de la représentation utilisateur (moyenne des vecteurs latents des cocktails aimés)
     liked_indices = []
-    for cid in user_cocktail_ids:
-        idx = df[df['idDrink'] == cid].index
+    for cocktail_name in user_cocktail_names:
+        idx = df[df['strDrink'].str.lower() == cocktail_name.lower()].index
         if len(idx) > 0:
             liked_indices.append(idx[0])
     if not liked_indices:
@@ -88,26 +88,29 @@ def get_recommendations_for_user(user_cocktail_ids, alcoholic_preference, desire
     # 4. Trier les candidats par similarité décroissante et sélectionner les top_n
     sorted_indices = np.argsort(-sim_scores)
     recommended_candidate_indices = [candidate_indices[i] for i in sorted_indices[:top_n]]
-    
-    return df.loc[recommended_candidate_indices, ['idDrink', 'strDrink', 'strIngredient1']]
+    recommended_scores = [sim_scores[i] for i in sorted_indices[:top_n]]
+    recommended_df = df.loc[recommended_candidate_indices, ['strDrink']].copy()
+    recommended_df['confidence'] = [f"{score*100:.2f}%" for score in recommended_scores]
+    return recommended_df
 
 ########################################### Exemple d'utilisation ###########################################
-"""
-# Supposons que l'utilisateur a aimé les cocktails d'ID 12754 et 178365
-user_liked_ids = [12754, 178365]
 
-# L'API renvoie par exemple "Non Alcoholic"
-alcoholic_preference = "Alcoholic"
+# # Supposons que l'utilisateur a aimé les cocktails d'ID 12754 et 178365
+# user_liked_cocktails = ["Gin Tonic",
+#       "Sex on the Beach",
+#       "Mojito"]
 
-# Critère sur la catégorie désirée (par exemple, "Shot")
-desired_category = None
+# # L'API renvoie par exemple "Non Alcoholic"
+# alcoholic_preference = "Alcoholic"
 
-# Nombre de cocktails à recommander 
-top_n = 5
+# # Critère sur la catégorie désirée (par exemple, "Shot")
+# desired_category = None
 
-# Obtenir les recommandations (top 5)
-reco_df = get_recommendations_for_user(user_liked_ids,alcoholic_preference, desired_category, cocktails_df, latent_representations, top_n)
+# # Nombre de cocktails à recommander 
+# top_n = 5
 
-print("Recommandations pour l'utilisateur:")
-print(reco_df)
-"""
+# # Obtenir les recommandations (top 5)
+# reco_df = get_recommendations_for_user(user_liked_cocktails,alcoholic_preference, desired_category, cocktails_df, latent_representations, top_n)
+
+# print("Recommandations pour l'utilisateur:")
+# print(reco_df)
