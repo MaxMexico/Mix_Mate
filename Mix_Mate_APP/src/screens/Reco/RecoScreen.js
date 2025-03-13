@@ -8,12 +8,16 @@ import {
   FlatList,
   Image,
   Alert,
+  Dimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Stockage local
+import Carousel from "react-native-snap-carousel"; // Import du Carousel
 import allCocktails from "../../../assets/all_cocktails.json"; // Base des cocktails
 
+// Récupère la largeur de l'écran pour configurer le carrousel
+const { width } = Dimensions.get("window");
+
 export default function RecoScreen({ navigation }) {
-  // On supprime flavorProfile et on ajoute l'état pour les profils
   const [preference, setPreference] = useState("");
   const [recommendedCocktails, setRecommendedCocktails] = useState([]);
   
@@ -25,11 +29,9 @@ export default function RecoScreen({ navigation }) {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        // Remplacez l'URL par celle de votre endpoint qui renvoie tous les profils
         const response = await fetch("http://192.168.1.55:5000/api/get_all_profiles");
         if (response.ok) {
           const data = await response.json();
-          // On suppose que l'API renvoie { profiles: [ {username: ..., name: ...}, ... ] }
           setProfiles(data.profiles || []);
         } else {
           console.error("Erreur lors de la récupération des profils :", response.status);
@@ -79,13 +81,27 @@ export default function RecoScreen({ navigation }) {
         recommendedNames.includes(cocktail.strDrink)
       );
       setRecommendedCocktails(recommendations);
+
       // Sauvegarder la reco dans AsyncStorage pour éviter de la relancer
       await AsyncStorage.setItem("recommendedCocktails", JSON.stringify(recommendations));
     } catch (error) {
       console.error("Erreur lors de la récupération des recommandations :", error);
     }
   };
-  
+
+  // Fonction de rendu pour chaque item du carrousel
+  const renderCarouselItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Recipe", { item })}
+        style={styles.cocktailCard}
+      >
+        <Image source={{ uri: item.strDrinkThumb }} style={styles.cocktailImage} />
+        <Text style={styles.cocktailName}>{item.strDrink}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Recommandations de Cocktails</Text>
@@ -117,7 +133,6 @@ export default function RecoScreen({ navigation }) {
         />
       )}
       
-      
       {/* Sélection de la préférence */}
       <Text style={styles.label}>Préférence :</Text>
       <View style={styles.preferenceContainer}>
@@ -137,20 +152,16 @@ export default function RecoScreen({ navigation }) {
       
       <Button title="🔍 Trouver des cocktails" onPress={handleRecommendation} />
 
-      {/* Affichage des recommandations */}
+      {/* Remplacement de la FlatList par le carrousel */}
       {recommendedCocktails.length > 0 && (
-        <FlatList
+        <Carousel
+          layout="default"
           data={recommendedCocktails}
-          keyExtractor={(item) => item.strDrink}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Recipe", { item })}
-              style={styles.cocktailCard}
-            >
-              <Image source={{ uri: item.strDrinkThumb }} style={styles.cocktailImage} />
-              <Text style={styles.cocktailName}>{item.strDrink}</Text>
-            </TouchableOpacity>
-          )}
+          renderItem={renderCarouselItem}
+          sliderWidth={width}
+          itemWidth={150}               // Ajustez la largeur de la "carte"
+          inactiveSlideScale={0.95}     // Échelle pour les slides inactives
+          inactiveSlideOpacity={0.7}    // Opacité pour les slides inactives
         />
       )}
     </View>
@@ -222,11 +233,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#fff",
   },
+  // Styles conservés pour la "carte" cocktail
   cocktailCard: {
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
-    marginVertical: 10,
     alignItems: "center",
   },
   cocktailImage: {
