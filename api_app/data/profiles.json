@@ -27,5 +27,16 @@
       "Cuba Libre",
       "Moscow Mule"
     ]
+  },
+  {
+    "name": "Mehats2",
+    "username": "pousse",
+    "email": "Pousse@gmail.com",
+    "favoriteCocktails": [
+      "Cuba Libre",
+      "Moscow Mule",
+      "Vodka Martini",
+      "Slippery Nipple"
+    ]
   }
 ]
