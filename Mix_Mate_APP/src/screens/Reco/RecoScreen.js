@@ -41,30 +41,6 @@ export default function RecoScreen({ navigation }) {
     fetchProfiles();
   }, []);
 
-  // La fonction pour envoyer le profil à l'API (si besoin) reste inchangée ou peut être adaptée
-  const sendProfileToAPI = async (profileData) => {
-    try {
-      // Exemple d'URL (à adapter)
-      const apiUrl = "http://192.168.1.55:5000/api/get_all_profiles";
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(profileData),
-      });
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Réponse de l'API :", result);
-        Alert.alert("Succès", "Profil envoyé avec succès !");
-      } else {
-        console.error("Erreur lors de l'envoi du profil :", response.status, response.statusText);
-        Alert.alert("Erreur", "Une erreur est survenue lors de l'envoi du profil.");
-      }
-    } catch (error) {
-      console.error("Erreur réseau ou API :", error);
-      Alert.alert("Erreur", "Impossible de se connecter au serveur.");
-    }
-  };
-
   // Fonction de demande de recommandations
   const handleRecommendation = async () => {
     if (!selectedProfile || !preference) {
@@ -86,8 +62,6 @@ export default function RecoScreen({ navigation }) {
       topN: 5
     };
   
-    console.log("Payload envoyé à /api/recommendations :", payload);
-  
     try {
       const response = await fetch("http://192.168.1.55:5000/api/recommendations", {
         method: "POST",
@@ -100,19 +74,18 @@ export default function RecoScreen({ navigation }) {
         Alert.alert("Erreur", data.error);
         return;
       }
-      console.log("Réponse de l'API :", data);
-      const recommendedIds = data.recommendedDrinks; // Exemple : ["17222", "11007", ...]
+      const recommendedNames = data.recommendedDrinks.map(drink => drink.strDrink);
       const recommendations = allCocktails.filter((cocktail) =>
-        recommendedIds.includes(cocktail.idDrink)
+        recommendedNames.includes(cocktail.strDrink)
       );
       setRecommendedCocktails(recommendations);
+      // Sauvegarder la reco dans AsyncStorage pour éviter de la relancer
+      await AsyncStorage.setItem("recommendedCocktails", JSON.stringify(recommendations));
     } catch (error) {
       console.error("Erreur lors de la récupération des recommandations :", error);
     }
   };
   
-  
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Recommandations de Cocktails</Text>
@@ -144,7 +117,6 @@ export default function RecoScreen({ navigation }) {
         />
       )}
       
-      {/* Suppression de la saisie du profil de saveur */}
       
       {/* Sélection de la préférence */}
       <Text style={styles.label}>Préférence :</Text>
@@ -169,7 +141,7 @@ export default function RecoScreen({ navigation }) {
       {recommendedCocktails.length > 0 && (
         <FlatList
           data={recommendedCocktails}
-          keyExtractor={(item) => item.idDrink}
+          keyExtractor={(item) => item.strDrink}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => navigation.navigate("Recipe", { item })}
@@ -188,7 +160,7 @@ export default function RecoScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
     backgroundColor: "#f5f5f5",

@@ -97,8 +97,8 @@ def get_recommendations_for_user(user_cocktail_names, alcoholic_preference, desi
 
 # # Supposons que l'utilisateur a aimé les cocktails d'ID 12754 et 178365
 # user_liked_cocktails = ["Gin Tonic",
-#       "Sex on the Beach",
-#       "Mojito"]
+#       "Mojito",
+#       "Blueberry Mojito"]
 
 # # L'API renvoie par exemple "Non Alcoholic"
 # alcoholic_preference = "Alcoholic"
