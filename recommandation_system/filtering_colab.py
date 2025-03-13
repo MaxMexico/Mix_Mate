@@ -7,7 +7,7 @@ from surprise import accuracy
 from collections import defaultdict
 
 # Charger le fichier JSON
-with open("../Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
+with open("./Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
     cocktails_data = json.load(file)
 
 # Extraire les avis et structurer les données en DataFrame

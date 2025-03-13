@@ -22,3 +22,13 @@ blob6 = TextBlob(text3)
 print(blob4.sentiment)  
 print(blob5.sentiment)
 print(blob6.sentiment)
+
+second_blob = TextBlob("Test")
+second_blob.sentiment
+
+first_blob = TextBlob("Test", analyzer=NaiveBayesAnalyzer())
+first_blob.sentiment
+
+second_blob = TextBlob("Test 2")
+second_blob.sentiment
+

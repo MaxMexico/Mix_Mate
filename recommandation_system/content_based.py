@@ -36,7 +36,8 @@ def recommander(name):
     return cocktail_names
 
 # Calling the function for Gin Tonic
-reco_list = recommander('Gin Tonic')
+cocktail = str(input("What is your favorite cocktail ?\nType here : "))
+reco_list = recommander(cocktail)
 print(reco_list)
 
 
