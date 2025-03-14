@@ -9,7 +9,7 @@ export default function ChatbotScreen() {
   return (
     <View style={styles.container}>
       <WebView
-        source={{ uri: "https://mixmate.zapier.app/" }} // URL du chatbot Zapier
+        source={{ uri: "https://mixmate1.zapier.app/" }} // URL du chatbot Zapier
         style={styles.webview}
       />
     </View>
