@@ -91,6 +91,16 @@ const styles = StyleSheet.create({
   sectionContent: {
     fontSize: 16,
   },
+  searchResultsContainer: {
+    maxHeight: 150, // Limite la hauteur des résultats
+    position: "absolute",
+    top: 200, // Place les résultats au-dessus de la barre de recherche
+    left: 16,
+    right: 16,
+    backgroundColor: "rgb(230, 108, 217)",
+    borderRadius: 8,
+    zIndex: 10,
+  },
   removeText: {
     color: "red",
     fontSize: 16,

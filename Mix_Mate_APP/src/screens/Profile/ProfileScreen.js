@@ -7,11 +7,12 @@ import {
   Pressable,
   FlatList,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import styles from "./styles";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Stockage local
-import allCocktails from "../../../assets/all_cocktails.json"; // Base des cocktails
-import userProfileData from "../../../assets/userProfile.json"; // Charger les données initiales
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import allCocktails from "../../../assets/all_cocktails.json"; 
 
 const profileImages = [
   require("../../../assets/Profile1.png"),
@@ -28,62 +29,23 @@ export default function ProfileScreen({ navigation }) {
     favoriteCocktails: [],
   });
 
-  const [profileImage, setProfileImage] = useState(profileImages[0]); // Gestion des images de profil
+  const [profileImage, setProfileImage] = useState(profileImages[0]);
   const [isSelectingImage, setIsSelectingImage] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCocktails, setFilteredCocktails] = useState([]);
 
-  // 📌 Charger les données utilisateur
-  useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const savedProfile = await AsyncStorage.getItem("userProfile");
-        if (savedProfile) {
-          setProfile(JSON.parse(savedProfile));
-        } else {
-          setProfile(userProfileData); // Charger le JSON initial
-          await AsyncStorage.setItem("userProfile", JSON.stringify(userProfileData));
-        }
-      } catch (error) {
-        console.log("Erreur lors du chargement du profil :", error);
-      }
-    };
-
-    loadProfile();
-  }, []);
-
-  // 📌 Sauvegarder le profil et l'envoyer à l'API Flask
-const saveProfile = async () => {
-  try {
-    // Sauvegarde locale avec AsyncStorage
-    await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
-    console.log("Profil sauvegardé localement :", profile);
-    
-    // URL de l'API Flask (assurez-vous que l'IP et le port sont corrects)
-    const apiUrl = "http://192.168.1.55:5000/api/profile";
-
-    // Envoi du profil à l'API
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(profile),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log("Réponse de l'API :", result);
-      // Vous pouvez afficher une alerte ou mettre à jour l'état ici
-    } else {
-      console.error("Erreur API :", response.status, response.statusText);
+  // 📌 Sauvegarde le profil
+  const saveProfile = async () => {
+    try {
+      await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
+      console.log("Profil sauvegardé !");
+    } catch (error) {
+      console.log("Erreur lors de la sauvegarde :", error);
     }
-  } catch (error) {
-    console.log("Erreur lors de la sauvegarde :", error);
-  }
-};
+  };
 
-
-  // 📌 Ajouter un cocktail aux favoris
+  // 📌 Ajoute un cocktail préféré
   const addFavoriteCocktail = (cocktail) => {
     if (!profile.favoriteCocktails.includes(cocktail.strDrink)) {
       const updatedProfile = {
@@ -92,10 +54,12 @@ const saveProfile = async () => {
       };
       setProfile(updatedProfile);
       saveProfile();
+      setSearchQuery(""); // Réinitialise la recherche
+      setFilteredCocktails([]);
     }
   };
 
-  // 📌 Supprimer un cocktail favori
+  // 📌 Supprime un cocktail préféré
   const removeFavoriteCocktail = (cocktail) => {
     const updatedProfile = {
       ...profile,
@@ -105,7 +69,7 @@ const saveProfile = async () => {
     saveProfile();
   };
 
-  // 📌 Recherche de cocktails
+  // 📌 Filtrage des cocktails selon la recherche
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setFilteredCocktails([]);
@@ -118,7 +82,10 @@ const saveProfile = async () => {
   }, [searchQuery]);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container} 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       {/* Image de profil */}
       <View style={styles.profileHeader}>
         <TouchableOpacity onPress={() => setIsSelectingImage(!isSelectingImage)}>
@@ -170,14 +137,40 @@ const saveProfile = async () => {
           </View>
         ) : (
           <>
-            <Text style={styles.profileName}>{profile.name}</Text>
-            <Text style={styles.profileUsername}>@{profile.username}</Text>
-            <Text style={styles.profileEmail}>{profile.email}</Text>
+            <Text style={styles.profileName}>{profile.name || "Nom"}</Text>
+            <Text style={styles.profileUsername}>@{profile.username || "Pseudo"}</Text>
+            <Text style={styles.profileEmail}>{profile.email || "Email"}</Text>
           </>
         )}
       </View>
 
-      {/* Cocktails préférés */}
+      {/* 📌 Liste déroulante des résultats de recherche vers le haut */}
+      {filteredCocktails.length > 0 && (
+        <FlatList
+          data={filteredCocktails}
+          keyExtractor={(item) => item.idDrink}
+          style={styles.searchResultsContainer}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.searchResult}
+              onPress={() => addFavoriteCocktail(item)}
+            >
+              <Text style={styles.searchText}>{item.strDrink}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
+
+      {/* 📌 Barre de recherche */}
+      <Text style={styles.sectionTitle}>Ajouter un cocktail préféré :</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Rechercher un cocktail..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+
+      {/* 📌 Cocktails préférés maintenant en dessous */}
       <Text style={styles.sectionTitle}>Cocktails Préférés</Text>
       <FlatList
         data={profile.favoriteCocktails}
@@ -192,36 +185,9 @@ const saveProfile = async () => {
         keyExtractor={(item, index) => index.toString()}
       />
 
-      {/* Barre de recherche */}
-      <Text style={styles.sectionTitle}>Ajouter un cocktail préféré :</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Rechercher un cocktail..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-
-      {/* Résultats de recherche */}
-      {filteredCocktails.length > 0 ? (
-        <FlatList
-          data={filteredCocktails}
-          keyExtractor={(item) => item.idDrink}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.searchResult}
-              onPress={() => addFavoriteCocktail(item)}
-            >
-              <Text style={styles.searchText}>{item.strDrink}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      ) : searchQuery.trim() !== "" && (
-        <Text style={styles.noResults}>Aucun cocktail trouvé.</Text>
-      )}
-
-      {/* Bouton Modifier */}
+      {/* Bouton Modifier (remonté de quelques pixels) */}
       <Pressable
-        style={styles.editButton}
+        style={[styles.editButton, { marginBottom: 30 }]}
         onPress={() => {
           if (isEditing) saveProfile();
           setIsEditing(!isEditing);
@@ -229,6 +195,6 @@ const saveProfile = async () => {
       >
         <Text style={styles.editButtonText}>{isEditing ? "Sauvegarder" : "Modifier"}</Text>
       </Pressable>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
