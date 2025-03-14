@@ -31,7 +31,7 @@ export default function RecoScreen({ navigation }) {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await fetch("http://192.168.1.55:5000/api/get_all_profiles");
+        const response = await fetch("http://192.168.1.124:5000/api/get_all_profiles");
         if (response.ok) {
           const data = await response.json();
           setProfiles(data.profiles || []);
@@ -67,7 +67,7 @@ export default function RecoScreen({ navigation }) {
     };
   
     try {
-      const response = await fetch("http://192.168.1.55:5000/api/CB_recommendations", {
+      const response = await fetch("http://192.168.1.124:5000/api/CB_recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -112,7 +112,7 @@ export default function RecoScreen({ navigation }) {
     };
   
     try {
-      const response = await fetch("http://192.168.1.55:5000/api/FC_recommendations", {
+      const response = await fetch("http://192.168.1.124:5000/api/FC_recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
