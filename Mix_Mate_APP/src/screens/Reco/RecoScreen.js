@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Stockage local
 import Carousel from "react-native-snap-carousel"; // Import du Carousel
+import { LinearGradient } from "expo-linear-gradient"; // Import de LinearGradient
 import allCocktails from "../../../assets/all_cocktails.json"; // Base des cocktails
 
 // Récupère la largeur de l'écran pour configurer le carrousel
@@ -154,96 +155,105 @@ export default function RecoScreen({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} nestedScrollEnabled={true}>
-      <Text style={styles.header}>Recommandations de Cocktails</Text>
-      
-      {/* Dropdown pour sélectionner un profil */}
-      <TouchableOpacity
-        style={styles.dropdown}
-        onPress={() => setShowDropdown(!showDropdown)}
-      >
-        <Text style={styles.dropdownText}>
-          {selectedProfile ? selectedProfile.username : "Sélectionner un profil"}
-        </Text>
-      </TouchableOpacity>
-      {showDropdown && (
-        <FlatList
-          data={profiles}
-          keyExtractor={(item, index) => index.toString()}
-          style={styles.dropdownList}
-          nestedScrollEnabled={true}  // Ajout de nestedScrollEnabled ici
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                setSelectedProfile(item);
-                setShowDropdown(false);
-              }}
-            >
-              <Text style={styles.dropdownItem}>{item.username}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      )}
-      
-      {/* Sélection de la préférence */}
-      <Text style={styles.label}>Préférence :</Text>
-      <View style={styles.preferenceContainer}>
+    <LinearGradient
+    colors={["#a1628f", "#ebbcb7"]}
+    start={{ x: 0, y: 1 }}
+    end={{ x: 1, y: 0 }}
+    style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={styles.container} nestedScrollEnabled={true}>
+        <Text style={styles.header}>Recommandations de Cocktails</Text>
+        
+        {/* Dropdown pour sélectionner un profil */}
         <TouchableOpacity
-          style={[styles.preferenceButton, preference === "Alcoolisée" ? styles.activeButton : null]}
-          onPress={() => setPreference("Alcoolisée")}
+          style={styles.dropdown}
+          onPress={() => setShowDropdown(!showDropdown)}
         >
-          <Text style={styles.preferenceText}>Alcoolisée</Text>
+          <Text style={styles.dropdownText}>
+            {selectedProfile ? selectedProfile.username : "Sélectionner un profil"}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.preferenceButton, preference === "Sans alcool" ? styles.activeButton : null]}
-          onPress={() => setPreference("Sans alcool")}
-        >
-          <Text style={styles.preferenceText}>Sans alcool</Text>
-        </TouchableOpacity>
-      </View>
-      
-      {/* Bouton unique appelant les deux reco */}
-      <Button title="🔍 Trouver des cocktails" onPress={handleCombinedRecommendation} />
-
-      {/* Carousel pour la reco basée sur le contenu (CB) */}
-      {recommendedCocktails.length > 0 && (
-        <View style={{ marginTop: 20 }}>
-          <Text style={styles.header}>Vous aller aimer</Text>
-          {/* Enveloppez le Carousel dans une View à hauteur fixe */}
-          <View style={{ height: 180 }}>  
-            <Carousel
-              layout="default"
-              data={recommendedCocktails}
-              renderItem={renderCarouselItem}
-              sliderWidth={width}
-              itemWidth={150}
-              inactiveSlideScale={0.95}
-              inactiveSlideOpacity={0.7}
-            />
-          </View>
+        {showDropdown && (
+          <FlatList
+            data={profiles}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.dropdownList}
+            nestedScrollEnabled={true}  // Ajout de nestedScrollEnabled ici
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedProfile(item);
+                  setShowDropdown(false);
+                }}
+              >
+                <Text style={styles.dropdownItem}>{item.username}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
+        
+        {/* Sélection de la préférence */}
+        <Text style={styles.label}>Préférence :</Text>
+        <View style={styles.preferenceContainer}>
+          <TouchableOpacity
+            style={[styles.preferenceButton, preference === "Alcoolisée" ? styles.activeButton : null]}
+            onPress={() => setPreference("Alcoolisée")}
+          >
+            <Text style={styles.preferenceText}>Alcoolisée</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.preferenceButton, preference === "Sans alcool" ? styles.activeButton : null]}
+            onPress={() => setPreference("Sans alcool")}
+          >
+            <Text style={styles.preferenceText}>Sans alcool</Text>
+          </TouchableOpacity>
         </View>
-      )}
+        
+        {/* Bouton unique appelant les deux reco */}
+        <Button title="🔍 Trouver des cocktails" onPress={handleCombinedRecommendation} />
 
-
-      {/* Carousel pour la reco collaborative (FC) */}
-      {fcRecommendedCocktails.length > 0 && (
-        <View style={{ marginTop: 20, marginBottom: 30 }}>
-          <Text style={styles.header}>Les autres ont aimé aussi</Text>
-          <View style={{ height: 180 }}>  
-            <Carousel
-              layout="default"
-              data={fcRecommendedCocktails}
-              renderItem={renderCarouselItem}
-              sliderWidth={width}
-              itemWidth={150}
-              inactiveSlideScale={0.95}
-              inactiveSlideOpacity={0.7}
-            />
+        {/* Carousel pour la reco basée sur le contenu (CB) */}
+        {recommendedCocktails.length > 0 && (
+          <View style={{ marginTop: 20 }}>
+            <Text style={styles.header}>Vous allez aimer</Text>
+            {/* Enveloppez le Carousel dans une View à hauteur fixe */}
+            <View style={{ height: 210 }}>  
+              <Carousel
+                layout="default"
+                data={recommendedCocktails}
+                renderItem={renderCarouselItem}
+                sliderWidth={width}
+                itemWidth={150}
+                inactiveSlideScale={0.95}
+                inactiveSlideOpacity={0.7}
+                activeSlideAlignment="start"
+              />
+            </View>
           </View>
-        </View>
-      )}
-      <View style={{ height: 100 }} />
-    </ScrollView>
+        )}
+
+
+        {/* Carousel pour la reco collaborative (FC) */}
+        {fcRecommendedCocktails.length > 0 && (
+          <View style={{ marginTop: 20, marginBottom: 30 }}>
+            <Text style={styles.header}>Les autres ont aimé aussi</Text>
+            <View style={{ height: 210 }}>  
+              <Carousel
+                layout="default"
+                data={fcRecommendedCocktails}
+                renderItem={renderCarouselItem}
+                sliderWidth={width}
+                itemWidth={150}
+                inactiveSlideScale={0.95}
+                inactiveSlideOpacity={0.7}
+                activeSlideAlignment="start"
+              />
+            </View>
+          </View>
+        )}
+        <View style={{ height: 100 }} />
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
@@ -253,7 +263,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#f5f5f5",
   },
   header: {
     fontSize: 24,
@@ -264,9 +273,9 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#d8d1e0",
     borderRadius: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "#d8d1e0",
     marginBottom: 20,
   },
   dropdownText: {
@@ -276,9 +285,9 @@ const styles = StyleSheet.create({
     width: "100%",
     maxHeight: 150,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#d8d1e0",
     borderRadius: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "#d8d1e0",
     marginBottom: 20,
   },
   dropdownItem: {
@@ -313,10 +322,12 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   cocktailCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "#d8d1e0",
     borderRadius: 10,
     padding: 10,
     alignItems: "center",
+    width: 150,
+    height: 190,
   },
   cocktailImage: {
     width: 120,

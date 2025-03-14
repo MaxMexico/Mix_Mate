@@ -22,6 +22,9 @@ function MainNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerStyle: {
+          backgroundColor: '#d8d1e0', // Couleur de fond du header
+        },
         headerTitleStyle: {
           fontWeight: 'bold',
         },
