@@ -34,7 +34,7 @@ export default function HomeScreen(props) {
   }, []);
 
   const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
+    navigation.navigate("Recette", { item });
   };
 
   const renderRecipes = ({ item }) => (

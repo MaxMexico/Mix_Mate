@@ -40,7 +40,7 @@ export default function CategoriesScreen(props) {
     const filteredCocktails = allCocktails.filter(
       (cocktail) => cocktail.strCategory === category
     );
-    navigation.navigate("RecipesList", { category: filteredCocktails, title });
+    navigation.navigate("Catégorie", { category: filteredCocktails, title });
   };
 
   const renderCategory = ({ item }) => (

@@ -144,7 +144,7 @@ export default function RecoScreen({ navigation }) {
   const renderCarouselItem = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("Recipe", { item })}
+        onPress={() => navigation.navigate("Recette", { item })}
         style={styles.cocktailCard}
       >
         <Image source={{ uri: item.strDrinkThumb }} style={styles.cocktailImage} />

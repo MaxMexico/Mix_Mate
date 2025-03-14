@@ -6,7 +6,7 @@ export default function RecipesList({ route, navigation }) {
   const { category, title } = route.params;  // Recevoir les cocktails de la catégorie et le titre
 
   const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
+    navigation.navigate("Recette", { item });
   };
 
   const renderRecipe = ({ item }) => (

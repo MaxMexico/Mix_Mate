@@ -17,7 +17,7 @@ export default function IngredientScreen(props) {
   }, []);
 
   const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
+    navigation.navigate("Recette", { item });
   };
 
   const renderRecipes = ({ item }) => (
