@@ -242,6 +242,7 @@ export default function RecoScreen({ navigation }) {
           </View>
         </View>
       )}
+      <View style={{ height: 100 }} />
     </ScrollView>
   );
 }
