@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
   Dimensions,
+  ScrollView  // Import du ScrollView
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Stockage local
 import Carousel from "react-native-snap-carousel"; // Import du Carousel
@@ -20,6 +21,7 @@ const { width } = Dimensions.get("window");
 export default function RecoScreen({ navigation }) {
   const [preference, setPreference] = useState("");
   const [recommendedCocktails, setRecommendedCocktails] = useState([]);
+  const [fcRecommendedCocktails, setFcRecommendedCocktails] = useState([]);
   
   const [profiles, setProfiles] = useState([]);         // Liste des profils récupérés via l'API
   const [selectedProfile, setSelectedProfile] = useState(null); // Profil choisi
@@ -43,7 +45,7 @@ export default function RecoScreen({ navigation }) {
     fetchProfiles();
   }, []);
 
-  // Fonction de demande de recommandations
+  // Fonction de demande de recommandations CB
   const handleRecommendation = async () => {
     if (!selectedProfile || !preference) {
       Alert.alert("Attention", "Veuillez sélectionner un profil et renseigner votre préférence.");
@@ -65,7 +67,7 @@ export default function RecoScreen({ navigation }) {
     };
   
     try {
-      const response = await fetch("http://192.168.1.55:5000/api/recommendations", {
+      const response = await fetch("http://192.168.1.55:5000/api/CB_recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -77,16 +79,65 @@ export default function RecoScreen({ navigation }) {
         return;
       }
       const recommendedNames = data.recommendedDrinks.map(drink => drink.strDrink);
+      // Comparaison insensible à la casse
       const recommendations = allCocktails.filter((cocktail) =>
-        recommendedNames.includes(cocktail.strDrink)
+        recommendedNames.some(name => name.trim().toLowerCase() === cocktail.strDrink.trim().toLowerCase())
       );
       setRecommendedCocktails(recommendations);
-
-      // Sauvegarder la reco dans AsyncStorage pour éviter de la relancer
       await AsyncStorage.setItem("recommendedCocktails", JSON.stringify(recommendations));
     } catch (error) {
       console.error("Erreur lors de la récupération des recommandations :", error);
     }
+  };
+
+  // Fonction de demande de recommandations FC
+  const handleFCRecommendation = async () => {
+    if (!selectedProfile || !preference) {
+      Alert.alert("Attention", "Veuillez sélectionner un profil et renseigner votre préférence.");
+      return;
+    }
+  
+    if (!selectedProfile.favoriteCocktails || selectedProfile.favoriteCocktails.length === 0) {
+      Alert.alert("Attention", "Le profil sélectionné ne contient aucun cocktail favori.");
+      return;
+    }
+  
+    const formattedPreference = preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic";
+  
+    const payload = {
+      userLikedCocktails: selectedProfile.favoriteCocktails,
+      alcoholicPreference: formattedPreference,
+      desiredCategory: null,
+      topN: 5,
+    };
+  
+    try {
+      const response = await fetch("http://192.168.1.55:5000/api/FC_recommendations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (data.error) {
+        console.error("Erreur API FC :", data.error);
+        Alert.alert("Erreur", data.error);
+        return;
+      }
+      const recommendedNames = data.recommendedDrinks.map((drink) => drink.strDrink);
+      const recommendations = allCocktails.filter((cocktail) =>
+        recommendedNames.some(name => name.trim().toLowerCase() === cocktail.strDrink.trim().toLowerCase())
+      );
+      setFcRecommendedCocktails(recommendations);
+      await AsyncStorage.setItem("fcRecommendedCocktails", JSON.stringify(recommendations));
+    } catch (error) {
+      console.error("Erreur lors de la récupération des recommandations FC :", error);
+    }
+  };
+
+  // Fonction combinée pour appeler les deux reco en même temps
+  const handleCombinedRecommendation = () => {
+    handleRecommendation();
+    handleFCRecommendation();
   };
 
   // Fonction de rendu pour chaque item du carrousel
@@ -103,7 +154,7 @@ export default function RecoScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} nestedScrollEnabled={true}>
       <Text style={styles.header}>Recommandations de Cocktails</Text>
       
       {/* Dropdown pour sélectionner un profil */}
@@ -120,6 +171,7 @@ export default function RecoScreen({ navigation }) {
           data={profiles}
           keyExtractor={(item, index) => index.toString()}
           style={styles.dropdownList}
+          nestedScrollEnabled={true}  // Ajout de nestedScrollEnabled ici
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => {
@@ -150,27 +202,53 @@ export default function RecoScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       
-      <Button title="🔍 Trouver des cocktails" onPress={handleRecommendation} />
+      {/* Bouton unique appelant les deux reco */}
+      <Button title="🔍 Trouver des cocktails" onPress={handleCombinedRecommendation} />
 
-      {/* Remplacement de la FlatList par le carrousel */}
+      {/* Carousel pour la reco basée sur le contenu (CB) */}
       {recommendedCocktails.length > 0 && (
-        <Carousel
-          layout="default"
-          data={recommendedCocktails}
-          renderItem={renderCarouselItem}
-          sliderWidth={width}
-          itemWidth={150}               // Ajustez la largeur de la "carte"
-          inactiveSlideScale={0.95}     // Échelle pour les slides inactives
-          inactiveSlideOpacity={0.7}    // Opacité pour les slides inactives
-        />
+        <View style={{ marginTop: 20 }}>
+          <Text style={styles.header}>Vous aller aimer</Text>
+          {/* Enveloppez le Carousel dans une View à hauteur fixe */}
+          <View style={{ height: 180 }}>  
+            <Carousel
+              layout="default"
+              data={recommendedCocktails}
+              renderItem={renderCarouselItem}
+              sliderWidth={width}
+              itemWidth={150}
+              inactiveSlideScale={0.95}
+              inactiveSlideOpacity={0.7}
+            />
+          </View>
+        </View>
       )}
-    </View>
+
+
+      {/* Carousel pour la reco collaborative (FC) */}
+      {fcRecommendedCocktails.length > 0 && (
+        <View style={{ marginTop: 20, marginBottom: 30 }}>
+          <Text style={styles.header}>Les autres ont aimé aussi</Text>
+          <View style={{ height: 180 }}>  
+            <Carousel
+              layout="default"
+              data={fcRecommendedCocktails}
+              renderItem={renderCarouselItem}
+              sliderWidth={width}
+              itemWidth={150}
+              inactiveSlideScale={0.95}
+              inactiveSlideOpacity={0.7}
+            />
+          </View>
+        </View>
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,  // Permet au ScrollView de s'étendre avec le contenu
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
@@ -233,7 +311,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#fff",
   },
-  // Styles conservés pour la "carte" cocktail
   cocktailCard: {
     backgroundColor: "#fff",
     borderRadius: 10,

@@ -3,9 +3,12 @@ import os
 import json
 from flask import Flask, request, jsonify
 from recommandation_system.final_system_for_app import (
-    get_recommendations_for_user,
+    get_CB_recommendations,
+    get_FC_recommendations,  
     cocktails_df,
-    latent_representations
+    latent_representations,
+    reviews,                  
+    cocktail_dict  
 )
 
 app = Flask(__name__)
@@ -71,7 +74,7 @@ def get_all_profiles():
     return jsonify({"profiles": profiles}), 200
 
 
-@app.route("/api/recommendations", methods=["POST"])
+@app.route("/api/CB_recommendations", methods=["POST"])
 def recommendations():
     data = request.get_json()
     favorite_cocktails = data.get("favoriteCocktails")
@@ -87,7 +90,7 @@ def recommendations():
         import time
         start_time = time.time()
         
-        recommendations_df = get_recommendations_for_user(
+        recommendations_df = get_CB_recommendations(
             favorite_cocktails,
             alcoholic_preference,
             desired_category,
@@ -113,6 +116,45 @@ def recommendations():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/FC_recommendations", methods=["POST"])
+def fc_recommendations():
+    data = request.get_json()
+    user_liked_cocktails = data.get("userLikedCocktails")
+    alcoholic_preference = data.get("alcoholicPreference")
+    desired_category = data.get("desiredCategory", None)
+    top_n = data.get("topN", 5)
+    
+    if not user_liked_cocktails or not alcoholic_preference:
+        return jsonify({"error": "Les paramètres 'userLikedCocktails' et 'alcoholicPreference' sont requis."}), 400
 
+    try:
+        import time
+        start_time = time.time()
+        
+        recommendations_df = get_FC_recommendations(
+            user_liked_cocktails,
+            alcoholic_preference,
+            desired_category,
+            cocktails_df,
+            top_n
+        )
+        
+        end_time = time.time()
+        print(f"Temps d'exécution de la reco FC: {end_time - start_time:.2f} secondes")
+        
+        if recommendations_df is None:
+            return jsonify({"error": "Aucune recommandation trouvée avec ces critères."}), 404
+
+        print("Réponse de la fonction de reco FC :")
+        print(recommendations_df)
+        
+        recommendations_list = recommendations_df.to_dict(orient="records")
+        print("JSON renvoyé:", {"recommendedDrinks": recommendations_list})
+        return jsonify({"recommendedDrinks": recommendations_list}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+        
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

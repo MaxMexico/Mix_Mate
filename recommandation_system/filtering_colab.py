@@ -1,13 +1,13 @@
 import json
 import pandas as pd
 import numpy as np
-from surprise import Dataset, Reader, SVD, SVDpp, NMF
+from surprise import Dataset, Reader, SVD, SVDpp, NMF, accuracy, dump
 from surprise.model_selection import train_test_split, cross_validate
-from surprise import accuracy
 from collections import defaultdict
 
+
 # Charger le fichier JSON
-with open("./Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
+with open("../Sentiment_Analysis/cocktails_with_reviews_updated.json", "r", encoding="utf-8") as file:
     cocktails_data = json.load(file)
 
 # Extraire les avis et structurer les données en DataFrame
@@ -78,9 +78,9 @@ for model_name, metrics in results.items():
 best_model_name = min(results, key=lambda x: results[x]["RMSE"])
 print(f"\nLe meilleur modèle est : {best_model_name} avec RMSE = {results[best_model_name]['RMSE']:.4f}")
 
-# Récupérer le meilleur algorithme
+# Récupérer et sauvegarder le meilleur algorithme
 best_model = models[best_model_name]
-
+dump.dump("Final_models/Filtering_Collab_Model.pkl", algo=best_model, verbose=True)
 # Générer des recommandations
 
 def get_top_n(predictions, n=5):
@@ -104,7 +104,9 @@ top_n = get_top_n(predictions, n=5)
 
 # Fonction pour recommander des cocktails en fonction d'un cocktail préféré
 def recommend_from_cocktail(fav_cocktail, n=5):
-    """Recommande des cocktails similaires à un cocktail préféré en fonction des notes des utilisateurs."""
+    """Recommande des cocktails similaires à un cocktail préféré en fonction des notes des utilisateurs.
+       Le score est transformé en pourcentage de compatibilité (maximum 100%).
+    """
     cocktail_id = None
     for cid, cname in cocktail_dict.items():
         if cname.lower() == fav_cocktail.lower():
@@ -114,21 +116,34 @@ def recommend_from_cocktail(fav_cocktail, n=5):
         print("Cocktail non trouvé.")
         return
     
+    # Récupérer les utilisateurs qui ont noté le cocktail préféré avec une note >= 3
     similar_users = set()
     for review in reviews:
         if review["cocktail_id"] == cocktail_id and review["rating"] >= 3:
             similar_users.add(review["user_id"])
     
+    # Accumuler les scores pour les autres cocktails par ces mêmes utilisateurs
     recommended_cocktails = defaultdict(float)
     for review in reviews:
         if review["user_id"] in similar_users and review["cocktail_id"] != cocktail_id:
             recommended_cocktails[review["cocktail_id"]] += review["rating"]
     
     sorted_recommendations = sorted(recommended_cocktails.items(), key=lambda x: x[1], reverse=True)[:n]
+    if not sorted_recommendations:
+        print("Aucune recommandation trouvée.")
+        return
+
+    # Score maximum théorique
+    max_possible_score = len(similar_users) * 5
+
     print(f"Cocktails recommandés pour les amateurs de {fav_cocktail}:")
     for cid, score in sorted_recommendations:
-        print(f"{cocktail_dict[cid]} (Score: {score:.2f})")
+        # Normalisation et clamp à 100%
+        percentage = min((score / max_possible_score) * 100, 100)
+        print(f"{cocktail_dict[cid]} (Compatibilité: {percentage:.2f}%)")
 
-# Demande de l'utilisateur
-fav_cocktail = input("Ton cocktail préféré : ")
-recommend_from_cocktail(fav_cocktail)
+
+# Obtenir les recommandations (top 5)
+fav_cocktail = "Cuba Libre"
+reco_df = recommend_from_cocktail(fav_cocktail,5)
+

@@ -113,10 +113,10 @@ tfidf_glass = tfidf_glass.astype(np.float32)
 tfidf_ingredients = tfidf_ingredients.astype(np.float32)
 
 # Sauvegarder les vectorizers
-joblib.dump(vectorizer_category, "CB_model/vectorizer_category.pkl")
-joblib.dump(vectorizer_alcoholic, "CB_model/vectorizer_alcoholic.pkl")
-joblib.dump(vectorizer_glass, "CB_model/vectorizer_glass.pkl")
-joblib.dump(vectorizer_ingredients, "CB_model/vectorizer_ingredients.pkl")
+joblib.dump(vectorizer_category, "Final_models/vectorizer_category.pkl")
+joblib.dump(vectorizer_alcoholic, "Final_models/vectorizer_alcoholic.pkl")
+joblib.dump(vectorizer_glass, "Final_models/vectorizer_glass.pkl")
+joblib.dump(vectorizer_ingredients, "Final_models/vectorizer_ingredients.pkl")
 
 
 ####################################### Recherche de la Meilleure Pondération ########################################
@@ -203,7 +203,7 @@ scaler = MinMaxScaler()
 X_normalized = scaler.fit_transform(X_combined)
 
 # Sauvegarder le scaler
-joblib.dump(scaler, "CB_model/scaler.pkl")
+joblib.dump(scaler, "Final_models/scaler.pkl")
 
 # Diviser les données en ensembles d'entrainement et de test
 X_train, X_test = train_test_split(X_normalized, test_size=0.2, random_state=42)
@@ -265,7 +265,7 @@ final_history = final_model.fit(X_train, X_train,
 representations_latent = final_model.predict(X_normalized)
 
 # Enregistrement des représentations latentes 
-np.save("CB_model/representations_latentes.npy", representations_latent)
+np.save("Final_models/representations_latentes.npy", representations_latent)
 
 # Calculer la similarité cosinus entre les cocktails
 similarities = cosine_similarity(representations_latent, representations_latent)
@@ -278,7 +278,7 @@ rmse = np.sqrt(mse)
 print(f"Performance du modèle - MSE: {mse}, RMSE: {rmse}, MAE: {mae}")
 
 # Sauvegarder le modèle pour éviter de le réentrainer à chaque fois 
-final_model.save("CB_model/Content_Based_DL_Model.h5")
+final_model.save("Final_models/Content_Based_DL_Model.h5")
 
 
 # Fonction de recommandation
