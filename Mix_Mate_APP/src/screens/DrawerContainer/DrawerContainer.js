@@ -68,6 +68,16 @@ export default function DrawerContainer(props) {
           }}
         />
 
+        <MenuButton
+          title="FORUM"
+          source={require("../../../assets/icons/forum.png")} // 📌 Remplace par ton icône
+          onPress={() => {
+            navigation.navigate("Main", { screen: "Forum" });
+            navigation.closeDrawer();
+          }}
+        />
+
+
       </View>
     </View>
   );

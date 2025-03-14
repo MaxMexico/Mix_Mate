@@ -15,6 +15,8 @@ import SearchScreen from "../screens/Search/SearchScreen";
 import CocktailDetailsScreen from "../screens/CocktailDetails/CocktailDetailsScreen";
 import IngredientsDetailsScreen from '../screens/CocktailDetails/CocktailDetailsScreen';
 import RecoScreen from '../screens/Reco/RecoScreen';
+import ForumScreen from "../screens/Forum/ForumScreen"; // 📌 Importation de la page Forum
+
 
 const Stack = createStackNavigator();
 
@@ -43,6 +45,8 @@ function MainNavigator() {
       <Stack.Screen name="IngredientsDetails" component={IngredientsDetailsScreen} />
       <Stack.Screen name="Cocktail Aléatoire" component={RandomCocktailScreen} />
       <Stack.Screen name="Recommandations" component={RecoScreen} />
+      <Stack.Screen name="Forum" component={ForumScreen} />
+
 
 
 
