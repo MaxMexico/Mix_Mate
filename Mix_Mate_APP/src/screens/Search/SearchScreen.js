@@ -26,7 +26,7 @@ export default function SearchScreen({ navigation }) {
   const renderCocktail = ({ item }) => (
     <TouchableOpacity
       style={styles.cocktailItem}
-      onPress={() => navigation.navigate("CocktailDetails", { cocktail: item })}
+      onPress={() => navigation.navigate("Recette", { item })}
     >
       <Text style={styles.cocktailName}>{item.strDrink}</Text>
     </TouchableOpacity>
