@@ -28,18 +28,18 @@ function MainNavigator() {
         headerTitleAlign: 'center',
       }}
     >
-      <Stack.Screen name='Home' component={HomeScreen} />
-      <Stack.Screen name='Categories' component={CategoriesScreen}/>
+      <Stack.Screen name='Accueil' component={HomeScreen} />
+      <Stack.Screen name='Catégories' component={CategoriesScreen}/>
       <Stack.Screen name='Recipe' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />
       <Stack.Screen name='Ingredient' component={IngredientScreen} />
-      <Stack.Screen name='Search' component={SearchScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name='Rechercher' component={SearchScreen} />
+      <Stack.Screen name="Profil" component={ProfileScreen} />
       <Stack.Screen name="Chatbot" component={ChatbotScreen} />
       <Stack.Screen name="CocktailDetails" component={CocktailDetailsScreen} />
       <Stack.Screen name="IngredientsDetails" component={IngredientsDetailsScreen} />
-      <Stack.Screen name="RandomCocktail" component={RandomCocktailScreen} />
-      <Stack.Screen name="Reco" component={RecoScreen} />
+      <Stack.Screen name="Cocktail Aléatoire" component={RandomCocktailScreen} />
+      <Stack.Screen name="Recommandations" component={RecoScreen} />
 
 
 

@@ -10,10 +10,10 @@ export default function DrawerContainer(props) {
     <View style={styles.content}>
       <View style={styles.container}>
         <MenuButton
-          title="HOME"
+          title="ACCUEIL"
           source={require("../../../assets/icons/home.png")}
           onPress={() => {
-            navigation.navigate("Main", { screen: "Home" });
+            navigation.navigate("Main", { screen: "Accueil" });
             navigation.closeDrawer();
           }}
         />
@@ -21,38 +21,38 @@ export default function DrawerContainer(props) {
           title="CATEGORIES"
           source={require("../../../assets/icons/category.png")}
           onPress={() => {
-            navigation.navigate("Main", { screen: "Categories" });
+            navigation.navigate("Main", { screen: "Catégories" });
             navigation.closeDrawer();
           }}
         />
         <MenuButton
-          title="SEARCH"
+          title="RECHERCHER"
           source={require("../../../assets/icons/search.png")}
           onPress={() => {
-            navigation.navigate("Main", { screen: "Search" });
+            navigation.navigate("Main", { screen: "Rechercher" });
             navigation.closeDrawer();
           }}
         />
         <MenuButton
-          title="PROFILE"
+          title="PROFIL"
           source={require("../../../assets/icons/profile.png")}
           onPress={() => {
-            navigation.navigate("Main", { screen: "Profile" });
+            navigation.navigate("Main", { screen: "Profil" });
             navigation.closeDrawer();
           }}
 
 
         />
         <MenuButton
-          title="COCKTAIL ALEATOIRE 🍸"
+          title="COCKTAIL ALEATOIRE"
           source={require("../../../assets/icons/random.png")}
           onPress={() => {
-            navigation.navigate("Main", { screen: "RandomCocktail" });
+            navigation.navigate("Main", { screen: "Cocktail Aléatoire" });
             navigation.closeDrawer();
           }}
         />
         <MenuButton
-          title="CHATBOT 💬"
+          title="CHATBOT"
           source={require("../../../assets/icons/chatbot.png")}
           onPress={() => {
             navigation.navigate("Main", { screen: "Chatbot" });
@@ -60,10 +60,10 @@ export default function DrawerContainer(props) {
           }}
         />
         <MenuButton
-          title="RECOMMANDATION 🍹"
+          title="RECOMMANDATIONS"
           source={require("../../../assets/icons/recommendation.png")}
           onPress={() => {
-            navigation.navigate("Main", { screen: "Reco" });
+            navigation.navigate("Main", { screen: "Recommandations" });
             navigation.closeDrawer();
           }}
         />
