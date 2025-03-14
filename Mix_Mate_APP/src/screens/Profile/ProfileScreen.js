@@ -35,11 +35,45 @@ export default function ProfileScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCocktails, setFilteredCocktails] = useState([]);
 
-  // 📌 Sauvegarde le profil
+  // Charger le profil existant depuis AsyncStorage au démarrage
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const storedProfile = await AsyncStorage.getItem("userProfile");
+        if (storedProfile) {
+          setProfile(JSON.parse(storedProfile));
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement du profil :", error);
+      }
+    };
+    loadProfile();
+  }, []);
+
+  // Fonction pour sauvegarder le profil et l'envoyer à l'API Flask
   const saveProfile = async () => {
     try {
+      // Sauvegarde locale avec AsyncStorage
       await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
-      console.log("Profil sauvegardé !");
+      console.log("Profil sauvegardé localement :", profile);
+      
+      // URL de l'API Flask (assurez-vous que l'IP et le port sont corrects)
+      const apiUrl = "http://192.168.1.124:5000/api/profile";
+
+      // Envoi du profil à l'API
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Réponse de l'API :", result);
+        // Vous pouvez afficher une alerte ou mettre à jour l'état ici
+      } else {
+        console.error("Erreur API :", response.status, response.statusText);
+      }
     } catch (error) {
       console.log("Erreur lors de la sauvegarde :", error);
     }

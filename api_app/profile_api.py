@@ -1,4 +1,8 @@
 ## Pour lancer cette API, il faut être dans la racine (Mix_Mate) et lancer la commande suivante : python -m api_app.profile_api
+
+## Au lancement de ce code, il faut récupérer l'ip de l'api qui est la 3ème ip qui sort dans le terminal et la changer des les codes:
+##          - ProfileScreen.js --> 1 fois
+##          - RecoScreen.js --> 3 fois
 import os
 import json
 from flask import Flask, request, jsonify
@@ -155,6 +159,6 @@ def fc_recommendations():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-        
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -36,5 +36,14 @@
       "Vodka Martini",
       "Slippery Nipple"
     ]
+  },
+  {
+    "name": "So\u00fblard",
+    "username": "Max So\u00fblard",
+    "email": "Soulard@gmail.com",
+    "favoriteCocktails": [
+      "Sex on the Beach",
+      "After sex"
+    ]
   }
 ]

@@ -1,3 +1,4 @@
+# Attention il faut etre en python 3.10
 requests_html
 pandas
 numpy==1.26.4
