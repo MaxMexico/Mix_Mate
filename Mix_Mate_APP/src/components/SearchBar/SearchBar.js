@@ -1,38 +1,38 @@
-// components/SearchBar.js
-import React, { useState } from "react";
+/* components/SearchBar/SearchBar.js */
+import React from "react";
 import { TextInput, StyleSheet, View } from "react-native";
 
-export default function SearchBar({ onSearch }) {
-  const [query, setQuery] = useState("");
-
-  const handleSearch = (text) => {
-    setQuery(text);
-    onSearch(text); // Appeler la fonction de recherche passée en props
-  };
-
+const SearchBar = ({ onSearch, placeholder, style }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TextInput
         style={styles.input}
-        placeholder="Rechercher un cocktail..."
-        value={query}
-        onChangeText={handleSearch}
+        onChangeText={onSearch}
+        placeholder={placeholder || "Rechercher..."}
+        placeholderTextColor="#aaa"
+        autoCapitalize="none"
+        autoCorrect={false}
+        clearButtonMode="always" // Affiche un bouton pour effacer le texte (iOS)
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    backgroundColor: "#f5f5f5",
+    width: "100%",
+    marginBottom: 16,
   },
   input: {
-    height: 40,
-    borderColor: "#ccc",
     borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
+    borderColor: "#ddd",
+    borderRadius: 25, // Coins arrondis pour un design moderne
+    paddingVertical: 10,
+    paddingHorizontal: 16,
     fontSize: 16,
+    color: "#333",
+    backgroundColor: "#fff", // Fond blanc pour contraster avec le gradient
   },
 });
+
+export default SearchBar;

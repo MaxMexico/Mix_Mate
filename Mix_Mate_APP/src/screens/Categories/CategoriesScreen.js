@@ -1,5 +1,7 @@
+/* CategoriesScreen.js */
 import React, { useLayoutEffect, useState, useEffect } from "react";
-import { FlatList, Text, View, Image, TouchableHighlight } from "react-native";
+import { FlatList, Text, View, Image, TouchableHighlight, TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient"; // Import du LinearGradient
 import styles from "./styles";
 import MenuImage from "../../components/MenuImage/MenuImage";
 import allCocktails from "../../../assets/all_cocktails.json"; // Import de la BDD
@@ -44,36 +46,39 @@ export default function CategoriesScreen(props) {
   };
 
   const renderCategory = ({ item }) => (
-    <TouchableHighlight
-      underlayColor="rgba(73,182,77,0.9)"
-      onPress={() => onPressCategory(item)}
-    >
-      <View style={styles.categoriesItemContainer}>
-        <Image
-          style={styles.categoriesPhoto}
-          source={{
-            uri:
-              allCocktails.find((cocktail) => cocktail.strCategory === item)
-                ?.strDrinkThumb || "", // Affiche la première image de la catégorie
-          }}
-        />
-        <Text style={styles.categoriesName}>{item}</Text>
-        <Text style={styles.categoriesInfo}>
-          {allCocktails.filter((cocktail) => cocktail.strCategory === item)
-            .length}{" "}
-          recettes
-        </Text>
-      </View>
-    </TouchableHighlight>
+<TouchableOpacity
+  onPress={() => onPressCategory(item)}
+  style={styles.categoriesItemContainer} // Ajoutez le style ici
+>
+  <Image
+    style={styles.categoriesPhoto}
+    source={{
+      uri:
+        allCocktails.find((cocktail) => cocktail.strCategory === item)
+          ?.strDrinkThumb || "", // Affiche la première image de la catégorie
+    }}
+  />
+  <Text style={styles.categoriesName}>{item}</Text>
+  <Text style={styles.categoriesInfo}>
+    {allCocktails.filter((cocktail) => cocktail.strCategory === item).length}{" "}
+    recettes
+  </Text>
+</TouchableOpacity>
   );
 
   return (
-    <View>
+    <LinearGradient
+      colors={["#a1628f", "#ebbcb7"]} // Même gradient que les autres écrans
+      start={{ x: 0, y: 1 }}
+      end={{ x: 1, y: 0 }}
+      style={{ flex: 1 }} // Gradient comme arrière-plan principal
+    >
       <FlatList
         data={categories}
         renderItem={renderCategory}
         keyExtractor={(item) => item}
+        contentContainerStyle={styles.listContent} // Ajout d'un style pour le contenu
       />
-    </View>
+    </LinearGradient>
   );
 }

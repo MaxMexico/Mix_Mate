@@ -4,7 +4,7 @@ const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#292929",
+    backgroundColor: "#ebbcb7",
     borderRadius: 10,
     margin: 8,
     padding: 10,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     right: 2,
     bottom: 2,
     borderRadius: 10,
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: "#4A4A4A",
   },
   photo: {
@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "bold",
-    color: "#E0E0E0",
+    color: "rgb(0, 0, 0)",
     textAlign: "center",
     flexWrap: "wrap",
     maxHeight: 40,
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     ellipsizeMode: "tail",
   },
   category: {
-    fontSize: 12,
-    color: "#B0B0B0",
+    fontSize: 13,
+    color: "rgb(90, 80, 80)",
     textAlign: "center",
     marginTop: 5,
   },

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#f5f5f5",
+
   },
   loadingContainer: {
     flex: 1,
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 16,
-    color: "#333",
+    color: "rgb(0, 0, 0)",
   },
   cocktailImage: {
     width: 250,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   category: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#777",
+    color: "rgb(84, 80, 80)53)",
     marginBottom: 16,
   },
   instructionsTitle: {
@@ -39,20 +39,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 16,
     marginBottom: 8,
-    color: "#555",
+    color: "rgb(0, 0, 0)",
   },
   instructions: {
     fontSize: 16,
     textAlign: "center",
     marginBottom: 16,
-    color: "#666",
+    color: "rgb(84, 80, 80)53)",
     paddingHorizontal: 10,
   },
   ingredientsTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#555",
+    color: "rgb(0, 0, 0)",
   },
   ingredientsContainer: {
     marginBottom: 16,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   ingredientText: {
     fontSize: 16,
-    color: "#444",
+    color: "rgb(84, 80, 80)53)",
     marginBottom: 8,
   },
 });
