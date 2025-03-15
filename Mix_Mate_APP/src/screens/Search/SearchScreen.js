@@ -1,9 +1,9 @@
-// screens/Search/SearchScreen.js
+/* screens/Search/SearchScreen.js */
 import React, { useState } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import cocktailsData from "../../../assets/all_cocktails.json"; // Assure-toi que le chemin est correct
-import styles from "./styles"; // Importe les styles depuis le fichier séparé
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from "react-native";
+import SearchBar from "../../components/SearchBar/SearchBar"; // Votre composant SearchBar
+import cocktailsData from "../../../assets/all_cocktails.json"; // Assurez-vous que le chemin est correct
+import styles from "./styles";
 
 export default function SearchScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,12 +22,19 @@ export default function SearchScreen({ navigation }) {
     }
   };
 
-  // Rendu d'un cocktail dans la liste
+  // Rendu d'un cocktail dans la liste avec image
   const renderCocktail = ({ item }) => (
     <TouchableOpacity
       style={styles.cocktailItem}
       onPress={() => navigation.navigate("Recette", { item })}
     >
+      {/* Image du cocktail */}
+      <Image 
+        source={{ uri: item.strDrinkThumb }} 
+        style={styles.cocktailImage} 
+      />
+      
+      {/* Nom du cocktail */}
       <Text style={styles.cocktailName}>{item.strDrink}</Text>
     </TouchableOpacity>
   );
@@ -35,7 +42,10 @@ export default function SearchScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Barre de recherche */}
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar 
+        onSearch={handleSearch} 
+        placeholder="Rechercher un cocktail..." 
+      />
 
       {/* Liste des cocktails filtrés */}
       <FlatList
@@ -43,8 +53,11 @@ export default function SearchScreen({ navigation }) {
         keyExtractor={(item) => item.idDrink}
         renderItem={renderCocktail}
         ListEmptyComponent={
-          <Text style={styles.noResults}>Aucun résultat trouvé</Text>
+          searchQuery.length > 0 && ( // Afficher le message uniquement si une recherche a été effectuée
+
+          <Text style={styles.noResults}>Aucun résultat trouvé</Text>)
         }
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );

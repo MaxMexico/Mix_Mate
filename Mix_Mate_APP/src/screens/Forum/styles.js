@@ -4,11 +4,13 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingTop: 32, // Ajout d'un espace en haut
+    paddingHorizontal: 16,
     backgroundColor: '#f5f5f5'
   },
   categoryBar: {
-    marginBottom: 16,
+    marginTop: 16, // Ajout d'une marge en haut
+    marginBottom: 24, // Augmentation de l'espace sous la barre
     flexDirection: 'row',
     paddingHorizontal: 4
   },
@@ -27,9 +29,12 @@ export default StyleSheet.create({
     fontSize: 14
   },
   discussionCard: {
-    marginBottom: 12,
+    marginTop: 12, // Ajout d'une marge en haut pour chaque carte
+    marginBottom: 16, // Espacement entre les cartes
     borderRadius: 12,
-    elevation: 2
+    elevation: 2,
+    backgroundColor: '#fff', // Assurez-vous que les cartes ont un fond
+    padding: 16 // Ajout de padding interne
   },
   categoryBadge: {
     backgroundColor: '#3498db',
@@ -60,7 +65,8 @@ export default StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    padding: 24,
+    paddingTop: 40, // Ajout d'un espace en haut du modal
+    paddingHorizontal: 24,
     backgroundColor: '#fff'
   },
   modalInput: {
@@ -78,6 +84,7 @@ export default StyleSheet.create({
   modalActions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    gap: 16
+    gap: 16,
+    marginTop: 24 // Ajout d'une marge en haut des boutons
   }
 });

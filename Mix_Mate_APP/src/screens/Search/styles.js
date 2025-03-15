@@ -5,23 +5,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "#f5f5f5"
   },
   cocktailItem: {
-    padding: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#eee"
+  },
+  cocktailImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 12
   },
   cocktailName: {
     fontSize: 16,
-    fontWeight: "bold",
+    color: "#333"
   },
   noResults: {
     textAlign: "center",
-    marginTop: 20,
-    fontSize: 16,
-    color: "#666",
+    color: "#777",
+    padding: 20
   },
+  listContent: {
+    paddingBottom: 24
+  }
 });
 
 export default styles;
