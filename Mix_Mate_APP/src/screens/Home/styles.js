@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "rgb(0, 0, 0)",
+    color: "#2e2e2e",
     textAlign: "center",
     flexWrap: "wrap",
     maxHeight: 40,

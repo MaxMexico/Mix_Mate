@@ -65,9 +65,14 @@ export default function RandomCocktailScreen() {
 
           {/* Bouton pour générer un nouveau cocktail */}
           <TouchableOpacity style={styles.randomButton} onPress={getRandomCocktail}>
-            <Text style={styles.randomButtonText}>🔀 Nouveau Cocktail</Text>
+            <Image 
+              source={require("../../../assets/icons/random_white.png")} 
+              style={styles.randomButtonIcon} 
+            />
+            <Text style={styles.randomButtonText}>Nouveau Cocktail</Text>
           </TouchableOpacity>
         </View>
+      <View style={{ height: 100 }} />
       </ScrollView>
     </LinearGradient>
   );

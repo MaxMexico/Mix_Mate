@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   recipeItemContainer: {
     flex: 1,
     margin: 10,
-    backgroundColor: "#fff", // Fond blanc pour chaque carte
+    backgroundColor: "#ebbcb7", // Fond blanc pour chaque carte
     borderRadius: 12,
     shadowColor: "#000", // Ombre légère pour un effet de profondeur
     shadowOffset: { width: 0, height: 2 },
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#333333",
+    color: "#2e2e2e",
     marginTop: 8,
     
   },
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     marginBottom: 1,
-    color: "rgb(0, 0, 0)",
+    color: "#2e2e2e",
   },
 });
 

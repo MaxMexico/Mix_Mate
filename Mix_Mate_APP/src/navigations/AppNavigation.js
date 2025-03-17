@@ -29,6 +29,7 @@ function MainNavigator() {
         },
         headerTitleStyle: {
           fontWeight: 'bold',
+          color : '#2e2e2e', // Couleur du titre du header
         },
         headerTitleAlign: 'center',
       }}

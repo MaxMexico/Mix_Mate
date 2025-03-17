@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LinearGradient } from "expo-linear-gradient";
 import allCocktails from "../../../assets/all_cocktails.json"; 
 
 const profileImages = [
@@ -58,7 +59,7 @@ export default function ProfileScreen({ navigation }) {
       console.log("Profil sauvegardé localement :", profile);
       
       // URL de l'API Flask (assurez-vous que l'IP et le port sont corrects)
-      const apiUrl = "http://192.168.1.124:5000/api/profile";
+      const apiUrl = "http://192.168.1.55:5000/api/profile";
 
       // Envoi du profil à l'API
       const response = await fetch(apiUrl, {
@@ -116,119 +117,126 @@ export default function ProfileScreen({ navigation }) {
   }, [searchQuery]);
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container} 
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      <LinearGradient
+      colors={["#a1628f", "#ebbcb7"]}
+      start={{ x: 0, y: 1 }}
+      end={{ x: 1, y: 0 }}
+      style={{ flex: 1 }}
     >
-      {/* Image de profil */}
-      <View style={styles.profileHeader}>
-        <TouchableOpacity onPress={() => setIsSelectingImage(!isSelectingImage)}>
-          <Image style={styles.profileImage} source={profileImage} />
-        </TouchableOpacity>
+      <KeyboardAvoidingView 
+        style={styles.container} 
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        {/* Image de profil */}
+        <View style={styles.profileHeader}>
+          <TouchableOpacity onPress={() => setIsSelectingImage(!isSelectingImage)}>
+            <Image style={styles.profileImage} source={profileImage} />
+          </TouchableOpacity>
 
-        {isSelectingImage && (
+          {isSelectingImage && (
+            <FlatList
+              data={profileImages}
+              horizontal
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setProfileImage(item);
+                    setIsSelectingImage(false);
+                  }}
+                >
+                  <Image source={item} style={[styles.profileImage, { width: 80, height: 80, margin: 5 }]} />
+                </TouchableOpacity>
+              )}
+            />
+          )}
+        </View>
+
+        {/* Infos Profil */}
+        <View style={styles.profileInfo}>
+          {isEditing ? (
+            <View style={styles.editFields}>
+              <TextInput
+                style={styles.input}
+                value={profile.name}
+                onChangeText={(text) => setProfile({ ...profile, name: text })}
+                placeholder="Nom"
+              />
+              <TextInput
+                style={styles.input}
+                value={profile.username}
+                onChangeText={(text) => setProfile({ ...profile, username: text })}
+                placeholder="Pseudo"
+              />
+              <TextInput
+                style={styles.input}
+                value={profile.email}
+                onChangeText={(text) => setProfile({ ...profile, email: text })}
+                placeholder="Email"
+                keyboardType="email-address"
+              />
+            </View>
+          ) : (
+            <>
+              <Text style={styles.profileName}>{profile.name || "Nom"}</Text>
+              <Text style={styles.profileUsername}>@{profile.username || "Pseudo"}</Text>
+              <Text style={styles.profileEmail}>{profile.email || "Email"}</Text>
+            </>
+          )}
+        </View>
+
+        {/* 📌 Liste déroulante des résultats de recherche vers le haut */}
+        {filteredCocktails.length > 0 && (
           <FlatList
-            data={profileImages}
-            horizontal
-            keyExtractor={(item, index) => index.toString()}
+            data={filteredCocktails}
+            keyExtractor={(item) => item.idDrink}
+            style={styles.searchResultsContainer}
             renderItem={({ item }) => (
               <TouchableOpacity
-                onPress={() => {
-                  setProfileImage(item);
-                  setIsSelectingImage(false);
-                }}
+                style={styles.searchResult}
+                onPress={() => addFavoriteCocktail(item)}
               >
-                <Image source={item} style={[styles.profileImage, { width: 80, height: 80, margin: 5 }]} />
+                <Text style={styles.searchText}>{item.strDrink}</Text>
               </TouchableOpacity>
             )}
           />
         )}
-      </View>
 
-      {/* Infos Profil */}
-      <View style={styles.profileInfo}>
-        {isEditing ? (
-          <View style={styles.editFields}>
-            <TextInput
-              style={styles.input}
-              value={profile.name}
-              onChangeText={(text) => setProfile({ ...profile, name: text })}
-              placeholder="Nom"
-            />
-            <TextInput
-              style={styles.input}
-              value={profile.username}
-              onChangeText={(text) => setProfile({ ...profile, username: text })}
-              placeholder="Pseudo"
-            />
-            <TextInput
-              style={styles.input}
-              value={profile.email}
-              onChangeText={(text) => setProfile({ ...profile, email: text })}
-              placeholder="Email"
-              keyboardType="email-address"
-            />
-          </View>
-        ) : (
-          <>
-            <Text style={styles.profileName}>{profile.name || "Nom"}</Text>
-            <Text style={styles.profileUsername}>@{profile.username || "Pseudo"}</Text>
-            <Text style={styles.profileEmail}>{profile.email || "Email"}</Text>
-          </>
-        )}
-      </View>
-
-      {/* 📌 Liste déroulante des résultats de recherche vers le haut */}
-      {filteredCocktails.length > 0 && (
-        <FlatList
-          data={filteredCocktails}
-          keyExtractor={(item) => item.idDrink}
-          style={styles.searchResultsContainer}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.searchResult}
-              onPress={() => addFavoriteCocktail(item)}
-            >
-              <Text style={styles.searchText}>{item.strDrink}</Text>
-            </TouchableOpacity>
-          )}
+        {/* 📌 Barre de recherche */}
+        <Text style={styles.sectionTitle}>Ajouter un cocktail préféré :</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Rechercher un cocktail..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
         />
-      )}
 
-      {/* 📌 Barre de recherche */}
-      <Text style={styles.sectionTitle}>Ajouter un cocktail préféré :</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Rechercher un cocktail..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
+        {/* 📌 Cocktails préférés maintenant en dessous */}
+        <Text style={styles.sectionTitle}>Cocktails Préférés</Text>
+        <FlatList
+          data={profile.favoriteCocktails}
+          renderItem={({ item }) => (
+            <View style={styles.favoriteItem}>
+              <Text style={styles.sectionContent}>{item}</Text>
+              <TouchableOpacity onPress={() => removeFavoriteCocktail(item)}>
+                <Text style={styles.removeText}>❌</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
 
-      {/* 📌 Cocktails préférés maintenant en dessous */}
-      <Text style={styles.sectionTitle}>Cocktails Préférés</Text>
-      <FlatList
-        data={profile.favoriteCocktails}
-        renderItem={({ item }) => (
-          <View style={styles.favoriteItem}>
-            <Text style={styles.sectionContent}>{item}</Text>
-            <TouchableOpacity onPress={() => removeFavoriteCocktail(item)}>
-              <Text style={styles.removeText}>❌</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
-
-      {/* Bouton Modifier (remonté de quelques pixels) */}
-      <Pressable
-        style={[styles.editButton, { marginBottom: 30 }]}
-        onPress={() => {
-          if (isEditing) saveProfile();
-          setIsEditing(!isEditing);
-        }}
-      >
-        <Text style={styles.editButtonText}>{isEditing ? "Sauvegarder" : "Modifier"}</Text>
-      </Pressable>
-    </KeyboardAvoidingView>
+        {/* Bouton Modifier (remonté de quelques pixels) */}
+        <Pressable
+          style={[styles.editButton, { marginBottom: 30 }]}
+          onPress={() => {
+            if (isEditing) saveProfile();
+            setIsEditing(!isEditing);
+          }}
+        >
+          <Text style={styles.editButtonText}>{isEditing ? "Sauvegarder" : "Modifier"}</Text>
+        </Pressable>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }

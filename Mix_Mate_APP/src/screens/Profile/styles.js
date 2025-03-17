@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#f5f5f5",
   },
   profileHeader: {
     alignItems: "center",
@@ -23,6 +22,7 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 24,
     fontWeight: "bold",
+    color : "#2e2e2e",
     marginBottom: 8,
   },
   profileUsername: {
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
+    backgroundColor: "#fff",
     borderColor: "#ccc",
     borderRadius: 8,
     padding: 12,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   editButton: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#7640a3",
     padding: 12,
     borderRadius: 8,
     alignItems: "center",
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   },
   editButtonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
 
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 16,
     marginBottom: 8,
+    color: "#2e2e2e",
   },
   searchResult: {
     padding: 12,
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     top: 200, // Place les résultats au-dessus de la barre de recherche
     left: 16,
     right: 16,
-    backgroundColor: "rgb(230, 108, 217)",
+    backgroundColor: "#d8d1e0",
     borderRadius: 8,
     zIndex: 10,
   },

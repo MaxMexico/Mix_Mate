@@ -53,6 +53,7 @@ export default function RecipeScreen({ route }) {
             })}
           </View>
         </View>
+      <View style={{ height: 100 }} />
       </ScrollView>
     </LinearGradient>
   );

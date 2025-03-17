@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 215,
-    backgroundColor: '#fff', // Fond blanc pour chaque catégorie
+    backgroundColor: '#ebbcb7', // Fond blanc pour chaque catégorie
     borderRadius: 20,
     shadowColor: '#000', // Ombre légère pour un effet de profondeur
     shadowOffset: { width: 0, height: 2 },
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#333333',
+    color: '#2e2e2e',
     marginTop: 8,
   },
   categoriesInfo: {

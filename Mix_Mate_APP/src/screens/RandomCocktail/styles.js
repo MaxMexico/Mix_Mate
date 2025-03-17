@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 16,
-    color: "rgb(0, 0, 0)",
+    color: "#2e2e2e",
   },
   cocktailImage: {
     width: 250,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 16,
     marginBottom: 8,
-    color: "rgb(0, 0, 0)",
+    color: "#2e2e2e",
   },
   instructions: {
     fontSize: 16,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "rgb(0, 0, 0)",
+    color: "#2e2e2e",
   },
   ingredientsContainer: {
     marginBottom: 16,
@@ -63,16 +63,24 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   randomButton: {
-    backgroundColor: "#d09ab2", // Couleur orange vif pour le bouton
-    padding: 12,
-    borderRadius: 10,
-    marginTop: 20,
+    flexDirection: "row",      // Place l’icône et le texte sur la même ligne
+    alignItems: "center",      // Aligne verticalement l’icône et le texte
+    justifyContent: "center",  // Centre horizontalement l’icône et le texte (optionnel)
+    padding: 10,
+    backgroundColor: "#7640a3",
+    borderRadius: 8,
+    // ... autres propriétés éventuelles
   },
   randomButtonText: {
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  randomButtonIcon: {
+    width: 23,
+    height: 23,
+    marginRight: 8,
   },
 });
 

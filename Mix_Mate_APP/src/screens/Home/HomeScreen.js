@@ -21,11 +21,11 @@ export default function HomeScreen(props) {
       ),
       headerRight: () => <View />,
       headerStyle: {
-        backgroundColor: "#ebbcb7", // Fond sombre
+        backgroundColor: "#d8d1e0", // Fond sombre
       },
       headerTintColor: "#F28A1A", // Couleur d'accent
       headerTitleStyle: {
-        color: "#E0E0E0", // Texte principal clair
+        color: "#2e2e2e", // Texte principal clair
       },
     });
   }, []);
@@ -49,6 +49,7 @@ export default function HomeScreen(props) {
     <Text style={styles.title}>{item.strDrink}</Text>
     <Text style={styles.category}>{item.strCategory}</Text>
   </View>
+  
 </TouchableOpacity>
   );
 
