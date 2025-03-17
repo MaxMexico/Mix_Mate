@@ -15,7 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from "expo-linear-gradient"; // Import du LinearGradient
 import SearchBar from '../../components/SearchBar/SearchBar'; // Votre composant SearchBar
-import allCocktails from '../../../assets/final_data_base.json'; // Votre base de données
+import allCocktails from "../../../assets/Translation_database.json"; // Import de la BDD
 
 const ForumScreen = () => {
   const navigation = useNavigation();

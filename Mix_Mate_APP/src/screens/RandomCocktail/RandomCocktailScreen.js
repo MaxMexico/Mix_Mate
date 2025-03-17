@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"; // Import du LinearGradient
-import cocktailsData from "../../../assets/all_cocktails.json";
+import cocktailsData from "../../../assets/Translation_database.json"; // Import de la BDD
+
 import styles from "./styles"; // 🎨 Import des nouveaux styles
 
 export default function RandomCocktailScreen() {

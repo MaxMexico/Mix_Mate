@@ -14,7 +14,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Stockage local
 import Carousel from "react-native-snap-carousel"; // Import du Carousel
 import { LinearGradient } from "expo-linear-gradient"; // Import de LinearGradient
-import allCocktails from "../../../assets/all_cocktails.json"; // Base des cocktails
+import allCocktails from "../../../assets/Translation_database.json"; // Import de la BDD
 
 // Récupère la largeur de l'écran pour configurer le carrousel
 const { width } = Dimensions.get("window");

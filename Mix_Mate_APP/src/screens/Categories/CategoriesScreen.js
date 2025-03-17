@@ -4,7 +4,7 @@ import { FlatList, Text, View, Image, TouchableHighlight, TouchableOpacity } fro
 import { LinearGradient } from "expo-linear-gradient"; // Import du LinearGradient
 import styles from "./styles";
 import MenuImage from "../../components/MenuImage/MenuImage";
-import allCocktails from "../../../assets/all_cocktails.json"; // Import de la BDD
+import allCocktails from "../../../assets/Translation_database.json"; // Import de la BDD
 
 export default function CategoriesScreen(props) {
   const { navigation } = props;

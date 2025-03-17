@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"; // Importez LinearGradient
 import SearchBar from "../../components/SearchBar/SearchBar"; // Votre composant SearchBar
-import cocktailsData from "../../../assets/all_cocktails.json"; // Assurez-vous que le chemin est correct
+import cocktailsData from "../../../assets/Translation_database.json"; // Import de la BDD
 import styles from "./styles";
 
 export default function SearchScreen({ navigation }) {

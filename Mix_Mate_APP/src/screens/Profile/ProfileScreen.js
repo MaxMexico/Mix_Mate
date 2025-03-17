@@ -13,7 +13,7 @@ import {
 import styles from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
-import allCocktails from "../../../assets/all_cocktails.json"; 
+import allCocktails from "../../../assets/Translation_database.json"; // Import de la BDD
 
 const profileImages = [
   require("../../../assets/Profile1.png"),
