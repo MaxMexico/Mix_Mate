@@ -15,12 +15,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import allCocktails from "../../../assets/Translation_database.json"; // Import de la BDD
 
+// Tableau associant le nom d'image à son import
 const profileImages = [
-  require("../../../assets/Profile1.png"),
-  require("../../../assets/Profile2.png"),
-  require("../../../assets/Profile3.png"),
-  require("../../../assets/Profile4.png"),
+  { name: "Profile1.png", image: require("../../../assets/Profile1.png") },
+  { name: "Profile2.png", image: require("../../../assets/Profile2.png") },
+  { name: "Profile3.png", image: require("../../../assets/Profile3.png") },
+  { name: "Profile4.png", image: require("../../../assets/Profile4.png") },
 ];
+
+// Fonction utilitaire pour récupérer l'image en fonction du nom stocké
+const getProfileImage = (imageName) => {
+  const found = profileImages.find((img) => img.name === imageName);
+  return found ? found.image : require("../../../assets/Profile1.png");
+};
 
 export default function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({
@@ -28,9 +35,11 @@ export default function ProfileScreen({ navigation }) {
     username: "",
     email: "",
     favoriteCocktails: [],
+    profileImage: "Profile1.png", // Valeur par défaut stockée sous forme de chaîne
   });
 
-  const [profileImage, setProfileImage] = useState(profileImages[0]);
+  // On conserve ici le nom de l'image choisie
+  const [profileImageName, setProfileImageName] = useState("Profile1.png");
   const [isSelectingImage, setIsSelectingImage] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,7 +51,11 @@ export default function ProfileScreen({ navigation }) {
       try {
         const storedProfile = await AsyncStorage.getItem("userProfile");
         if (storedProfile) {
-          setProfile(JSON.parse(storedProfile));
+          const parsedProfile = JSON.parse(storedProfile);
+          setProfile(parsedProfile);
+          if (parsedProfile.profileImage) {
+            setProfileImageName(parsedProfile.profileImage);
+          }
         }
       } catch (error) {
         console.error("Erreur lors du chargement du profil :", error);
@@ -58,10 +71,7 @@ export default function ProfileScreen({ navigation }) {
       await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
       console.log("Profil sauvegardé localement :", profile);
       
-      // URL de l'API Flask (assurez-vous que l'IP et le port sont corrects)
       const apiUrl = "http://192.168.1.55:5000/api/profile";
-
-      // Envoi du profil à l'API
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -71,7 +81,6 @@ export default function ProfileScreen({ navigation }) {
       if (response.ok) {
         const result = await response.json();
         console.log("Réponse de l'API :", result);
-        // Vous pouvez afficher une alerte ou mettre à jour l'état ici
       } else {
         console.error("Erreur API :", response.status, response.statusText);
       }
@@ -89,7 +98,7 @@ export default function ProfileScreen({ navigation }) {
       };
       setProfile(updatedProfile);
       saveProfile();
-      setSearchQuery(""); // Réinitialise la recherche
+      setSearchQuery("");
       setFilteredCocktails([]);
     }
   };
@@ -117,7 +126,7 @@ export default function ProfileScreen({ navigation }) {
   }, [searchQuery]);
 
   return (
-      <LinearGradient
+    <LinearGradient
       colors={["#a1628f", "#ebbcb7"]}
       start={{ x: 0, y: 1 }}
       end={{ x: 1, y: 0 }}
@@ -130,7 +139,10 @@ export default function ProfileScreen({ navigation }) {
         {/* Image de profil */}
         <View style={styles.profileHeader}>
           <TouchableOpacity onPress={() => setIsSelectingImage(!isSelectingImage)}>
-            <Image style={styles.profileImage} source={profileImage} />
+            <Image
+              style={styles.profileImage}
+              source={getProfileImage(profileImageName)}
+            />
           </TouchableOpacity>
 
           {isSelectingImage && (
@@ -141,11 +153,16 @@ export default function ProfileScreen({ navigation }) {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => {
-                    setProfileImage(item);
+                    // Met à jour l'état avec le nom de l'image choisie
+                    setProfileImageName(item.name);
+                    setProfile({ ...profile, profileImage: item.name });
                     setIsSelectingImage(false);
                   }}
                 >
-                  <Image source={item} style={[styles.profileImage, { width: 80, height: 80, margin: 5 }]} />
+                  <Image
+                    source={item.image}
+                    style={[styles.profileImage, { width: 80, height: 80, margin: 5 }]}
+                  />
                 </TouchableOpacity>
               )}
             />
@@ -185,7 +202,7 @@ export default function ProfileScreen({ navigation }) {
           )}
         </View>
 
-        {/* 📌 Liste déroulante des résultats de recherche vers le haut */}
+        {/* Liste déroulante des résultats de recherche */}
         {filteredCocktails.length > 0 && (
           <FlatList
             data={filteredCocktails}
@@ -202,7 +219,7 @@ export default function ProfileScreen({ navigation }) {
           />
         )}
 
-        {/* 📌 Barre de recherche */}
+        {/* Barre de recherche */}
         <Text style={styles.sectionTitle}>Ajouter un cocktail préféré :</Text>
         <TextInput
           style={styles.input}
@@ -211,7 +228,7 @@ export default function ProfileScreen({ navigation }) {
           onChangeText={setSearchQuery}
         />
 
-        {/* 📌 Cocktails préférés maintenant en dessous */}
+        {/* Liste des cocktails préférés */}
         <Text style={styles.sectionTitle}>Cocktails Préférés</Text>
         <FlatList
           data={profile.favoriteCocktails}
@@ -226,7 +243,7 @@ export default function ProfileScreen({ navigation }) {
           keyExtractor={(item, index) => index.toString()}
         />
 
-        {/* Bouton Modifier (remonté de quelques pixels) */}
+        {/* Bouton Modifier */}
         <Pressable
           style={[styles.editButton, { marginBottom: 30 }]}
           onPress={() => {

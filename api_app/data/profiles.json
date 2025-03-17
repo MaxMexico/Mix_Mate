@@ -1,13 +1,15 @@
 [
   {
-    "name": "Asencio",
+    "name": "Victor Asencio",
     "username": "Victor",
-    "email": "Vic@gmail.com",
+    "email": "vic@gmail.com",
     "favoriteCocktails": [
       "Gin Tonic",
-      "Sex on the Beach",
-      "Mojito"
-    ]
+      "ABC",
+      "Cosmopolitan Martini",
+      "Rum Old-fashioned"
+    ],
+    "profileImage": "Profile1.png"
   },
   {
     "name": "Mehats",
@@ -54,5 +56,17 @@
     "favoriteCocktails": [
       "Arctic Mouthwash"
     ]
+  },
+  {
+    "name": "Eliott MEHATS ",
+    "username": "Eliott.mhts",
+    "email": "em@gmail.com",
+    "favoriteCocktails": [
+      "Cosmopolitan Martini",
+      "Gin Tonic",
+      "Moscow Mule",
+      "Pornstar Martini"
+    ],
+    "profileImage": "Profile1.png"
   }
 ]
