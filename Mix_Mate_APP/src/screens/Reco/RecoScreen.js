@@ -195,6 +195,16 @@ export default function RecoScreen({ navigation }) {
       </View>
     </TouchableOpacity>
   );
+  const favoriteCocktails =
+  selectedProfile && selectedProfile.favoriteCocktails
+    ? selectedProfile.favoriteCocktails
+        .map(name =>
+          allCocktails.find(
+            cocktail => cocktail.strDrink.toLowerCase() === name.toLowerCase()
+          )
+        )
+        .filter(item => item !== null)
+    : [];
 
   return (
     <LinearGradient
@@ -214,6 +224,31 @@ export default function RecoScreen({ navigation }) {
           </View>
         )}
 
+        {favoriteCocktails.length > 0 && (
+          <View style={styles.favoritesContainer}>
+            <Text style={styles.favoritesTitle}>Vos cocktails favoris</Text>
+            <FlatList
+              data={favoriteCocktails}
+              horizontal={true}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={searchStyles.cocktailItem}
+                  onPress={() => navigation.navigate("Recette", { item })}
+                >
+                  <Image
+                    source={{ uri: item.strDrinkThumb }}
+                    style={searchStyles.cocktailImage}
+                  />
+                  <Text style={searchStyles.cocktailName}>{item.strDrink}</Text>
+                </TouchableOpacity>
+              )}
+              ItemSeparatorComponent={() => <View style={searchStyles.separator} />}
+            />
+          </View>
+        )}
+
+
         {/* Boutons d'inspiration et d'ouverture du filtre */}
         <View style={styles.actionContainer}>
           <TouchableOpacity style={styles.inspireButton} onPress={handleCombinedRecommendation}>
@@ -228,6 +263,7 @@ export default function RecoScreen({ navigation }) {
               source={require("../../../assets/icons/filter.png")} 
               style={styles.filterIcon} 
             />
+            <Text style={styles.filterText}>Filtres</Text>
           </TouchableOpacity>
         </View>
 
@@ -376,10 +412,12 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "#fff",
+    padding : 20,
   },
   profileContainer: {
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   profileImage: {
     width: 100,
@@ -394,7 +432,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    marginBottom: 20,
     alignItems: "center",
   },
   inspireButton: {
@@ -423,6 +460,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     resizeMode: "contain",
+  },
+  filterText:{
+    fontSize: 16,
+    color: "#fff",
+  
   },
   preferenceButton: {
     width: "45%",
@@ -513,7 +555,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginBottom: 10,
   },
   categoryButton: {
     padding: 8,
@@ -531,7 +572,46 @@ const styles = StyleSheet.create({
   categoryButtonTextActive: {
     color: "#fff",
   },
+  favoritesContainer: {
+    width: "100%",
+    
+  },
+  favoritesTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff", // Même couleur que dans SearchScreen
+    
+  },
+  
 });
+
+const searchStyles = StyleSheet.create({
+  cocktailItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+    marginRight: 10,
+  },
+  cocktailImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 12,
+  },
+  cocktailName: {
+    fontSize: 16,
+    color: "#fff",
+  },
+  separator: {
+    width: 2,            // Épaisseur du séparateur
+    height: 60, 
+    backgroundColor: "#fff",
+    marginHorizontal: 10,
+    alignSelf: "center",
+  },
+});
+
+
 
 // Styles pour les cartes (mêmes que ceux utilisés dans HomeScreen)
 const cardStyles = StyleSheet.create({
