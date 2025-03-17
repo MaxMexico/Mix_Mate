@@ -5,8 +5,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 32, // Ajout d'un espace en haut
-    paddingHorizontal: 16,
-    backgroundColor: '#f5f5f5'
+    paddingHorizontal: 16
   },
   categoryBar: {
     marginTop: 16, // Ajout d'une marge en haut

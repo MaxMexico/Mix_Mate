@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from "expo-linear-gradient"; // Import du LinearGradient
 import SearchBar from '../../components/SearchBar/SearchBar'; // Votre composant SearchBar
 import allCocktails from '../../../assets/final_data_base.json'; // Votre base de données
 
@@ -102,15 +103,21 @@ const ForumScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Barre de catégories */}
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        style={styles.categoryBar}
-      >
-        {categories.map(category => (
-          <TouchableOpacity 
+    <LinearGradient
+          colors={["#a1628f", "#ebbcb7"]} // Mêmes couleurs que RecoScreen
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+          style={{ flex: 1 }} // Gradient comme arrière-plan principal
+        >
+      <View style={styles.container}>
+        {/* Barre de catégories */}
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          style={styles.categoryBar}
+        >
+          {categories.map(category => (
+            <TouchableOpacity
             key={category}
             style={[
               styles.categoryButton,
@@ -118,136 +125,143 @@ const ForumScreen = () => {
             ]}
             onPress={() => setSelectedCategory(category)}
           >
-            <Text style={styles.categoryText}>{category}</Text>
+            <Text
+              style={[
+                styles.categoryText,
+                selectedCategory === category && styles.activeCategoryText
+              ]}
+            >
+              {category}
+            </Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
 
-      {/* Liste des avis */}
-      <FlatList 
-        data={discussions.filter(disc => 
-          selectedCategory === 'Toutes' || disc.category === selectedCategory
-        )}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity 
-            style={styles.discussionCard}
-            onPress={() => handleDiscussionPress(item)}
-          >
-            <Image 
-              source={{ uri: item.cocktailImage }}
-              style={styles.cocktailImage}
-            />
-            <View style={styles.cardContent}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.content}>{item.content}</Text>
-              <View style={styles.footer}>
-                <Text style={styles.author}>{item.author}</Text>
-                <View style={styles.rating}>
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <Ionicons 
-                      key={i}
-                      name={i < item.rating ? 'star' : 'star-outline'}
-                      size={16}
-                      color="#FFD700"
-                    />
-                  ))}
+        {/* Liste des avis */}
+        <FlatList 
+          data={discussions.filter(disc => 
+            selectedCategory === 'Toutes' || disc.category === selectedCategory
+          )}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity 
+              style={styles.discussionCard}
+              onPress={() => handleDiscussionPress(item)}
+            >
+              <Image 
+                source={{ uri: item.cocktailImage }}
+                style={styles.cocktailImage}
+              />
+              <View style={styles.cardContent}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.content}>{item.content}</Text>
+                <View style={styles.footer}>
+                  <Text style={styles.author}>{item.author}</Text>
+                  <View style={styles.rating}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Ionicons 
+                        key={i}
+                        name={i < item.rating ? 'star' : 'star-outline'}
+                        size={16}
+                        color="#FFD700"
+                      />
+                    ))}
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        )}
-        ListEmptyComponent={<Text style={styles.noResults}>Aucun avis disponible</Text>}
-        contentContainerStyle={styles.listContainer}
-      />
+            </TouchableOpacity>
+          )}
+          ListEmptyComponent={<Text style={styles.noResults}>Aucun avis disponible</Text>}
+          contentContainerStyle={styles.listContainer}
+        />
 
-      {/* Bouton d'ajout */}
-      <TouchableOpacity 
-        style={styles.fab}
-        onPress={() => setModalVisible(true)}
-      >
-        <Ionicons name="add" size={32} color="#fff" />
-      </TouchableOpacity>
+        {/* Bouton d'ajout */}
+        <TouchableOpacity 
+          style={styles.fab}
+          onPress={() => setModalVisible(true)}
+        >
+          <Ionicons name="add" size={32} color="#fff" />
+        </TouchableOpacity>
 
-      {/* Modal d'ajout */}
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          {/* SearchBar pour sélectionner un cocktail */}
-          <SearchBar 
-            onSearch={handleSearch}
-            placeholder="Rechercher un cocktail..."
-          />
-          
-          {/* Liste des cocktails */}
-          <FlatList 
-            data={filteredCocktails}
-            keyExtractor={item => item.idDrink}
-            renderItem={({ item }) => (
+        {/* Modal d'ajout */}
+        <Modal
+          visible={modalVisible}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            {/* SearchBar pour sélectionner un cocktail */}
+            <SearchBar 
+              onSearch={handleSearch}
+              placeholder="Rechercher un cocktail..."
+            />
+            
+            {/* Liste des cocktails */}
+            <FlatList 
+              data={filteredCocktails}
+              keyExtractor={item => item.idDrink}
+              renderItem={({ item }) => (
+                <TouchableOpacity 
+                  style={[
+                    styles.cocktailSearchItem,
+                    newPost.cocktailId === item.idDrink && styles.selectedSearchItem
+                  ]}
+                  onPress={() => setNewPost({ ...newPost, cocktailId: item.idDrink })}
+                >
+                  <Image 
+                    source={{ uri: item.strDrinkThumb }}
+                    style={styles.searchItemImage}
+                  />
+                  <Text style={styles.searchItemText}>{item.strDrink}</Text>
+                </TouchableOpacity>
+              )}
+              style={styles.searchList}
+            />
+
+            {/* Formulaire */}
+            <TextInput 
+              style={styles.modalInput}
+              placeholder="Titre de votre avis"
+              value={newPost.title}
+              onChangeText={text => setNewPost({ ...newPost, title: text })}
+            />
+            <TextInput 
+              style={[styles.modalInput, styles.modalContent]}
+              placeholder="Votre avis..."
+              multiline
+              numberOfLines={4}
+              value={newPost.content}
+              onChangeText={text => setNewPost({ ...newPost, content: text })}
+            />
+
+            <View style={styles.modalActions}>
               <TouchableOpacity 
-                style={[
-                  styles.cocktailSearchItem,
-                  newPost.cocktailId === item.idDrink && styles.selectedSearchItem
-                ]}
-                onPress={() => setNewPost({ ...newPost, cocktailId: item.idDrink })}
+                style={styles.modalButton}
+                onPress={() => {
+                  setModalVisible(false);
+                  setFilteredCocktails(allCocktails);
+                }}
               >
-                <Image 
-                  source={{ uri: item.strDrinkThumb }}
-                  style={styles.searchItemImage}
-                />
-                <Text style={styles.searchItemText}>{item.strDrink}</Text>
+                <Text style={styles.buttonText}>Annuler</Text>
               </TouchableOpacity>
-            )}
-            style={styles.searchList}
-          />
-
-          {/* Formulaire */}
-          <TextInput 
-            style={styles.modalInput}
-            placeholder="Titre de votre avis"
-            value={newPost.title}
-            onChangeText={text => setNewPost({ ...newPost, title: text })}
-          />
-          <TextInput 
-            style={[styles.modalInput, styles.modalContent]}
-            placeholder="Votre avis..."
-            multiline
-            numberOfLines={4}
-            value={newPost.content}
-            onChangeText={text => setNewPost({ ...newPost, content: text })}
-          />
-
-          <View style={styles.modalActions}>
-            <TouchableOpacity 
-              style={styles.modalButton}
-              onPress={() => {
-                setModalVisible(false);
-                setFilteredCocktails(allCocktails);
-              }}
-            >
-              <Text style={styles.buttonText}>Annuler</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={[styles.modalButton, styles.primaryButton]}
-              onPress={handleNewPost}
-            >
-              <Text style={[styles.buttonText, styles.primaryText]}>Publier</Text>
-            </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.modalButton, styles.primaryButton]}
+                onPress={handleNewPost}
+              >
+                <Text style={[styles.buttonText, styles.primaryText]}>Publier</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#f5f5f5'
+    padding: 16
   },
   categoryBar: {
     marginBottom: 16,
@@ -262,7 +276,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   activeCategory: {
-    backgroundColor: '#3498db'
+    backgroundColor: '#7640a3'
+  },
+  activeCategoryText: {
+    color: '#fff'
   },
   categoryText: {
     color: '#333',
@@ -310,7 +327,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 24,
     right: 24,
-    backgroundColor: '#3498db',
+    backgroundColor: '#7640a3',
     width: 56,
     height: 56,
     borderRadius: 28,
