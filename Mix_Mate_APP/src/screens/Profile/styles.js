@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
   },
   profileInfo: {
     alignItems: "center",
-    width: '100%',
+    width: "100%",
   },
   profileName: {
     fontSize: 24,
     fontWeight: "bold",
-    color : "#2e2e2e",
+    color: "#2e2e2e",
     marginBottom: 8,
   },
   profileUsername: {
@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-
-  // Styles pour la barre de recherche
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
@@ -68,13 +66,24 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: "#2e2e2e",
   },
-  searchResult: {
-    padding: 12,
+  // Liste déroulante des résultats de recherche
+  cocktailItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
-  searchText: {
+  cocktailImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 12,
+  },
+  cocktailName: {
     fontSize: 16,
+    color: "#fff",
+    textAlign: "left",
   },
   noResults: {
     fontSize: 16,
@@ -82,26 +91,35 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 16,
   },
-
-  // Styles pour les cocktails favoris
+  // Liste des cocktails favoris
   favoriteItem: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 8,
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "#fff",
   },
   sectionContent: {
     fontSize: 16,
+    color: "#2e2e2e",
+    textAlign: "left",
+    flex: 1,
   },
   searchResultsContainer: {
-    maxHeight: 150, // Limite la hauteur des résultats
+    maxHeight: 150,
     position: "absolute",
-    top: 200, // Place les résultats au-dessus de la barre de recherche
+    top: 200,
     left: 16,
     right: 16,
-    backgroundColor: "#d8d1e0",
+    backgroundColor: "#d09ab2",
     borderRadius: 8,
     zIndex: 10,
+  },
+  deleteIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: "contain",
   },
   removeText: {
     color: "red",

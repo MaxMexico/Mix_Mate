@@ -35,10 +35,8 @@ export default function ProfileScreen({ navigation }) {
     username: "",
     email: "",
     favoriteCocktails: [],
-    profileImage: "Profile1.png", // Valeur par défaut stockée sous forme de chaîne
+    profileImage: "Profile1.png", // Valeur par défaut
   });
-
-  // On conserve ici le nom de l'image choisie
   const [profileImageName, setProfileImageName] = useState("Profile1.png");
   const [isSelectingImage, setIsSelectingImage] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -64,20 +62,22 @@ export default function ProfileScreen({ navigation }) {
     loadProfile();
   }, []);
 
-  // Fonction pour sauvegarder le profil et l'envoyer à l'API Flask
-  const saveProfile = async () => {
+  /**
+   * Fonction pour sauvegarder le profil et l'envoyer à l'API Flask.
+   * On peut lui passer un profil en paramètre pour être sûr d'envoyer
+   * la version mise à jour. Sinon, on utilise la valeur de l'état `profile`.
+   */
+  const saveProfile = async (profileToSave) => {
+    const finalProfile = profileToSave || profile;
     try {
-      // Sauvegarde locale avec AsyncStorage
-      await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
-      console.log("Profil sauvegardé localement :", profile);
-      
+      await AsyncStorage.setItem("userProfile", JSON.stringify(finalProfile));
+      console.log("Profil sauvegardé localement :", finalProfile);
       const apiUrl = "http://192.168.1.55:5000/api/profile";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(profile),
+        body: JSON.stringify(finalProfile),
       });
-
       if (response.ok) {
         const result = await response.json();
         console.log("Réponse de l'API :", result);
@@ -89,31 +89,33 @@ export default function ProfileScreen({ navigation }) {
     }
   };
 
-  // 📌 Ajoute un cocktail préféré
-  const addFavoriteCocktail = (cocktail) => {
+  // Ajoute un cocktail préféré
+  const addFavoriteCocktail = async (cocktail) => {
     if (!profile.favoriteCocktails.includes(cocktail.strDrink)) {
       const updatedProfile = {
         ...profile,
         favoriteCocktails: [...profile.favoriteCocktails, cocktail.strDrink],
       };
       setProfile(updatedProfile);
-      saveProfile();
+      await saveProfile(updatedProfile);
       setSearchQuery("");
       setFilteredCocktails([]);
     }
   };
 
-  // 📌 Supprime un cocktail préféré
-  const removeFavoriteCocktail = (cocktail) => {
+  // Supprime un cocktail préféré
+  const removeFavoriteCocktail = async (cocktailName) => {
     const updatedProfile = {
       ...profile,
-      favoriteCocktails: profile.favoriteCocktails.filter((fav) => fav !== cocktail),
+      favoriteCocktails: profile.favoriteCocktails.filter(
+        (fav) => fav !== cocktailName
+      ),
     };
     setProfile(updatedProfile);
-    saveProfile();
+    await saveProfile(updatedProfile);
   };
 
-  // 📌 Filtrage des cocktails selon la recherche
+  // Filtrage des cocktails selon la recherche
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setFilteredCocktails([]);
@@ -132,8 +134,8 @@ export default function ProfileScreen({ navigation }) {
       end={{ x: 1, y: 0 }}
       style={{ flex: 1 }}
     >
-      <KeyboardAvoidingView 
-        style={styles.container} 
+      <KeyboardAvoidingView
+        style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         {/* Image de profil */}
@@ -144,7 +146,6 @@ export default function ProfileScreen({ navigation }) {
               source={getProfileImage(profileImageName)}
             />
           </TouchableOpacity>
-
           {isSelectingImage && (
             <FlatList
               data={profileImages}
@@ -153,9 +154,10 @@ export default function ProfileScreen({ navigation }) {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => {
-                    // Met à jour l'état avec le nom de l'image choisie
                     setProfileImageName(item.name);
-                    setProfile({ ...profile, profileImage: item.name });
+                    const updatedProfile = { ...profile, profileImage: item.name };
+                    setProfile(updatedProfile);
+                    saveProfile(updatedProfile);
                     setIsSelectingImage(false);
                   }}
                 >
@@ -202,24 +204,7 @@ export default function ProfileScreen({ navigation }) {
           )}
         </View>
 
-        {/* Liste déroulante des résultats de recherche */}
-        {filteredCocktails.length > 0 && (
-          <FlatList
-            data={filteredCocktails}
-            keyExtractor={(item) => item.idDrink}
-            style={styles.searchResultsContainer}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.searchResult}
-                onPress={() => addFavoriteCocktail(item)}
-              >
-                <Text style={styles.searchText}>{item.strDrink}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        )}
-
-        {/* Barre de recherche */}
+        {/* Barre de recherche pour ajouter un cocktail préféré */}
         <Text style={styles.sectionTitle}>Ajouter un cocktail préféré :</Text>
         <TextInput
           style={styles.input}
@@ -228,30 +213,81 @@ export default function ProfileScreen({ navigation }) {
           onChangeText={setSearchQuery}
         />
 
-        {/* Liste des cocktails préférés */}
-        <Text style={styles.sectionTitle}>Cocktails Préférés</Text>
+        {/* Liste déroulante des résultats de recherche avec image en rond et nom */}
+        {filteredCocktails.length > 0 && (
+          <FlatList
+            keyboardShouldPersistTaps="always"
+            data={filteredCocktails}
+            keyExtractor={(item) => item.idDrink}
+            style={styles.searchResultsContainer}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.cocktailItem}
+                onPress={() => addFavoriteCocktail(item)}
+              >
+                <Image
+                  source={{ uri: item.strDrinkThumb }}
+                  style={styles.cocktailImage}
+                />
+                <Text style={styles.cocktailName}>{item.strDrink}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
+
+        {/* Liste des cocktails préférés affichée comme dans Search (avec image et nom)
+            En cliquant sur un élément, on navigue vers l'écran de recette */}
+        <Text style={[styles.sectionTitle, { textAlign: "left", alignSelf: "flex-start" }]}>
+          Cocktails Préférés
+        </Text>
         <FlatList
           data={profile.favoriteCocktails}
-          renderItem={({ item }) => (
-            <View style={styles.favoriteItem}>
-              <Text style={styles.sectionContent}>{item}</Text>
-              <TouchableOpacity onPress={() => removeFavoriteCocktail(item)}>
-                <Text style={styles.removeText}>❌</Text>
-              </TouchableOpacity>
-            </View>
-          )}
           keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => {
+            const cocktailData = allCocktails.find(
+              (cocktail) =>
+                cocktail.strDrink.toLowerCase() === item.toLowerCase()
+            );
+            return (
+              <View style={styles.favoriteItem}>
+                <TouchableOpacity
+                  style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
+                  onPress={() =>
+                    navigation.navigate("Recette", { item: cocktailData })
+                  }
+                >
+                  {cocktailData && (
+                    <Image
+                      source={{ uri: cocktailData.strDrinkThumb }}
+                      style={styles.cocktailImage}
+                    />
+                  )}
+                  <Text style={styles.cocktailName}>{item}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => removeFavoriteCocktail(item)}>
+                  <Image
+                    source={require("../../../assets/icons/delete.png")}
+                    style={styles.deleteIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+            );
+          }}
         />
 
         {/* Bouton Modifier */}
         <Pressable
           style={[styles.editButton, { marginBottom: 30 }]}
-          onPress={() => {
-            if (isEditing) saveProfile();
+          onPress={async () => {
+            if (isEditing) {
+              await saveProfile();
+            }
             setIsEditing(!isEditing);
           }}
         >
-          <Text style={styles.editButtonText}>{isEditing ? "Sauvegarder" : "Modifier"}</Text>
+          <Text style={styles.editButtonText}>
+            {isEditing ? "Sauvegarder" : "Modifier"}
+          </Text>
         </Pressable>
       </KeyboardAvoidingView>
     </LinearGradient>
