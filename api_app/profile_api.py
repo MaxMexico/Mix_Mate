@@ -86,8 +86,8 @@ def recommendations():
     desired_category = data.get("desiredCategory", None)
     top_n = data.get("topN", 5)
     
-    if not favorite_cocktails or not alcoholic_preference:
-        return jsonify({"error": "Les paramètres 'favoriteCocktails' et 'alcoholicPreference' sont requis."}), 400
+    if not favorite_cocktails :
+        return jsonify({"error": "Le paramètre 'favoriteCocktails' est requis."}), 400
 
     try:
         # Mesure du temps d'exécution
@@ -128,8 +128,8 @@ def fc_recommendations():
     desired_category = data.get("desiredCategory", None)
     top_n = data.get("topN", 5)
     
-    if not user_liked_cocktails or not alcoholic_preference:
-        return jsonify({"error": "Les paramètres 'userLikedCocktails' et 'alcoholicPreference' sont requis."}), 400
+    if not user_liked_cocktails :
+        return jsonify({"error": "Le paramètre 'userLikedCocktails' est requis."}), 400
 
     try:
         import time

@@ -92,21 +92,30 @@ export default function RecoScreen({ navigation }) {
 
   // Fonction de demande de recommandations CB
   const handleRecommendation = async () => {
-    if (!selectedProfile || !preference) {
-      Alert.alert("Attention", "Veuillez vous assurer qu'un profil est actif et que vous avez renseigné votre préférence.");
+    if (!selectedProfile ) {
+      Alert.alert("Attention", "Veuillez vous assurer qu'un profil est actif ");
       return;
     }
     if (!selectedProfile.favoriteCocktails || selectedProfile.favoriteCocktails.length === 0) {
       Alert.alert("Attention", "Le profil actif ne contient aucun cocktail favori.");
       return;
     }
-    const formattedPreference = preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic";
+    const formattedPreference = 
+    preference === "" 
+      ? "" 
+      : (preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic");
+    const finalDesiredCategory = modalSelectedCategories.includes("Toutes")
+    ? []
+    : modalSelectedCategories;
+
     const payload = {
       favoriteCocktails: selectedProfile.favoriteCocktails,
       alcoholicPreference: formattedPreference,
-      desiredCategory: desiredCategory,
+      desiredCategory: finalDesiredCategory,
       topN: topN,
     };
+    // Ajout du console.log pour vérifier le payload envoyé
+    console.log("Payload pour API (CB):", payload);
     try {
       const response = await fetch("http://192.168.1.55:5000/api/CB_recommendations", {
         method: "POST",
@@ -135,21 +144,31 @@ export default function RecoScreen({ navigation }) {
 
   // Fonction de demande de recommandations FC
   const handleFCRecommendation = async () => {
-    if (!selectedProfile || !preference) {
-      Alert.alert("Attention", "Veuillez vous assurer qu'un profil est actif et que vous avez renseigné votre préférence.");
+    if (!selectedProfile) {
+      Alert.alert("Attention", "Veuillez vous assurer qu'un profil est actif");
       return;
     }
     if (!selectedProfile.favoriteCocktails || selectedProfile.favoriteCocktails.length === 0) {
       Alert.alert("Attention", "Le profil actif ne contient aucun cocktail favori.");
       return;
     }
-    const formattedPreference = preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic";
+    const formattedPreference = 
+    preference === "" 
+    ? "" 
+    : (preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic");
+    const finalDesiredCategory = modalSelectedCategories.includes("Toutes")
+    ? []
+    : modalSelectedCategories;
+
     const payload = {
       userLikedCocktails: selectedProfile.favoriteCocktails,
       alcoholicPreference: formattedPreference,
-      desiredCategory: desiredCategory,
+      desiredCategory: finalDesiredCategory,
       topN: topN,
+      
     };
+    // Ajout du console.log pour vérifier le payload envoyé
+    console.log("Payload pour API (FC):", payload);
     try {
       const response = await fetch("http://192.168.1.55:5000/api/FC_recommendations", {
         method: "POST",
@@ -271,7 +290,7 @@ export default function RecoScreen({ navigation }) {
         {recommendedCocktails.length > 0 && (
           <View style={{ marginTop: 0 }}>
             <Text style={styles.header}>Pour vous</Text>
-            <View style={{ height: 240 }}>
+            <View style={{ height: 260 }}>
               <Carousel
                 layout="default"
                 data={recommendedCocktails}
@@ -291,7 +310,7 @@ export default function RecoScreen({ navigation }) {
         {fcRecommendedCocktails.length > 0 && (
           <View style={{ marginTop: 0, marginBottom: 0 }}>
             <Text style={styles.header}>Les autres ont aimé aussi</Text>
-            <View style={{ height: 240 }}>
+            <View style={{ height: 260 }}>
               <Carousel
                 layout="default"
                 data={fcRecommendedCocktails}
@@ -627,8 +646,7 @@ const cardStyles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 10,
     width : 150,
-    minHeight: 205
-    ,
+    minHeight: 230,
     position: "relative",
   },
   innerBorder: {

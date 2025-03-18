@@ -91,12 +91,20 @@ def get_CB_recommendations(user_cocktail_names, alcoholic_preference, desired_ca
     
     # 2. Filtrage des candidats selon la préférence alcoolisée
     pref = alcoholic_preference.lower().strip()
-    mask_alcoholic = df['strAlcoholic'].str.lower().str.strip() == pref
-    
-    # Si une catégorie désirée est spécifiée, filtrer aussi par 'strCategory'
-    if desired_category is not None:
-        cat = desired_category.lower().strip()
-        mask_category = df['strCategory'].str.lower().str.strip() == cat
+    if pref:  # Si une préférence est définie (non vide)
+        mask_alcoholic = df['strAlcoholic'].str.lower().str.strip() == pref
+    else:
+        mask_alcoholic = pd.Series(True, index=df.index)  # Pas de filtre sur alcool
+
+
+    # Filtrer sur la catégorie désirée si elle est spécifiée
+    if desired_category:
+        if isinstance(desired_category, list):
+            desired_category_lower = [cat.lower().strip() for cat in desired_category]
+            mask_category = df['strCategory'].str.lower().str.strip().isin(desired_category_lower)
+        else:
+            cat = desired_category.lower().strip()
+            mask_category = df['strCategory'].str.lower().str.strip() == cat
         mask = mask_alcoholic & mask_category
     else:
         mask = mask_alcoholic
@@ -109,15 +117,15 @@ def get_CB_recommendations(user_cocktail_names, alcoholic_preference, desired_ca
     candidate_indices = candidate_df.index.tolist()
     candidate_latent = latent_reps[candidate_indices]
     
-    # 3. Calcul de la similarité cosinus entre le vecteur utilisateur et les vecteurs candidats
+    # 3. Calcul de la similarité cosinus
     sim_scores = cosine_similarity(user_rep, candidate_latent).flatten()
     
-    # Exclure les cocktails déjà aimés (même s'ils respectent les critères)
+    # Exclure les cocktails déjà aimés
     for i, idx in enumerate(candidate_indices):
         if idx in liked_indices:
-            sim_scores[i] = -1  # Score très bas pour les candidats déjà aimés
+            sim_scores[i] = -1  # score très bas
     
-    # 4. Trier les candidats par similarité décroissante et sélectionner les top_n
+    # 4. Sélection des top_n recommandations
     sorted_indices = np.argsort(-sim_scores)
     recommended_candidate_indices = [candidate_indices[i] for i in sorted_indices[:top_n]]
     recommended_scores = [sim_scores[i] for i in sorted_indices[:top_n]]
@@ -127,27 +135,25 @@ def get_CB_recommendations(user_cocktail_names, alcoholic_preference, desired_ca
 
 
 ########################################### Recommandation Filtrage Collaboratif ###########################################
-
 def get_FC_recommendations(user_liked_cocktails, alcoholic_preference, desired_category, df, top_n):
     """
     Retourne les top_n recommandations collaboratives sous forme d'une DataFrame,
-    en excluant les cocktails déjà aimés par l'utilisateur. La recherche se fait
-    sur le nom du cocktail (strDrink) plutôt que sur son identifiant.
-
-    Paramètres:
-      - user_liked_cocktails : liste des noms de cocktails aimés par l'utilisateur.
-      - alcoholic_preference : préférence alcoolisée (ex. "Alcoholic" ou "Non Alcoholic").
-      - desired_category     : catégorie désirée (ou None pour ne pas filtrer sur la catégorie).
-      - df                   : DataFrame contenant la base de cocktails (doit contenir les colonnes 'idDrink', 'strDrink', 'strAlcoholic', 'strCategory').
-      - top_n                : nombre de recommandations à retourner.
-
-    Retourne:
-      Un DataFrame avec les colonnes 'strDrink' et 'confidence' (score en pourcentage, maximum 100%).
+    en excluant les cocktails déjà aimés par l'utilisateur.
     """
-    # Filtrer les cocktails selon la préférence alcoolisée et la catégorie désirée
-    mask_alcoholic = df['strAlcoholic'].str.lower().str.strip() == alcoholic_preference.lower().strip()
-    if desired_category is not None:
-        mask_category = df['strCategory'].str.lower().str.strip() == desired_category.lower().strip()
+    # Filtrer selon la préférence alcoolisée, seulement si la valeur n'est pas vide
+    pref = alcoholic_preference.lower().strip()
+    if pref:
+        mask_alcoholic = df['strAlcoholic'].str.lower().str.strip() == pref
+    else:
+        mask_alcoholic = pd.Series(True, index=df.index)
+    
+    # Filtrer sur la catégorie désirée si spécifiée
+    if desired_category:
+        if isinstance(desired_category, list):
+            desired_category_lower = [cat.lower().strip() for cat in desired_category]
+            mask_category = df['strCategory'].str.lower().str.strip().isin(desired_category_lower)
+        else:
+            mask_category = df['strCategory'].str.lower().str.strip() == desired_category.lower().strip()
         mask = mask_alcoholic & mask_category
     else:
         mask = mask_alcoholic
@@ -157,7 +163,7 @@ def get_FC_recommendations(user_liked_cocktails, alcoholic_preference, desired_c
         print(f"Aucun cocktail correspondant aux critères '{alcoholic_preference}' et '{desired_category}'.")
         return None
 
-    # Exclure les cocktails déjà aimés par l'utilisateur (comparaison insensible à la casse)
+    # Exclure les cocktails déjà aimés
     liked_lower = [x.lower() for x in user_liked_cocktails]
     candidate_df = candidate_df[~candidate_df['strDrink'].str.lower().isin(liked_lower)]
     if candidate_df.empty:
@@ -167,9 +173,7 @@ def get_FC_recommendations(user_liked_cocktails, alcoholic_preference, desired_c
     # Construire l'ensemble des utilisateurs similaires à partir des cocktails aimés
     similar_users = set()
     liked_lower_set = set(liked_lower)
-    # Pour chaque avis, vérifier si le cocktail (via son nom) figure dans les cocktails aimés
     for review in reviews:
-        # On récupère le nom du cocktail grâce à cocktail_dict
         cocktail_name = cocktail_dict.get(review["cocktail_id"], "").lower()
         if review["rating"] >= 3 and cocktail_name in liked_lower_set:
             similar_users.add(review["user_id"])
@@ -177,8 +181,7 @@ def get_FC_recommendations(user_liked_cocktails, alcoholic_preference, desired_c
         print("Aucun utilisateur similaire trouvé pour les cocktails aimés.")
         return None
 
-    # Pour chaque cocktail candidat, cumuler les notes données par ces utilisateurs similaires.
-    # On utilise ici le nom du cocktail pour effectuer la correspondance.
+    # Cumuler les notes des utilisateurs similaires pour chaque cocktail candidat
     candidate_names = set(candidate_df['strDrink'].str.lower().values)
     recommended_cocktails = defaultdict(float)
     for review in reviews:
@@ -190,13 +193,11 @@ def get_FC_recommendations(user_liked_cocktails, alcoholic_preference, desired_c
         print("Aucune recommandation trouvée.")
         return None
 
-    # Trier les recommandations par score décroissant et garder les top_n
+    # Trier et sélectionner les top_n
     sorted_recommendations = sorted(recommended_cocktails.items(), key=lambda x: x[1], reverse=True)[:top_n]
     
-    # Calculer le score maximum théorique : chaque utilisateur peut donner jusqu'à 5 points
     max_possible_score = len(similar_users) * 5
 
-    # Construire le résultat en convertissant le score en pourcentage (clampé à 100%)
     results = []
     for cname, score in sorted_recommendations:
          percentage = min((score / max_possible_score) * 100, 100)
@@ -204,7 +205,6 @@ def get_FC_recommendations(user_liked_cocktails, alcoholic_preference, desired_c
     
     recommendation_FC = pd.DataFrame(results, columns=['strDrink', 'confidence'])
     return recommendation_FC
-
 
 ########################################### Exemple d'utilisation ###########################################
 
