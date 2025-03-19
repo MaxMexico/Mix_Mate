@@ -9,13 +9,15 @@ import {
   Modal,
   TextInput,
   StyleSheet,
-  Image
+  Image,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from "expo-linear-gradient"; // Import du LinearGradient
-import SearchBar from '../../components/SearchBar/SearchBar'; // Votre composant SearchBar
-import allCocktails from "../../../assets/Translation_database.json"; // Import de la BDD
+import { LinearGradient } from "expo-linear-gradient";
+import SearchBar from '../../components/SearchBar/SearchBar';
+import allCocktails from "../../../assets/Translation_database.json";
 
 const ForumScreen = () => {
   const navigation = useNavigation();
@@ -26,17 +28,17 @@ const ForumScreen = () => {
   const [newPost, setNewPost] = useState({
     title: '',
     content: '',
-    cocktailId: null
+    cocktailId: null,
+    rating: 0,
   });
   const [filteredCocktails, setFilteredCocktails] = useState(allCocktails);
 
-  // Préchargement des avis au montage
   useEffect(() => {
     const formattedDiscussions = allCocktails.reduce((acc, cocktail) => {
       if (cocktail.reviews && cocktail.reviews.length > 0) {
         cocktail.reviews.forEach((review, index) => {
           acc.push({
-            id: `${cocktail.idDrink}-${index}`, // Clé unique
+            id: `${cocktail.idDrink}-${index}`,
             category: cocktail.strCategory,
             cocktailId: cocktail.idDrink,
             cocktailName: cocktail.strDrink,
@@ -52,13 +54,11 @@ const ForumScreen = () => {
       return acc;
     }, []);
 
-    // Extraction des catégories uniques
     const uniqueCategories = ['Toutes', ...new Set(allCocktails.map(c => c.strCategory))];
     setDiscussions(formattedDiscussions);
     setCategories(uniqueCategories);
   }, []);
 
-  // Gestion du clic sur un avis
   const handleDiscussionPress = (discussionItem) => {
     const cocktail = allCocktails.find(c => c.idDrink === discussionItem.cocktailId);
     if (cocktail) {
@@ -66,7 +66,6 @@ const ForumScreen = () => {
     }
   };
 
-  // Gestion de la recherche dans le modal
   const handleSearch = (query) => {
     const filtered = allCocktails.filter(cocktail => 
       cocktail.strDrink.toLowerCase().includes(query.toLowerCase())
@@ -74,7 +73,6 @@ const ForumScreen = () => {
     setFilteredCocktails(filtered);
   };
 
-  // Ajout d'un nouvel avis
   const handleNewPost = () => {
     if (!newPost.title || !newPost.content || !newPost.cocktailId) return;
 
@@ -91,24 +89,24 @@ const ForumScreen = () => {
       cocktailImage: cocktail.strDrinkThumb,
       title: newPost.title,
       content: newPost.content,
-      author: 'Utilisateur', // À remplacer par un système d'authentification
-      rating: 0,
+      author: 'Utilisateur',
+      rating: newPost.rating,
       date: new Date().toISOString()
     };
 
     setDiscussions([newDiscussion, ...discussions]);
-    setNewPost({ title: '', content: '', cocktailId: null });
+    setNewPost({ title: '', content: '', cocktailId: null, rating: 0 });
     setFilteredCocktails(allCocktails);
     setModalVisible(false);
   };
 
   return (
     <LinearGradient
-          colors={["#a1628f", "#ebbcb7"]} // Mêmes couleurs que RecoScreen
-          start={{ x: 0, y: 1 }}
-          end={{ x: 1, y: 0 }}
-          style={{ flex: 1 }} // Gradient comme arrière-plan principal
-        >
+      colors={["#a1628f", "#ebbcb7"]}
+      start={{ x: 0, y: 1 }}
+      end={{ x: 1, y: 0 }}
+      style={{ flex: 1 }}
+    >
       <View style={styles.container}>
         {/* Barre de catégories */}
         <ScrollView 
@@ -118,22 +116,22 @@ const ForumScreen = () => {
         >
           {categories.map(category => (
             <TouchableOpacity
-            key={category}
-            style={[
-              styles.categoryButton,
-              selectedCategory === category && styles.activeCategory
-            ]}
-            onPress={() => setSelectedCategory(category)}
-          >
-            <Text
+              key={category}
               style={[
-                styles.categoryText,
-                selectedCategory === category && styles.activeCategoryText
+                styles.categoryButton,
+                selectedCategory === category && styles.activeCategory
               ]}
+              onPress={() => setSelectedCategory(category)}
             >
-              {category}
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={[
+                  styles.categoryText,
+                  selectedCategory === category && styles.activeCategoryText
+                ]}
+              >
+                {category}
+              </Text>
+            </TouchableOpacity>
           ))}
         </ScrollView>
 
@@ -187,71 +185,95 @@ const ForumScreen = () => {
         <Modal
           visible={modalVisible}
           animationType="slide"
+          transparent={true}
           onRequestClose={() => setModalVisible(false)}
         >
-          <View style={styles.modalContainer}>
-            {/* SearchBar pour sélectionner un cocktail */}
-            <SearchBar 
-              onSearch={handleSearch}
-              placeholder="Rechercher un cocktail..."
-            />
-            
-            {/* Liste des cocktails */}
-            <FlatList 
-              data={filteredCocktails}
-              keyExtractor={item => item.idDrink}
-              renderItem={({ item }) => (
-                <TouchableOpacity 
-                  style={[
-                    styles.cocktailSearchItem,
-                    newPost.cocktailId === item.idDrink && styles.selectedSearchItem
-                  ]}
-                  onPress={() => setNewPost({ ...newPost, cocktailId: item.idDrink })}
-                >
-                  <Image 
-                    source={{ uri: item.strDrinkThumb }}
-                    style={styles.searchItemImage}
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={50}
+          >
+            <ScrollView contentContainerStyle={styles.modalScrollContainer}>
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  {/* SearchBar pour sélectionner un cocktail */}
+                  <SearchBar 
+                    onSearch={handleSearch}
+                    placeholder="Rechercher un cocktail..."
                   />
-                  <Text style={styles.searchItemText}>{item.strDrink}</Text>
-                </TouchableOpacity>
-              )}
-              style={styles.searchList}
-            />
+                  
+                  {/* Liste des cocktails */}
+                  <FlatList 
+                    data={filteredCocktails}
+                    keyExtractor={item => item.idDrink}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity 
+                        style={[
+                          styles.cocktailSearchItem,
+                          newPost.cocktailId === item.idDrink && styles.selectedSearchItem
+                        ]}
+                        onPress={() => setNewPost({ ...newPost, cocktailId: item.idDrink })}
+                      >
+                        <Image 
+                          source={{ uri: item.strDrinkThumb }}
+                          style={styles.searchItemImage}
+                        />
+                        <Text style={styles.searchItemText}>{item.strDrink}</Text>
+                      </TouchableOpacity>
+                    )}
+                    style={styles.searchList}
+                  />
 
-            {/* Formulaire */}
-            <TextInput 
-              style={styles.modalInput}
-              placeholder="Titre de votre avis"
-              value={newPost.title}
-              onChangeText={text => setNewPost({ ...newPost, title: text })}
-            />
-            <TextInput 
-              style={[styles.modalInput, styles.modalContent]}
-              placeholder="Votre avis..."
-              multiline
-              numberOfLines={4}
-              value={newPost.content}
-              onChangeText={text => setNewPost({ ...newPost, content: text })}
-            />
+                  {/* Zone de notation par étoiles */}
+                  <View style={styles.ratingContainer}>
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <TouchableOpacity key={i} onPress={() => setNewPost({ ...newPost, rating: i })}>
+                        <Ionicons 
+                          name={i <= newPost.rating ? 'star' : 'star-outline'}
+                          size={16}
+                          color="#FFD700"
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
 
-            <View style={styles.modalActions}>
-              <TouchableOpacity 
-                style={styles.modalButton}
-                onPress={() => {
-                  setModalVisible(false);
-                  setFilteredCocktails(allCocktails);
-                }}
-              >
-                <Text style={styles.buttonText}>Annuler</Text>
-              </TouchableOpacity>
-              <TouchableOpacity 
-                style={[styles.modalButton, styles.primaryButton]}
-                onPress={handleNewPost}
-              >
-                <Text style={[styles.buttonText, styles.primaryText]}>Publier</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+                  {/* Formulaire */}
+                  <TextInput 
+                    style={styles.modalInput}
+                    placeholder="Titre de votre avis"
+                    value={newPost.title}
+                    onChangeText={text => setNewPost({ ...newPost, title: text })}
+                  />
+                  <TextInput 
+                    style={[styles.modalInput, styles.modalContentInput]}
+                    placeholder="Votre avis..."
+                    multiline
+                    numberOfLines={4}
+                    value={newPost.content}
+                    onChangeText={text => setNewPost({ ...newPost, content: text })}
+                  />
+
+                  <View style={styles.modalActions}>
+                    <TouchableOpacity 
+                      style={styles.modalButton}
+                      onPress={() => {
+                        setModalVisible(false);
+                        setFilteredCocktails(allCocktails);
+                      }}
+                    >
+                      <Text style={styles.buttonText}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                      style={[styles.modalButton, styles.primaryButton]}
+                      onPress={handleNewPost}
+                    >
+                      <Text style={[styles.buttonText, styles.primaryText]}>Publier</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
         </Modal>
       </View>
     </LinearGradient>
@@ -335,27 +357,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 4
   },
+  /* --- Modal styles modifiés --- */
+  modalScrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40
+  },
   modalContainer: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: '#fff'
+    width: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20
+    // Retiré alignItems: "center" pour éviter que tout soit collé à gauche
+  },
+  modalContent: {
+    width: "100%"
   },
   modalInput: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
-    backgroundColor: '#fff'
+    backgroundColor: "#fff",
+    width: "100%"
   },
-  modalContent: {
+  modalContentInput: {
     height: 150,
-    textAlignVertical: 'top'
+    textAlignVertical: "top"
   },
   modalActions: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 16
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: 10,
+    gap: 16,
+    width: "100%"
   },
   modalButton: {
     paddingVertical: 12,
@@ -363,31 +400,32 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   primaryButton: {
-    backgroundColor: '#3498db'
+    backgroundColor: "#3498db"
   },
   buttonText: {
     fontSize: 16,
-    color: '#333'
+    color: "#333"
   },
   primaryText: {
-    color: '#fff'
+    color: "#fff"
   },
   searchList: {
     maxHeight: 200,
     marginBottom: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     borderRadius: 8,
-    elevation: 2
+    elevation: 2,
+    width: "100%"
   },
   cocktailSearchItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee'
+    borderBottomColor: "#eee"
   },
   selectedSearchItem: {
-    backgroundColor: '#3498db30'
+    backgroundColor: "#3498db30"
   },
   searchItemImage: {
     width: 40,
@@ -397,15 +435,66 @@ const styles = StyleSheet.create({
   },
   searchItemText: {
     fontSize: 16,
-    color: '#333'
+    color: "#333"
   },
   listContainer: {
     paddingBottom: 24
   },
   noResults: {
-    textAlign: 'center',
-    color: '#777',
+    textAlign: "center",
+    color: "#777",
     padding: 20
+  },
+  ratingContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 10
+  },
+  /* --- Fin modal styles modifiés --- */
+  favoritesContainer: {
+    width: "100%"
+  },
+  favoritesTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff"
+  },
+  actionContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "center"
+  },
+  inspireButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#7640a3",
+    padding: 10,
+    borderRadius: 5
+  },
+  inspireButtonIcon: {
+    width: 27,
+    height: 27,
+    resizeMode: "contain",
+    marginRight: 8
+  },
+  inspireButtonText: {
+    fontSize: 18,
+    color: "#fff"
+  },
+  filterButton: {
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 10
+  },
+  filterIcon: {
+    width: 50,
+    height: 50,
+    resizeMode: "contain"
+  },
+  filterText: {
+    fontSize: 16,
+    color: "#fff"
   }
 });
 

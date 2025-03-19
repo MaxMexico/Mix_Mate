@@ -72,7 +72,7 @@ export default function ProfileScreen({ navigation }) {
     try {
       await AsyncStorage.setItem("userProfile", JSON.stringify(finalProfile));
       console.log("Profil sauvegardé localement :", finalProfile);
-      const apiUrl = "http://192.168.1.55:5000/api/profile";
+      const apiUrl = "http://192.168.1.124:5000/api/profile";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

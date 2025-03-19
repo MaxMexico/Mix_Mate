@@ -69,5 +69,16 @@
       "Afterglow"
     ],
     "profileImage": "Profile2.png"
+  },
+  {
+    "name": "Victor",
+    "username": "Asencio",
+    "email": "Victor.asencio@esme.fr",
+    "favoriteCocktails": [
+      "Bloody Mary",
+      "Mojito",
+      "Ace"
+    ],
+    "profileImage": "Profile1.png"
   }
 ]
