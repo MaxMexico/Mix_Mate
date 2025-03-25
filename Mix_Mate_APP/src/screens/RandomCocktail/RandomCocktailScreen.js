@@ -1,24 +1,57 @@
 /* RandomCocktailScreen.js */
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient"; // Import du LinearGradient
-import cocktailsData from "../../../assets/Translation_database.json"; // Import de la BDD
-
-import styles from "./styles"; // 🎨 Import des nouveaux styles
+import { LinearGradient } from "expo-linear-gradient";
+import cocktailsData from "../../../assets/Translation_database.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import styles from "./styles"; // Assurez-vous que ce fichier contient vos styles habituels
 
 export default function RandomCocktailScreen() {
   const [cocktail, setCocktail] = useState(null);
+  const [isAdult, setIsAdult] = useState(null);
 
+  // Fonction pour obtenir un cocktail aléatoire selon le mode utilisateur
   const getRandomCocktail = () => {
-    const randomIndex = Math.floor(Math.random() * cocktailsData.length);
-    setCocktail(cocktailsData[randomIndex]);
+    let data = cocktailsData;
+    if (isAdult === false) {
+      // En mode mineur, filtrer pour n'afficher que les cocktails non alcoolisés
+      data = cocktailsData.filter((c) => c.strAlcoholic === "Non alcoholic");
+    }
+    if (data.length > 0) {
+      const randomIndex = Math.floor(Math.random() * data.length);
+      setCocktail(data[randomIndex]);
+    } else {
+      setCocktail(null);
+    }
   };
 
+  // Charger le mode utilisateur depuis AsyncStorage
   useEffect(() => {
-    getRandomCocktail();
+    const loadUserMode = async () => {
+      try {
+        const storedMode = await AsyncStorage.getItem("userMode");
+        if (storedMode !== null) {
+          setIsAdult(JSON.parse(storedMode));
+        } else {
+          setIsAdult(true); // Par défaut, on considère majeur
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement du mode utilisateur", error);
+        setIsAdult(true);
+      }
+    };
+    loadUserMode();
   }, []);
 
-  if (!cocktail) {
+  // Obtenir un cocktail aléatoire dès que le mode est chargé
+  useEffect(() => {
+    if (isAdult !== null) {
+      getRandomCocktail();
+    }
+  }, [isAdult]);
+
+  // Affichage d'un loader tant que le mode ou le cocktail n'est pas chargé
+  if (isAdult === null || cocktail === null) {
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.title}>Chargement...</Text>
@@ -28,29 +61,31 @@ export default function RandomCocktailScreen() {
 
   return (
     <LinearGradient
-      colors={["#a1628f", "#ebbcb7"]} // Mêmes couleurs que RecipeScreen
+      colors={["#a1628f", "#ebbcb7"]}
       start={{ x: 0, y: 1 }}
       end={{ x: 1, y: 0 }}
-      style={{ flex: 1 }} // Gradient comme arrière-plan principal
+      style={{ flex: 1 }}
     >
       <ScrollView style={styles.container}>
+        {/* Bannière identique à celle de HomeScreen */}
+        {isAdult === false && (
+          <View style={{ backgroundColor: "#F28A1A", paddingVertical: 5 }}>
+            <Text style={{ textAlign: "center", color: "#fff", fontSize: 12 }}>
+              Mode mineur activé
+            </Text>
+          </View>
+        )}
         <View style={styles.cocktailContainer}>
-          {/* Affichage de l'image du cocktail */}
-          <Image source={{ uri: cocktail.strDrinkThumb }} style={styles.cocktailImage} />
-
-          {/* Nom du cocktail */}
+          <Image
+            source={{ uri: cocktail.strDrinkThumb }}
+            style={styles.cocktailImage}
+          />
           <Text style={styles.title}>{cocktail.strDrink}</Text>
-
-          {/* Catégorie du cocktail */}
           <Text style={styles.category}>{cocktail.strCategory}</Text>
-
-          {/* Instructions de la recette */}
           <Text style={styles.instructionsTitle}>Recette :</Text>
           <Text style={styles.instructions}>
             {cocktail.strInstructionsFR || cocktail.strInstructions}
           </Text>
-
-          {/* Liste des ingrédients */}
           <Text style={styles.ingredientsTitle}>Ingrédients :</Text>
           <View style={styles.ingredientsContainer}>
             {Array.from({ length: 15 }, (_, i) => i + 1).map((num) => {
@@ -63,17 +98,15 @@ export default function RandomCocktailScreen() {
               ) : null;
             })}
           </View>
-
-          {/* Bouton pour générer un nouveau cocktail */}
           <TouchableOpacity style={styles.randomButton} onPress={getRandomCocktail}>
-            <Image 
-              source={require("../../../assets/icons/random_white.png")} 
-              style={styles.randomButtonIcon} 
+            <Image
+              source={require("../../../assets/icons/random_white.png")}
+              style={styles.randomButtonIcon}
             />
             <Text style={styles.randomButtonText}>Nouveau Cocktail</Text>
           </TouchableOpacity>
         </View>
-      <View style={{ height: 100 }} />
+        <View style={{ height: 100 }} />
       </ScrollView>
     </LinearGradient>
   );
