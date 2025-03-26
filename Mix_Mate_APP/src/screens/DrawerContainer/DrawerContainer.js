@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
@@ -9,7 +9,7 @@ export default function DrawerContainer(props) {
   const { navigation } = props;
   const [userMode, setUserMode] = useState(null);
 
-  // Récupère le mode depuis AsyncStorage
+  // Récupère le mode utilisateur (fonctionnalité existante)
   useEffect(() => {
     const loadUserMode = async () => {
       try {
@@ -24,10 +24,16 @@ export default function DrawerContainer(props) {
     loadUserMode();
   }, []);
 
+  // Gestion de la déconnexion
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("isLoggedIn");
+    navigation.navigate("Login");
+  };
+
   return (
     <View style={styles.content}>
-      {/* Conteneur centré avec les boutons */}
       <View style={styles.container}>
+        {/* Menu principal (hors Profil et Déconnexion) */}
         <MenuButton
           title="ACCUEIL"
           source={require("../../../assets/icons/home.png")}
@@ -49,14 +55,6 @@ export default function DrawerContainer(props) {
           source={require("../../../assets/icons/search.png")}
           onPress={() => {
             navigation.navigate("Main", { screen: "Rechercher" });
-            navigation.closeDrawer();
-          }}
-        />
-        <MenuButton
-          title="PROFIL"
-          source={require("../../../assets/icons/profile.png")}
-          onPress={() => {
-            navigation.navigate("Main", { screen: "Profil" });
             navigation.closeDrawer();
           }}
         />
@@ -92,9 +90,27 @@ export default function DrawerContainer(props) {
             navigation.closeDrawer();
           }}
         />
+
+        {/* Profil en bas du menu principal */}
+        <MenuButton
+          title="PROFIL"
+          source={require("../../../assets/icons/profile.png")}
+          onPress={() => {
+            navigation.navigate("Main", { screen: "Profil" });
+            navigation.closeDrawer();
+          }}
+        />
+
+        {/* Déconnexion en dessous du Profil */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+        >
+          <Text style={styles.logoutButtonText}>Se déconnecter</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Texte du mode tout en bas du drawer */}
+      {/* Mode utilisateur (existant) */}
       <View style={styles.modeContainer}>
         {userMode !== null && (
           <Text style={styles.modeText}>
