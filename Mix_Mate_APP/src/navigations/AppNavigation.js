@@ -18,35 +18,33 @@ import SearchScreen from "../screens/Search/SearchScreen";
 import CocktailDetailsScreen from "../screens/CocktailDetails/CocktailDetailsScreen";
 import IngredientsDetailsScreen from '../screens/CocktailDetails/CocktailDetailsScreen';
 import RecoScreen from '../screens/Reco/RecoScreen';
-import ForumScreen from "../screens/Forum/ForumScreen"; // Import de la page Forum
+import ForumScreen from "../screens/Forum/ForumScreen";
+import LoginScreen from '../screens/Login/LoginScreen'; // Import de la page de connexion
 
-import Logo from "../../assets/icons/logo.png"; // Import du logo
+import Logo from "../../assets/icons/logo.png";
 
 const Stack = createStackNavigator();
+const MainStack = createStackNavigator(); // Stack pour la navigation principale
+const Drawer = createDrawerNavigator();
 
 function MainNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: '#d8d1e0', // Couleur de fond du header
-        },
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          color: '#2e2e2e', // Couleur du titre du header
-        },
+        headerStyle: { backgroundColor: '#d8d1e0' },
+        headerTitleStyle: { fontWeight: 'bold', color: '#2e2e2e' },
         headerTitleAlign: 'center',
         headerRight: () => (
           <Image source={Logo} style={{ width: 80, height: 80, marginRight: 10 }} />
         ),
       }}
     >
-      <Stack.Screen name='Accueil' component={HomeScreen} />
-      <Stack.Screen name='Catégories' component={CategoriesScreen} />
-      <Stack.Screen name='Recette' component={RecipeScreen} />
-      <Stack.Screen name='Catégorie' component={RecipesListScreen} />
-      <Stack.Screen name='Ingredient' component={IngredientScreen} />
-      <Stack.Screen name='Rechercher' component={SearchScreen} />
+      <Stack.Screen name="Accueil" component={HomeScreen} />
+      <Stack.Screen name="Catégories" component={CategoriesScreen} />
+      <Stack.Screen name="Recette" component={RecipeScreen} />
+      <Stack.Screen name="Catégorie" component={RecipesListScreen} />
+      <Stack.Screen name="Ingredient" component={IngredientScreen} />
+      <Stack.Screen name="Rechercher" component={SearchScreen} />
       <Stack.Screen name="Profil" component={ProfileScreen} />
       <Stack.Screen name="Chatbot" component={ChatbotScreen} />
       <Stack.Screen name="CocktailDetails" component={CocktailDetailsScreen} />
@@ -58,41 +56,47 @@ function MainNavigator() {
   );
 }
 
-const Drawer = createDrawerNavigator();
-
 function DrawerStack() {
   return (
     <Drawer.Navigator
       screenOptions={{
         headerShown: false,
-        drawerStyle: {
-          width: 250, 
-        },
+        drawerStyle: { width: 250 },
       }}
       drawerContent={({ navigation }) => <DrawerContainer navigation={navigation} />}
     >
-      <Drawer.Screen name='Main' component={MainNavigator} />
+      <Drawer.Screen name="Main" component={MainNavigator} />
     </Drawer.Navigator>
   );
 }
 
 export default function AppContainer() {
   const [isReady, setIsReady] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Supprime la clé "userMode" à chaque reload de l'app et indique que l'app est prête après
-    AsyncStorage.removeItem('userMode')
-      .then(() => {
+    const checkLogin = async () => {
+      try {
+        // Réinitialisation de "userMode" (fonctionnalité existante)
+        
+        await AsyncStorage.removeItem('userMode');
+        await AsyncStorage.removeItem('isLoggedIn'); // <--- AJOUTEZ CETTE LIGNE
+
         console.log("userMode réinitialisé");
+
+        // Vérification de la connexion
+        const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+        setIsLoggedIn(!!isLoggedIn);
+      } catch (error) {
+        console.error("Erreur lors de la configuration de l'application", error);
+      } finally {
         setIsReady(true);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la réinitialisation de userMode", error);
-        setIsReady(true);
-      });
+      }
+    };
+
+    checkLogin();
   }, []);
 
-  // Affiche un loader pendant la suppression de la clé
   if (!isReady) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -103,9 +107,15 @@ export default function AppContainer() {
 
   return (
     <NavigationContainer>
-      <DrawerStack />
+      <MainStack.Navigator
+        initialRouteName={isLoggedIn ? 'Drawer' : 'Login'}
+        screenOptions={{ headerShown: false }}
+      >
+        <MainStack.Screen name="Login" component={LoginScreen} />
+        <MainStack.Screen name="Drawer" component={DrawerStack} />
+      </MainStack.Navigator>
     </NavigationContainer>
   );
 }
 
-console.disableYellowBox = true;
+console.disableYellowBox = true;  

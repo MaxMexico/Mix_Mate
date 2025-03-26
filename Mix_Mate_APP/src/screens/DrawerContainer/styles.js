@@ -24,6 +24,37 @@ const styles = StyleSheet.create({
   modeText: {
     fontSize: 12,
     color: "gray"
+  },
+  logoutButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#2e2e2e',
+    borderRadius: 8,
+    marginHorizontal: 20,
+    backgroundColor: '#d8d1e0',
+  },
+  logoutButtonText: {
+    color: '#2e2e2e',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  logoutButton: {
+    marginTop: 20, // Espacement vertical avec le Profil
+    paddingVertical: 10, // Hauteur interne du bouton (augmentée)
+    paddingHorizontal: 18, // Largeur interne du bouton (augmentée)
+    borderWidth: 1,
+    borderColor: "#2e2e2e",
+    borderRadius: 12, // Bords arrondis pour un look plus moderne
+    marginHorizontal: 20, // Espacement horizontal par rapport aux bords
+    backgroundColor: "#d8d1e0",
+    elevation: 3, // Ombre légère (optionnel)
+  },
+  logoutButtonText: {
+    color: "#2e2e2e",
+    fontSize: 16, // Taille de police augmentée
+    textAlign: "center",
+    marginVertical: 5, // Espacement vertical supplémentaire (optionnel)
   }
 });
 

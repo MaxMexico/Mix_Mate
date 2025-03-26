@@ -197,9 +197,9 @@ export default function ProfileScreen({ navigation }) {
             </View>
           ) : (
             <>
-              <Text style={styles.profileName}>{profile.name || "Nom"}</Text>
-              <Text style={styles.profileUsername}>@{profile.username || "Pseudo"}</Text>
-              <Text style={styles.profileEmail}>{profile.email || "Email"}</Text>
+              <Text style={styles.profileName}>{profile.name || "Jhon"}</Text>
+              <Text style={styles.profileUsername}>@{profile.username || "MixMateDemo"}</Text>
+              <Text style={styles.profileEmail}>{profile.email || "Demo@MixMate.fr"}</Text>
             </>
           )}
         </View>
