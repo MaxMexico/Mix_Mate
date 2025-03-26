@@ -171,7 +171,7 @@
   },
   {
     "idDrink": "178319",
-    "strInstructions": "Shake well in a shaker with ice.\r\nStrain in a martini glass.",
+    "strInstructions": "Shake well in a shaker with ice.Strain in a martini glass.",
     "strInstructionsFR": "Bien agiter dans un shaker avec de la glace. Filtrer dans un verre à martini."
   },
   {
@@ -556,7 +556,7 @@
   },
   {
     "idDrink": "17254",
-    "strInstructions": "Stir in mixing glass with ice and strain\r\n",
+    "strInstructions": "Stir in mixing glass with ice and strain",
     "strInstructionsFR": "Incorporer dans un verre à mélange avec de la glace et filtrer."
   },
   {
@@ -662,11 +662,11 @@
   {
     "idDrink": "11129",
     "strInstructions": "Shake juice of lemon, powdered sugar, blended whiskey, and egg white with cracked ice and strain into a whiskey sour glass. Add the slice of lemon, top with the cherry, and serve.",
-    "strInstructionsFR": "Mélangez le jus de citron, le sucre glace, le whisky et le blanc d'œuf avec de la glace pilée, puis filtrez dans un verre à whisky sour. Ajoutez la tranche de citron, décorez de cerise et servez."
+    "strInstructionsFR": "Mélangez le jus de citron, le sucre en poudre, le whisky et le blanc d'œuf avec de la glace pilée, puis filtrez dans un verre à whisky sour. Ajoutez la tranche de citron, décorez de cerise et servez."
   },
   {
     "idDrink": "17267",
-    "strInstructions": "Add 2 parts club soda or more or less to taste.\r\n\r\nMix it all together and pour over a bunch of ice. Drink with a straw.",
+    "strInstructions": "Add 2 parts club soda or more or less to taste.Mix it all together and pour over a bunch of ice. Drink with a straw.",
     "strInstructionsFR": "Ajoutez deux doses d'eau gazeuse, ou plus ou moins selon votre goût. Mélangez le tout et versez sur des glaçons. Buvez avec une paille."
   },
   {
@@ -691,7 +691,7 @@
   },
   {
     "idDrink": "178317",
-    "strInstructions": "Shake ingredients with crushed ice\r\nGarnish with orange peel\r\n",
+    "strInstructions": "Shake ingredients with crushed iceGarnish with orange peel",
     "strInstructionsFR": "Secouez les ingrédients avec de la glace pilée. Décorez avec du zeste d'orange."
   },
   {
@@ -702,7 +702,7 @@
   {
     "idDrink": "11170",
     "strInstructions": "Shake brandy, juice of lemon, and powdered sugar with ice and strain into a whiskey sour glass. Decorate with the lemon slice, top with the cherry, and serve.",
-    "strInstructionsFR": "Secouez le brandy, le jus de citron et le sucre glace avec des glaçons, puis filtrez dans un verre à whisky sour. Décorez avec une tranche de citron, ajoutez la cerise et servez."
+    "strInstructionsFR": "Secouez le brandy, le jus de citron et le sucre en poudre avec des glaçons, puis filtrez dans un verre à whisky sour. Décorez avec une tranche de citron, ajoutez la cerise et servez."
   },
   {
     "idDrink": "17220",
@@ -731,7 +731,7 @@
   },
   {
     "idDrink": "178312",
-    "strInstructions": "Place the thawed strawberries in a large bowl. Mash them with a fork to ensure no large chunks.\r\n\r\nIn a punch bowl or pitcher, combine mashed strawberries, lime pulp and soda. Mix well.\r\n\r\nAdd blueberries and raisins. They will float and look like bugs in the punch.",
+    "strInstructions": "Place the thawed strawberries in a large bowl. Mash them with a fork to ensure no large chunks.In a punch bowl or pitcher, combine mashed strawberries, lime pulp and soda. Mix well.Add blueberries and raisins. They will float and look like bugs in the punch.",
     "strInstructionsFR": "Placez les fraises décongelées dans un grand bol. Écrasez-les à la fourchette pour éviter les gros morceaux. Dans un bol à punch ou un pichet, mélangez les fraises écrasées, la pulpe de citron vert et le soda. Mélangez bien. Ajoutez les myrtilles et les raisins secs. Ils flotteront et ressembleront à des insectes dans le punch."
   },
   {
@@ -761,7 +761,7 @@
   },
   {
     "idDrink": "17242",
-    "strInstructions": "Add the Bombay Sapphire, Crème de Cassis and lime juice to a balloon glass and swirl well to mix.\r\nFill the glass with good quality cubed ice.\r\nTop up with chilled and freshly opened Fever-Tree Ginger Beer.\r\nGently stir to combine, top with a gently squeezed lime wedge and finish with a fresh ginger slice.",
+    "strInstructions": "Add the Bombay Sapphire, Crème de Cassis and lime juice to a balloon glass and swirl well to mix.Fill the glass with good quality cubed ice.Top up with chilled and freshly opened Fever-Tree Ginger Beer.Gently stir to combine, top with a gently squeezed lime wedge and finish with a fresh ginger slice.",
     "strInstructionsFR": "Ajoutez le Bombay Sapphire, la crème de cassis et le jus de citron vert dans un verre ballon et remuez bien pour mélanger. Remplissez le verre de glaçons de bonne qualité. Complétez avec de la bière de gingembre Fever-Tree fraîche et fraîchement ouverte. Remuez doucement pour mélanger, garnissez d'un quartier de citron vert légèrement pressé et terminez par une tranche de gingembre frais."
   },
   {
@@ -791,7 +791,7 @@
   },
   {
     "idDrink": "17268",
-    "strInstructions": "If each part is 1/2 oz then use about 2.5 cups of ice.\r\n\r\nBlend it all together. \r\nDrink it with a big straw if you have one.\r\n\r\n",
+    "strInstructions": "If each part is 1/2 oz then use about 2.5 cups of ice.Blend it all together. Drink it with a big straw if you have one.",
     "strInstructionsFR": "Si chaque portion contient 125 ml, utilisez environ 700 ml de glace. Mixez le tout. Buvez avec une grande paille si vous en avez une."
   },
   {
@@ -816,7 +816,7 @@
   },
   {
     "idDrink": "16176",
-    "strInstructions": "Add ice cubes to shaker.\r\nAdd vodka.\r\nAdd peach schnapps.\r\nAdd peach nectar.\r\nShake.\r\nStrain into glass.\r\nAdd lemon twist peel.",
+    "strInstructions": "Add ice cubes to shaker.Add vodka.Add peach schnapps.Add peach nectar.Shake.Strain into glass.Add lemon twist peel.",
     "strInstructionsFR": "Ajoutez des glaçons dans le shaker. Ajoutez la vodka. Ajoutez le schnaps de pêche. Ajoutez le nectar de pêche. Secouez. Filtrez dans un verre. Ajoutez un zeste de citron."
   },
   {
@@ -851,7 +851,7 @@
   },
   {
     "idDrink": "178356",
-    "strInstructions": "Grab your boston tin, fill it with cubes ice and then simply chuck in all your ingredients apart from your lemonade.\nNow it’s time to shake what your mama gave you until all your ingredients are blended to perfection.\nAdd some cubes of ice to your hurricane glass, give them a swill to cool the whole thing down and then strain your raspberry vodka cocktail of wonder into the glass.\nTop with lemonade and chuck a sprig of mint on top for garnish.\nYou can either get drinking at this point or go and try and grab a few butterflies to finish, the choice really is yours.",
+    "strInstructions": "Grab your boston tin, fill it with cubes ice and then simply chuck in all your ingredients apart from your lemonade.Now it’s time to shake what your mama gave you until all your ingredients are blended to perfection.Add some cubes of ice to your hurricane glass, give them a swill to cool the whole thing down and then strain your raspberry vodka cocktail of wonder into the glass.Top with lemonade and chuck a sprig of mint on top for garnish.You can either get drinking at this point or go and try and grab a few butterflies to finish, the choice really is yours.",
     "strInstructionsFR": "Prenez votre boîte Boston, remplissez-la de glaçons, puis ajoutez-y simplement tous vos ingrédients, sauf votre limonade. Il est maintenant temps de secouer ce que votre maman vous a donné jusqu'à ce que tous vos ingrédients soient parfaitement mélangés. Ajoutez quelques glaçons dans votre verre Hurricane, remuez-les pour refroidir le tout, puis filtrez votre cocktail de vodka à la framboise dans le verre. Complétez avec de la limonade et ajoutez un brin de menthe pour décorer. Vous pouvez soit commencer à boire maintenant, soit essayer de prendre quelques papillons pour terminer, à vous de choisir."
   },
   {
@@ -1001,7 +1001,7 @@
   },
   {
     "idDrink": "17250",
-    "strInstructions": "Shake, strain, straight up, cocktail glass rinsed with absinthe\r\n",
+    "strInstructions": "Shake, strain, straight up, cocktail glass rinsed with absinthe",
     "strInstructionsFR": "Agiter, filtrer, boire directement, verre à cocktail rincé à l'absinthe"
   },
   {
@@ -1096,7 +1096,7 @@
   },
   {
     "idDrink": "178369",
-    "strInstructions": "Wash and brush an organic, untreated lemon, then cut a spiral of lemon peel, using a citrus peel. If it is too large, cut it with a sharp knife.\r\n\r\nPut some ice in a tall tumbler glass, place the lemon peel inside and pour the cognac, add the ginger beer and let 2-3 drops of Angostura fall into it. Easy to do, but once you try it you'll love it.",
+    "strInstructions": "Wash and brush an organic, untreated lemon, then cut a spiral of lemon peel, using a citrus peel. If it is too large, cut it with a sharp knife.Put some ice in a tall tumbler glass, place the lemon peel inside and pour the cognac, add the ginger beer and let 2-3 drops of Angostura fall into it. Easy to do, but once you try it you'll love it.",
     "strInstructionsFR": "Lavez et brossez un citron bio non traité, puis découpez une spirale de zeste de citron à l'aide d'un économe. Si elle est trop grosse, coupez-la avec un couteau bien aiguisé. Mettez de la glace dans un grand verre tumbler, placez le zeste de citron à l'intérieur, versez le cognac, ajoutez la bière de gingembre et laissez tomber 2 à 3 gouttes d'Angostura. Facile à faire, mais une fois que vous aurez essayé, vous adorerez."
   },
   {
@@ -1161,7 +1161,7 @@
   },
   {
     "idDrink": "17181",
-    "strInstructions": "Pour the vodka, dry vermouth and olive brine into a cocktail shaker with a handful of ice and shake well.\r\nRub the rim of a martini glass with the wedge of lemon.\r\nStrain the contents of the cocktail shaker into the glass and add the olive.\r\nA dirty Martini contains a splash of olive brine or olive juice and is typically garnished with an olive.",
+    "strInstructions": "Pour the vodka, dry vermouth and olive brine into a cocktail shaker with a handful of ice and shake well.Rub the rim of a martini glass with the wedge of lemon.Strain the contents of the cocktail shaker into the glass and add the olive.A dirty Martini contains a splash of olive brine or olive juice and is typically garnished with an olive.",
     "strInstructionsFR": "Versez la vodka, le vermouth sec et la saumure d'olive dans un shaker avec une poignée de glace et secouez bien. Frottez le bord d'un verre à martini avec le quartier de citron. Filtrez le contenu du shaker dans le verre et ajoutez l'olive. Un Dirty Martini contient un peu de saumure d'olive ou de jus d'olive et est généralement garni d'une olive."
   },
   {
@@ -1176,12 +1176,12 @@
   },
   {
     "idDrink": "17177",
-    "strInstructions": "Muddle the sugar into the lime wedges in an old-fashioned glass.\r\nFill the glass with ice cubes. Pour the cachaca into the glass. Stir well.",
+    "strInstructions": "Muddle the sugar into the lime wedges in an old-fashioned glass.Fill the glass with ice cubes. Pour the cachaca into the glass. Stir well.",
     "strInstructionsFR": "Écrasez le sucre dans les quartiers de citron vert dans un verre old-fashioned. Remplissez le verre de glaçons. Versez la cachaça dans le verre. Remuez bien."
   },
   {
     "idDrink": "17182",
-    "strInstructions": "Shake all ingredients.\r\nDouble strain in a chilled double old fashioned glass with abig ice cube.\r\nGarnish with a couple of lavender sprigs",
+    "strInstructions": "Shake all ingredients.Double strain in a chilled double old fashioned glass with abig ice cube.Garnish with a couple of lavender sprigs",
     "strInstructionsFR": "Agitez tous les ingrédients. Filtrez deux fois dans un verre double Old Fashioned refroidi avec un gros glaçon. Décorez avec quelques brins de lavande"
   },
   {
@@ -1237,7 +1237,7 @@
   {
     "idDrink": "11339",
     "strInstructions": "Rub rim of cocktail glass with lemon juice and dip rim of glass in powdered sugar. Shake all ingredients (except cherry) with ice and strain into sugar-rimmed glass. Top with the cherry and serve.",
-    "strInstructionsFR": "Frottez le bord du verre à cocktail avec du jus de citron et trempez-le dans du sucre glace. Secouez tous les ingrédients (sauf la cerise) avec de la glace et filtrez dans un verre à bord sucré. Complétez avec la cerise et servez."
+    "strInstructionsFR": "Frottez le bord du verre à cocktail avec du jus de citron et trempez-le dans du sucre en poudre. Secouez tous les ingrédients (sauf la cerise) avec de la glace et filtrez dans un verre à bord sucré. Complétez avec la cerise et servez."
   },
   {
     "idDrink": "178346",
@@ -1256,7 +1256,7 @@
   },
   {
     "idDrink": "178352",
-    "strInstructions": "Step 1\nPour rosé into a 13x9\" pan and freeze until almost solid (it won't completely solidify due to the alcohol), at least 6 hours.\n\nStep 2\nMeanwhile, bring sugar and ½ cup water to a boil in a medium saucepan; cook, stirring constantly, until sugar dissolves, about 3 minutes. Add strawberries, remove from heat, and let sit 30 minutes to infuse syrup with strawberry flavor. Strain through a fine-mesh sieve into a small bowl (do not press on solids); cover and chill until cold, about 30 minutes.\n\nStep 3\nScrape rosé into a blender. Add lemon juice, 3½ ounces strawberry syrup, and 1 cup crushed ice and purée until smooth. Transfer blender jar to freezer and freeze until frosé is thickened (aim for milkshake consistency), 25–35 minutes.\n\nStep 4\nBlend again until frosé is slushy. Divide among glasses.\n\nStep 5\nDo Ahead: Rosé can be frozen 1 week ahead.",
+    "strInstructions": "Step 1Pour rosé into a 13x9\" pan and freeze until almost solid (it won't completely solidify due to the alcohol), at least 6 hours.Step 2Meanwhile, bring sugar and ½ cup water to a boil in a medium saucepan; cook, stirring constantly, until sugar dissolves, about 3 minutes. Add strawberries, remove from heat, and let sit 30 minutes to infuse syrup with strawberry flavor. Strain through a fine-mesh sieve into a small bowl (do not press on solids); cover and chill until cold, about 30 minutes.Step 3Scrape rosé into a blender. Add lemon juice, 3½ ounces strawberry syrup, and 1 cup crushed ice and purée until smooth. Transfer blender jar to freezer and freeze until frosé is thickened (aim for milkshake consistency), 25–35 minutes.Step 4Blend again until frosé is slushy. Divide among glasses.Step 5Do Ahead: Rosé can be frozen 1 week ahead.",
     "strInstructionsFR": "Étape 1 : Versez le rosé dans un moule de 33 x 23 cm et congelez jusqu'à ce qu'il soit presque solide (il ne se solidifiera pas complètement à cause de l'alcool), au moins 6 heures. Étape 2 : Pendant ce temps, portez le sucre et 120 ml d'eau à ébullition dans une casserole moyenne; faites cuire en remuant constamment jusqu'à dissolution du sucre, environ 3 minutes. Ajoutez les fraises, retirez du feu et laissez reposer 30 minutes pour que le sirop infuse au goût de fraise. Filtrez à travers une passoire fine au-dessus d'un petit bol (ne pas appuyer sur les solides); couvrez et réfrigérez jusqu'à ce que le sirop soit froid, environ 30 minutes. Étape 3 : Raclez le rosé dans un mixeur. Ajoutez le jus de citron, 100 ml de sirop de fraise et 250 ml de glace pilée, puis réduisez en purée lisse. Transférez le bol du mixeur au congélateur et congelez jusqu'à ce que le frosé épaississe (visez la consistance d'un milkshake), 25 à 35 minutes. Étape 4 : Mixez à nouveau jusqu'à obtenir une consistance granitée. Divisez parmi les verres. Étape 5 : À préparer à l'avance: Le rosé peut être congelé 1 semaine à l'avance."
   },
   {
@@ -1316,7 +1316,7 @@
   },
   {
     "idDrink": "17248",
-    "strInstructions": "Add ice to a shaker and pour in all ingredients.\nUsing a bar spoon, stir 40 to 45 revolutions or until thoroughly chilled.\nStrain into a martini glass or over ice into a rocks glass. Garnish with orange twist.",
+    "strInstructions": "Add ice to a shaker and pour in all ingredients.Using a bar spoon, stir 40 to 45 revolutions or until thoroughly chilled.Strain into a martini glass or over ice into a rocks glass. Garnish with orange twist.",
     "strInstructionsFR": "Ajoutez de la glace dans un shaker et versez tous les ingrédients. À l'aide d'une cuillère à mélange, remuez 40 à 45 fois jusqu'à ce que le mélange soit bien froid. Filtrez dans un verre à martini ou sur glace dans un verre à whisky. Décorez d'un zeste d'orange."
   },
   {
@@ -1381,7 +1381,7 @@
   },
   {
     "idDrink": "17255",
-    "strInstructions": "Add all the ingredients to a shaker and fill with ice.\r\n\r\nShake, and strain into a chilled cocktail glass or an Old Fashioned glass filled with fresh ice.\r\n\r\nGarnish with a lime wheel.",
+    "strInstructions": "Add all the ingredients to a shaker and fill with ice.Shake, and strain into a chilled cocktail glass or an Old Fashioned glass filled with fresh ice.Garnish with a lime wheel.",
     "strInstructionsFR": "Ajoutez tous les ingrédients dans un shaker et remplissez de glace. Secouez et filtrez dans un verre à cocktail refroidi ou un verre Old Fashioned rempli de glace fraîche. Décorez avec une rondelle de citron vert."
   },
   {
@@ -1397,152 +1397,152 @@
   {
     "idDrink": "11417",
     "strInstructions": "In a shaker half-filled with ice cubes, combine the gin, lemon juice, and sugar. Shake well. Strain into a sour glass and garnish with the orange slice and the cherry.",
-    "strInstructionsFR": "In a shaker half-filled with ice cubes, combine the gin, lemon juice, and sugar. Shake well. Strain into a sour glass and garnish with the orange slice and the cherry."
+    "strInstructionsFR": "Dans un shaker à moitié rempli de glaçons, mélanger le gin, le jus de citron et le sucre. Bien agiter. Filtrer dans un verre acidulé et décorer avec la tranche d'orange et la cerise."
   },
   {
     "idDrink": "12758",
     "strInstructions": "Shake well and serve in a cocktail glass. This is a home cocktail of American/Internet Bar del Pozzo, Pavia, Italy.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Bien agiter et servir dans un verre à cocktail. Voici un cocktail maison du Bar américain del Pozzo, à Pavie, en Italie."
   },
   {
     "idDrink": "11424",
     "strInstructions": "Pour vodka and amaretto into an old-fashioned glass over ice and serve.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Versez la vodka et l'amaretto dans un verre old fashioned sur de la glace et servez."
   },
   {
     "idDrink": "11423",
     "strInstructions": "Pour all ingredients directly into old fashioned glass filled with ice cubes. Stir gently.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Versez tous les ingrédients directement dans un verre old fashioned rempli de glaçons. Remuez délicatement."
   },
   {
     "idDrink": "12944",
     "strInstructions": "Boil sugar and spices in water, leave in the water for 30 minutes. Strain the spiced water and mix with the wine. Heat slowly until short of boiling temperature. (To remove alcohol, let it boil for a while.) You may add lemon or orange juice to taste. Serve in irish coffee cup.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Faire bouillir le sucre et les épices dans l'eau et laisser infuser 30 minutes. Filtrer l'eau épicée et la mélanger au vin. Chauffer doucement jusqu'à ce qu'elle atteigne le point d'ébullition. (Pour éliminer l'alcool, laisser bouillir un moment.) Ajouter du jus de citron ou d'orange selon votre goût. Servir dans une tasse à café irlandais."
   },
   {
     "idDrink": "178365",
     "strInstructions": "Fill a highball glass with ice, pour the gin, top with tonic water and squeeze a lemon wedge and garnish with a lemon wedge.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Remplissez un verre highball de glace, versez le gin, complétez avec de l'eau tonique, pressez un quartier de citron et décorez avec un quartier de citron."
   },
   {
     "idDrink": "11420",
     "strInstructions": "Mix powdered sugar and water in an old-fashioned glass. Add gin and one ice cube. Stir, add the twist of lemon peel, and serve.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Dans un verre old-fashioned, mélanger le sucre en poudre et l'eau. Ajouter le gin et un glaçon. Remuer, ajouter un zeste de citron et servir."
   },
   {
     "idDrink": "11416",
     "strInstructions": "Muddle sugar with carbonated water and mint sprigs in an old-fashioned glass. Add gin and 1 ice cube. Stir, add the orange slice and the cherry, and serve.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Piler le sucre avec l'eau gazeuse et les brins de menthe dans un verre old-fashioned. Ajouter le gin et un glaçon. Remuer, ajouter la tranche d'orange et la cerise, et servir."
   },
   {
     "idDrink": "11408",
     "strInstructions": "In a shaker half-filled with ice cubes, combine the gin, lemon juice, sugar, and grenadine. Shake well. Pour into an old-fashioned glass and garnish with the cherry and the orange slice.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Dans un shaker à moitié rempli de glaçons, mélanger le gin, le jus de citron, le sucre et la grenadine. Bien agiter. Verser dans un verre old-fashioned et décorer avec la cerise et la tranche d'orange."
   },
   {
     "idDrink": "178366",
     "strInstructions": "For the preparation of the gin lemon you will not need the shaker. Fill the tumbler with ice, pour the gin and lemonade over it. Gently mix and decorate with a slice of lemon. Those who prefer can also add a few mint leaves. Your gin lemon is ready to be served.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Pour préparer le gin citron, vous n'avez pas besoin de shaker. Remplissez le verre de glaçons, versez le gin et la limonade par-dessus. Mélangez délicatement et décorez d'une tranche de citron. Vous pouvez également ajouter quelques feuilles de menthe. Votre gin citron est prêt à être servi."
   },
   {
     "idDrink": "11415",
     "strInstructions": "Dissolve powdered sugar in mixture of water and juice of lemon. Add gin. Pour into an old-fashioned glass over ice cubes and stir. Add the twist of orange peel and serve.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Dissoudre le sucre en poudre dans un mélange d'eau et de jus de citron. Ajouter le gin. Verser dans un verre old-fashioned sur des glaçons et remuer. Ajouter un zeste d'orange et servir."
   },
   {
     "idDrink": "17252",
-    "strInstructions": "Add the vodka to a Collins glass filled with ice.\nTop with grapefruit juice and stir.\n\n",
-    "strInstructionsFR": ""
+    "strInstructions": "Add the vodka to a Collins glass filled with ice.Top with grapefruit juice and stir.",
+    "strInstructionsFR": "Ajoutez la vodka dans un verre Collins rempli de glace.Complétez avec du jus de pamplemousse et remuez."
   },
   {
     "idDrink": "17230",
     "strInstructions": "Half-fill a tall glass with ice. Mix the gin and Grenadine together and pour over the ice. Add the lime or lemon juice and top off with soda water. Decorate the glass with lime and/or lemon slices.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Remplissez à moitié un grand verre de glaçons. Mélangez le gin et la grenadine et versez dessus. Ajoutez le jus de citron vert ou de citron et complétez avec de l'eau gazeuse. Décorez le verre de tranches de citron vert ou de citron."
   },
   {
     "idDrink": "11418",
     "strInstructions": "Stir gin, grenadine, and powdered sugar with ice and strain into a highball glass over ice cubes. Fill with carbonated water and stir. Decorate with the pineapple chunks and the strawberries and serve.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Mélanger le gin, la grenadine et le sucre en poudre avec des glaçons, puis passer dans un verre highball sur des glaçons. Compléter d'eau gazeuse et remuer. Décorer avec les morceaux d'ananas et les fraises, puis servir."
   },
   {
     "idDrink": "15427",
     "strInstructions": "Serve in an old fashioned glass.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Mélangez tous les ingrédients dans un shaker avec ou sans glace selon votre préférence (glacé ou normal).Servir dans un verre old fashioned avec ou sans glaçons."
   },
   {
     "idDrink": "11407",
     "strInstructions": "Stir powdered sugar and 2 oz. carbonated water in a collins glass. Fill glass with ice and add gin. Fill with carbonated water and stir. Add the lemon peel and the orange spiral so that the end of the orange spiral dangles over rim of glass.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Dans un verre Collins, mélanger le sucre en poudre et 60 ml d'eau gazeuse. Remplir de glaçons et ajouter le gin. Compléter avec de l'eau gazeuse et remuer. Ajouter le zeste de citron et la spirale d'orange de manière à ce que l'extrémité de la spirale pende au bord du verre."
   },
   {
     "idDrink": "11419",
     "strInstructions": "In a shaker half-filled with ice cubes, combine the lime juice, sugar, gin, and bitters. Shake well. Almost fill a colling glass with ice cubes. Stir until the glass is frosted. Strain the mixture in the shaker into the glass and add the club soda.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Dans un shaker à moitié rempli de glaçons, mélanger le jus de citron vert, le sucre, le gin et le bitter. Bien agiter. Remplir un verre à cocktail de glaçons. Remuer jusqu'à ce que le verre soit givré. Filtrer le mélange dans le verre et ajouter l'eau gazeuse."
   },
   {
     "idDrink": "11433",
     "strInstructions": "In a shaker half-filled with ice cubes, combine the gin, triple sec, pineapple juice, and grenadine. Shake well. Pour into an old-fashioned glass and garnish with the pineapple slice.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Dans un shaker à moitié rempli de glaçons, mélanger le gin, le triple sec, le jus d'ananas et la grenadine. Bien agiter. Verser dans un verre old-fashioned et décorer avec la tranche d'ananas."
   },
   {
     "idDrink": "17200",
     "strInstructions": "Pour ingredients into a cocktail shaker with ice. Shake briskly and then strain into a chilled cocktail glass.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Versez les ingrédients dans un shaker avec des glaçons. Secouez vigoureusement, puis filtrez dans un verre à cocktail glacé."
   },
   {
     "idDrink": "14642",
     "strInstructions": "Mix Kahlua and 151 in glass. Quickly add ice and pour grenadine over ice to give ice red tint.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Mélanger le Kahlua et le 151 dans un verre. Ajouter rapidement de la glace et verser la grenadine sur la glace pour obtenir une teinte rouge glace."
   },
   {
     "idDrink": "178342",
-    "strInstructions": "Pour the Gin and Soda water into a highball glass almost filled with ice cubes.\nStir well.\nGarnish with the lime wedge.",
-    "strInstructionsFR": ""
+    "strInstructions": "Pour the Gin and Soda water into a highball glass almost filled with ice cubes.Stir well.Garnish with the lime wedge.",
+    "strInstructionsFR": "Versez le gin et l'eau gazeuse dans un verre highball presque rempli de glaçons. Remuez bien. Garnissez avec le quartier de citron vert."
   },
   {
     "idDrink": "17199",
     "strInstructions": "Shake with cracked ice. Strain into glass and serve.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Secouer avec de la glace pilée. Filtrer dans un verre et servir."
   },
   {
     "idDrink": "13497",
     "strInstructions": "Cider First, Lager then Curacao",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Cidre d'abord, bière blonde ensuite Curaçao"
   },
   {
     "idDrink": "12762",
     "strInstructions": "Served over ice. Sounds nasty, but tastes great.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Servi sur glace. Ça a l'air dégoûtant, mais c'est délicieux."
   },
   {
     "idDrink": "11403",
     "strInstructions": "Pour the gin and the tonic water into a highball glass almost filled with ice cubes. Stir well. Garnish with the lime wedge.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Versez le gin et le tonic dans un verre highball presque rempli de glaçons. Remuez bien. Décorez avec le quartier de citron vert."
   },
   {
     "idDrink": "178314",
-    "strInstructions": "Muddle Basil leaves (~ 10) with Suggar Syrup in a shaker. Add Gin an Lemon Juice.\r\nFilter and serve in a tumbler with ice",
-    "strInstructionsFR": ""
+    "strInstructions": "Muddle Basil leaves (~ 10) with Suggar Syrup in a shaker. Add Gin an Lemon Juice.Filter and serve in a tumbler with ice",
+    "strInstructionsFR": "Dans un shaker, piler environ 10 feuilles de basilic avec du sirop de sucre. Ajouter le gin et le jus de citron. Filtrer et servir dans un verre avec des glaçons."
   },
   {
     "idDrink": "11396",
     "strInstructions": "In an old-fashioned glass almost filled with ice cubes, combine all of the ingredients. Stir well.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Dans un verre old-fashioned presque rempli de glaçons, mélanger tous les ingrédients. Bien mélanger."
   },
   {
     "idDrink": "17175",
     "strInstructions": "Add the cachaca, lemon juice and syrup to your boston glass. Add ice and shake until ice cold. Pour into a chilled flute and top-up with Champagne",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Ajoutez la cachaça, le jus de citron et le sirop dans votre verre Boston. Ajoutez des glaçons et secouez jusqu'à ce que le mélange soit glacé. Versez dans une flûte glacée et complétez avec du champagne."
   },
   {
     "idDrink": "178340",
     "strInstructions": "Mix together in a shaker and garnish with a simple orange slice. Fill your vitamin C and cocktail fix at the same time!",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Mélangez le tout dans un shaker et décorez d'une simple tranche d'orange. Faites le plein de vitamine C et de cocktails en même temps!"
   },
   {
     "idDrink": "17002",
     "strInstructions": "Add all ingredients in collins glass with ice and stir.",
-    "strInstructionsFR": ""
+    "strInstructionsFR": "Ajoutez tous les ingrédients dans un verre Collins avec de la glace et remuez."
   },
   {
     "idDrink": "12712",
@@ -1556,12 +1556,12 @@
   },
   {
     "idDrink": "178316",
-    "strInstructions": "Shake ingredients with crushed ice\r\n",
+    "strInstructions": "Shake ingredients with crushed ice",
     "strInstructionsFR": ""
   },
   {
     "idDrink": "178345",
-    "strInstructions": "STEP 1\r\nWhisk the whisky and honey together and split between 2 heatproof glasses. Add half of the cinnamon stick to each, then top up with 200ml boiling water.\r\n\r\nSTEP 2\r\nAdd a splash of lemon juice to each, then taste and add more to your preference. Finish each with a slice of lemon, studded with a clove, and serve immediately.",
+    "strInstructions": "STEP 1Whisk the whisky and honey together and split between 2 heatproof glasses. Add half of the cinnamon stick to each, then top up with 200ml boiling water.STEP 2Add a splash of lemon juice to each, then taste and add more to your preference. Finish each with a slice of lemon, studded with a clove, and serve immediately.",
     "strInstructionsFR": ""
   },
   {
@@ -1586,7 +1586,7 @@
   },
   {
     "idDrink": "178313",
-    "strInstructions": "Tip the cherry juice, orange peel, chilli, cinnamon sticks, cloves and ginger into a large saucepan. Simmer for 5 mins, then turn off the heat. Leave to cool, then chill for at least 4 hrs, or up to 2 days – the longer you leave it the more intense the flavours. If serving to young children, take the chilli out after a few hours.\r\n\r\nWhen you’re ready to serve, pour the juice into a jug. Serve in glass bottles or glasses and pop a straw in each. If you're adding vodka, do so at this stage. Dangle a fangs sweet from each glass.",
+    "strInstructions": "Tip the cherry juice, orange peel, chilli, cinnamon sticks, cloves and ginger into a large saucepan. Simmer for 5 mins, then turn off the heat. Leave to cool, then chill for at least 4 hrs, or up to 2 days – the longer you leave it the more intense the flavours. If serving to young children, take the chilli out after a few hours.When you’re ready to serve, pour the juice into a jug. Serve in glass bottles or glasses and pop a straw in each. If you're adding vodka, do so at this stage. Dangle a fangs sweet from each glass.",
     "strInstructionsFR": ""
   },
   {
@@ -1791,7 +1791,7 @@
   },
   {
     "idDrink": "178359",
-    "strInstructions": "The kiwi martini is a very fun vodka cocktail and it is one of the best drinks that makes use of fresh fruit. Though there are a few recipes floating around, this is one of the easiest and it is an absolutely delightful green martini to drink.\n\nFor this recipe, you'll simply muddle slices of kiwi with simple syrup, then shake it with vodka. It's a drink that anyone can mix up in minutes and a perfect cocktail to show off your favorite vodka.",
+    "strInstructions": "The kiwi martini is a very fun vodka cocktail and it is one of the best drinks that makes use of fresh fruit. Though there are a few recipes floating around, this is one of the easiest and it is an absolutely delightful green martini to drink.For this recipe, you'll simply muddle slices of kiwi with simple syrup, then shake it with vodka. It's a drink that anyone can mix up in minutes and a perfect cocktail to show off your favorite vodka.",
     "strInstructionsFR": ""
   },
   {
@@ -1936,7 +1936,7 @@
   },
   {
     "idDrink": "178360",
-    "strInstructions": "Pour all ingredients over ice, stir and enjoy!\r\n",
+    "strInstructions": "Pour all ingredients over ice, stir and enjoy!",
     "strInstructionsFR": ""
   },
   {
@@ -1971,7 +1971,7 @@
   },
   {
     "idDrink": "178343",
-    "strInstructions": "Mix the beer with tomato juice, freshly squeezed lime juice, and Worcestershire sauce, teriyaki sauce, soy sauce, or hot sauce.\r\nServed In a chilled, salt-rimmed glass\r\n",
+    "strInstructions": "Mix the beer with tomato juice, freshly squeezed lime juice, and Worcestershire sauce, teriyaki sauce, soy sauce, or hot sauce.Served In a chilled, salt-rimmed glass",
     "strInstructionsFR": ""
   },
   {
@@ -1986,7 +1986,7 @@
   },
   {
     "idDrink": "178370",
-    "strInstructions": "1 - Pour the Ricard (or pastis)\n2 - Pour the orgeat syrup\n3 - Finally pour the water and add ice cubes at your convenience.\n\nAdd the ice cubes at the end, otherwise the syrup and pastis do not mix well.",
+    "strInstructions": "1 - Pour the Ricard (or pastis)2 - Pour the orgeat syrup3 - Finally pour the water and add ice cubes at your convenience.Add the ice cubes at the end, otherwise the syrup and pastis do not mix well.",
     "strInstructionsFR": ""
   },
   {
@@ -2001,7 +2001,7 @@
   },
   {
     "idDrink": "17256",
-    "strInstructions": "Add all ingredients to a mixing glass and fill with ice.\r\n\r\nStir until chilled, and strain into a chilled coupe glass.",
+    "strInstructions": "Add all ingredients to a mixing glass and fill with ice.Stir until chilled, and strain into a chilled coupe glass.",
     "strInstructionsFR": ""
   },
   {
@@ -2031,7 +2031,7 @@
   },
   {
     "idDrink": "178315",
-    "strInstructions": "Fill glass with ice\r\nPour Gin and Lime Juice\r\nFill glass with Ginger Beer\r\nGarnish with Cucumer and Lime slice",
+    "strInstructions": "Fill glass with icePour Gin and Lime JuiceFill glass with Ginger BeerGarnish with Cucumer and Lime slice",
     "strInstructionsFR": ""
   },
   {
@@ -2041,7 +2041,7 @@
   },
   {
     "idDrink": "178358",
-    "strInstructions": "Squeeze the juice from 1½ limes and blend with the mango to give a smooth purée.\nCut the rest of the limes into quarters, and then cut each wedge in half again. Put 2 pieces of lime in a highball glass for each person and add 1 teaspoon of caster sugar and 5-6 mint leaves to each glass. Squish everything together with a muddler or the end of a rolling pin to release all the flavours from the lime and mint.\nDivide the mango purée between the glasses and add 30ml white rum and a handful of crushed ice to each one, stirring well to mix everything together. Top up with soda water to serve and garnish with extra mint, if you like.",
+    "strInstructions": "Squeeze the juice from 1½ limes and blend with the mango to give a smooth purée.Cut the rest of the limes into quarters, and then cut each wedge in half again. Put 2 pieces of lime in a highball glass for each person and add 1 teaspoon of caster sugar and 5-6 mint leaves to each glass. Squish everything together with a muddler or the end of a rolling pin to release all the flavours from the lime and mint.Divide the mango purée between the glasses and add 30ml white rum and a handful of crushed ice to each one, stirring well to mix everything together. Top up with soda water to serve and garnish with extra mint, if you like.",
     "strInstructionsFR": ""
   },
   {
@@ -2181,7 +2181,7 @@
   },
   {
     "idDrink": "11001",
-    "strInstructions": "Place sugar cube in old fashioned glass and saturate with bitters, add a dash of plain water. Muddle until dissolved.\r\nFill the glass with ice cubes and add whiskey.\r\n\r\nGarnish with orange twist, and a cocktail cherry.",
+    "strInstructions": "Place sugar cube in old fashioned glass and saturate with bitters, add a dash of plain water. Muddle until dissolved.Fill the glass with ice cubes and add whiskey.Garnish with orange twist, and a cocktail cherry.",
     "strInstructionsFR": ""
   },
   {
@@ -2191,7 +2191,7 @@
   },
   {
     "idDrink": "17266",
-    "strInstructions": "Just mix it all together.\nIt's meant to be a shot, but it works just fine as a proper adult-sized drink over lots of ice.\n\nTastes like an oatmeal cookie.",
+    "strInstructions": "Just mix it all together.It's meant to be a shot, but it works just fine as a proper adult-sized drink over lots of ice.Tastes like an oatmeal cookie.",
     "strInstructionsFR": ""
   },
   {
@@ -2251,7 +2251,7 @@
   },
   {
     "idDrink": "13214",
-    "strInstructions": "Vigorously shake and strain contents in a cocktail shaker with ice cubes, then pour into glass and garnish with bitters.\n",
+    "strInstructions": "Vigorously shake and strain contents in a cocktail shaker with ice cubes, then pour into glass and garnish with bitters.",
     "strInstructionsFR": ""
   },
   {
@@ -2296,7 +2296,7 @@
   },
   {
     "idDrink": "178327",
-    "strInstructions": "Rub the rim of each glass with lime slice and dip into salt.\r\nAdd ice, tequila, grapefruit juice, lime juice and top with pineapple soda.\r\nGive it a quick stir.\r\nGarnish with fresh pineapple or lime.",
+    "strInstructions": "Rub the rim of each glass with lime slice and dip into salt.Add ice, tequila, grapefruit juice, lime juice and top with pineapple soda.Give it a quick stir.Garnish with fresh pineapple or lime.",
     "strInstructionsFR": ""
   },
   {
@@ -2456,12 +2456,12 @@
   },
   {
     "idDrink": "17245",
-    "strInstructions": "1) Add the Bombay Sapphire, Blue Curacao, rosemary sprig and gently squeezed lemon wedge to a balloon glass. Swirl well to combine.\n2) Fill with cubed ice and top with the Fever-Tree Light Tonic Water.\n3) Gently fold with a bar spoon to mix.",
+    "strInstructions": "1) Add the Bombay Sapphire, Blue Curacao, rosemary sprig and gently squeezed lemon wedge to a balloon glass. Swirl well to combine.2) Fill with cubed ice and top with the Fever-Tree Light Tonic Water.3) Gently fold with a bar spoon to mix.",
     "strInstructionsFR": ""
   },
   {
     "idDrink": "178367",
-    "strInstructions": "Prepare all the ingredients on the counter to be able to work well and quickly, especially the cream and egg white.\r\n\r\nPour all the ingredients into a shaker.\r\n\r\nShake vigorously for 1 minute: cream and egg white must be mixed perfectly, so don't rush.\r\n\r\nNow open the shaker and put some ice and shake for 1-2 minutes. It depends on how long you can resist!\r\n\r\nPour into a highball glass, add a splash of soda and garnish to taste.\r\n\r\nRamos Gin Fizz was once drunk as an invigorating drink or even as a breakfast, try it as an aperitif and after dinner and you will discover a little gem now lost.",
+    "strInstructions": "Prepare all the ingredients on the counter to be able to work well and quickly, especially the cream and egg white.Pour all the ingredients into a shaker.Shake vigorously for 1 minute: cream and egg white must be mixed perfectly, so don't rush.Now open the shaker and put some ice and shake for 1-2 minutes. It depends on how long you can resist!Pour into a highball glass, add a splash of soda and garnish to taste.Ramos Gin Fizz was once drunk as an invigorating drink or even as a breakfast, try it as an aperitif and after dinner and you will discover a little gem now lost.",
     "strInstructionsFR": ""
   },
   {
@@ -2546,7 +2546,7 @@
   },
   {
     "idDrink": "178322",
-    "strInstructions": "Gently warm 60g golden caster sugar in a pan with 30ml water and 1 tbsp allspice. Cook gently until the sugar has dissolved, then leave the mixture to cool. Strain through a sieve lined with a coffee filter (or a double layer of kitchen paper).\n\nPour 60ml of the spiced syrup into a cocktail shaker along with 200ml rum and 90ml lime juice. Shake with ice and strain between six flute glasses. Top up with 600ml champagne and garnish each with an orange twist.",
+    "strInstructions": "Gently warm 60g golden caster sugar in a pan with 30ml water and 1 tbsp allspice. Cook gently until the sugar has dissolved, then leave the mixture to cool. Strain through a sieve lined with a coffee filter (or a double layer of kitchen paper).Pour 60ml of the spiced syrup into a cocktail shaker along with 200ml rum and 90ml lime juice. Shake with ice and strain between six flute glasses. Top up with 600ml champagne and garnish each with an orange twist.",
     "strInstructionsFR": ""
   },
   {
@@ -2741,7 +2741,7 @@
   },
   {
     "idDrink": "17233",
-    "strInstructions": "Add ice, toffee gin, chocolate liqueur and Amaretto to a cocktail shaker and shake vigorously. \nPour the chocolate syrup into a saucer and dip the top of a martini glass into the sauce. Grate some of the Willie\\'s sea salt chocolate into another saucer and dip the coated glass, so the flakes stick to the sauce, creating a chocolate rim!\nPour the contents of the shaker into your chocolatey glass and sprinkle with more grated chocolate - enjoy!  ",
+    "strInstructions": "Add ice, toffee gin, chocolate liqueur and Amaretto to a cocktail shaker and shake vigorously. Pour the chocolate syrup into a saucer and dip the top of a martini glass into the sauce. Grate some of the Willie\\'s sea salt chocolate into another saucer and dip the coated glass, so the flakes stick to the sauce, creating a chocolate rim!Pour the contents of the shaker into your chocolatey glass and sprinkle with more grated chocolate - enjoy!  ",
     "strInstructionsFR": ""
   },
   {
@@ -2836,7 +2836,7 @@
   },
   {
     "idDrink": "17824",
-    "strInstructions": "1) Squeeze two lime wedges into a balloon glass then add the cordial, Bombay Sapphire and MARTINI Rosso Vermouth, swirl to mix.\n\n2) Fully fill the glass with cubed ice and stir to chill.\n\n3) Top with Fever-Tree Ginger Ale and gently stir again to combine.\n\n4) Garnish with a snapped ginger slice and an awoken mint sprig.",
+    "strInstructions": "1) Squeeze two lime wedges into a balloon glass then add the cordial, Bombay Sapphire and MARTINI Rosso Vermouth, swirl to mix.2) Fully fill the glass with cubed ice and stir to chill.3) Top with Fever-Tree Ginger Ale and gently stir again to combine.4) Garnish with a snapped ginger slice and an awoken mint sprig.",
     "strInstructionsFR": ""
   },
   {
@@ -2871,7 +2871,7 @@
   },
   {
     "idDrink": "17826",
-    "strInstructions": "Fill glass with ice\nPour in The Irishman and Disaronno\nFill to the top with Cranberry Juice\nGarnish with a slice of lemon…Enjoy!",
+    "strInstructions": "Fill glass with icePour in The Irishman and DisaronnoFill to the top with Cranberry JuiceGarnish with a slice of lemon…Enjoy!",
     "strInstructionsFR": ""
   },
   {
@@ -2941,7 +2941,7 @@
   },
   {
     "idDrink": "178364",
-    "strInstructions": "Wash and cut 1 wedge and 1 slice of lime or lemon.\r\nFill a tumbler with fresh ice.\r\nPour the desired dose of vodka and top up with the tonic.\r\nSqueeze the lime wedge into the glass and decorate with the slice.\r\nThat's all, very simple: it's just the recipe for happiness!",
+    "strInstructions": "Wash and cut 1 wedge and 1 slice of lime or lemon.Fill a tumbler with fresh ice.Pour the desired dose of vodka and top up with the tonic.Squeeze the lime wedge into the glass and decorate with the slice.That's all, very simple: it's just the recipe for happiness!",
     "strInstructionsFR": ""
   },
   {
@@ -3056,7 +3056,7 @@
   },
   {
     "idDrink": "17241",
-    "strInstructions": "Blend at high speed for no more than 5 seconds.\n\nPour into a glass, add ice cubes to fill, then add the garnish.\n\n*Donn’s mix: Bring 3 crushed cinnamon sticks, 1 cup of sugar and 1 cup of water to a boil, stirring until the sugar is dissolved.\n\nSimmer for 2 minutes, then remove from the heat and let sit for at least 2 hours before straining into a clean glass bottle.\n\nThen add 1 part of the syrup and 2 parts of fresh grapefruit juice together.",
+    "strInstructions": "Blend at high speed for no more than 5 seconds.Pour into a glass, add ice cubes to fill, then add the garnish.*Donn’s mix: Bring 3 crushed cinnamon sticks, 1 cup of sugar and 1 cup of water to a boil, stirring until the sugar is dissolved.Simmer for 2 minutes, then remove from the heat and let sit for at least 2 hours before straining into a clean glass bottle.Then add 1 part of the syrup and 2 parts of fresh grapefruit juice together.",
     "strInstructionsFR": ""
   },
   {
