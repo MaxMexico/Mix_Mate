@@ -115,14 +115,7 @@ export default function CategoriesScreen(props) {
       end={{ x: 1, y: 0 }}
       style={{ flex: 1 }}
     >
-      {/* Bannière affichée en haut si le mode mineur est activé */}
-      {isAdult === false && (
-        <View style={{ backgroundColor: "#F28A1A", paddingVertical: 5 }}>
-          <Text style={{ textAlign: "center", color: "#fff", fontSize: 12 }}>
-            Mode mineur activé
-          </Text>
-        </View>
-      )}
+      
       <FlatList
         data={categories}
         renderItem={renderCategory}

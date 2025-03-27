@@ -94,10 +94,21 @@
     "username": "Coco",
     "email": "Lachieuse@gmail.com",
     "favoriteCocktails": [
-      "A Piece of Ass",
       "Tequila Sunrise",
-      "Espresso Martini"
+      "Espresso Martini",
+      "Mojito"
     ],
-    "profileImage": "Profile4.png"
+    "profileImage": "Profile2.png"
+  },
+  {
+    "name": "John MixMate",
+    "username": "John ",
+    "email": "demo@mixmate.com",
+    "favoriteCocktails": [
+      "Tequila Sunrise",
+      "Espresso Martini",
+      "Mojito"
+    ],
+    "profileImage": "Profile2.png"
   }
 ]

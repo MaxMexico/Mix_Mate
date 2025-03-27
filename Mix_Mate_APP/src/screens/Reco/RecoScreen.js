@@ -52,6 +52,9 @@ export default function RecoScreen({ navigation }) {
   const [modalTopN, setModalTopN] = useState("5");
   const [modalSelectedCategories, setModalSelectedCategories] = useState(["Toutes"]);
 
+  // Nouvel état pour le mode utilisateur (true: majeur, false: mineur)
+  const [userMode, setUserMode] = useState(null);
+
   // Récupération des catégories uniques depuis allCocktails
   const allCategories = ["Toutes", ...Array.from(new Set(allCocktails.map(cocktail => cocktail.strCategory)))];
 
@@ -81,7 +84,6 @@ export default function RecoScreen({ navigation }) {
         if (storedProfile) {
           const parsedProfile = JSON.parse(storedProfile);
           setSelectedProfile(parsedProfile);
-          setModalPreference(preference);
         }
       } catch (error) {
         console.error("Erreur lors du chargement du profil :", error);
@@ -90,9 +92,27 @@ export default function RecoScreen({ navigation }) {
     loadUserProfile();
   }, []);
 
+  // Chargement du mode utilisateur depuis AsyncStorage
+  useEffect(() => {
+    const loadUserMode = async () => {
+      try {
+        const storedMode = await AsyncStorage.getItem("userMode");
+        if (storedMode !== null) {
+          setUserMode(JSON.parse(storedMode));
+        } else {
+          setUserMode(true); // Par défaut, on considère majeur
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement du mode utilisateur :", error);
+        setUserMode(true);
+      }
+    };
+    loadUserMode();
+  }, []);
+
   // Fonction de demande de recommandations CB
   const handleRecommendation = async () => {
-    if (!selectedProfile ) {
+    if (!selectedProfile) {
       Alert.alert("Attention", "Veuillez vous assurer qu'un profil est actif ");
       return;
     }
@@ -100,13 +120,13 @@ export default function RecoScreen({ navigation }) {
       Alert.alert("Attention", "Le profil actif ne contient aucun cocktail favori.");
       return;
     }
-    const formattedPreference = 
-    preference === "" 
-      ? "" 
-      : (preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic");
+    const formattedPreference =
+      userMode === false
+        ? "Non Alcoholic"
+        : (preference === "" ? "" : (preference === "Alcoolisé" ? "Alcoholic" : "Non Alcoholic"));
     const finalDesiredCategory = modalSelectedCategories.includes("Toutes")
-    ? []
-    : modalSelectedCategories;
+      ? []
+      : modalSelectedCategories;
 
     const payload = {
       favoriteCocktails: selectedProfile.favoriteCocktails,
@@ -114,7 +134,6 @@ export default function RecoScreen({ navigation }) {
       desiredCategory: finalDesiredCategory,
       topN: topN,
     };
-    // Ajout du console.log pour vérifier le payload envoyé
     console.log("Payload pour API (CB):", payload);
     try {
       const response = await fetch("http://10.4.245.217:5000/api/CB_recommendations", {
@@ -152,22 +171,20 @@ export default function RecoScreen({ navigation }) {
       Alert.alert("Attention", "Le profil actif ne contient aucun cocktail favori.");
       return;
     }
-    const formattedPreference = 
-    preference === "" 
-    ? "" 
-    : (preference === "Alcoolisée" ? "Alcoholic" : "Non Alcoholic");
+    const formattedPreference =
+      userMode === false
+        ? "Non Alcoholic"
+        : (preference === "" ? "" : (preference === "Alcoolisé" ? "Alcoholic" : "Non Alcoholic"));
     const finalDesiredCategory = modalSelectedCategories.includes("Toutes")
-    ? []
-    : modalSelectedCategories;
+      ? []
+      : modalSelectedCategories;
 
     const payload = {
       userLikedCocktails: selectedProfile.favoriteCocktails,
       alcoholicPreference: formattedPreference,
       desiredCategory: finalDesiredCategory,
       topN: topN,
-      
     };
-    // Ajout du console.log pour vérifier le payload envoyé
     console.log("Payload pour API (FC):", payload);
     try {
       const response = await fetch("http://10.4.245.217:5000/api/FC_recommendations", {
@@ -215,15 +232,15 @@ export default function RecoScreen({ navigation }) {
     </TouchableOpacity>
   );
   const favoriteCocktails =
-  selectedProfile && selectedProfile.favoriteCocktails
-    ? selectedProfile.favoriteCocktails
-        .map(name =>
-          allCocktails.find(
-            cocktail => cocktail.strDrink.toLowerCase() === name.toLowerCase()
+    selectedProfile && selectedProfile.favoriteCocktails
+      ? selectedProfile.favoriteCocktails
+          .map(name =>
+            allCocktails.find(
+              cocktail => cocktail.strDrink.toLowerCase() === name.toLowerCase()
+            )
           )
-        )
-        .filter(item => item !== null)
-    : [];
+          .filter(item => item !== null)
+      : [];
 
   return (
     <LinearGradient
@@ -266,7 +283,6 @@ export default function RecoScreen({ navigation }) {
             />
           </View>
         )}
-
 
         {/* Boutons d'inspiration et d'ouverture du filtre */}
         <View style={styles.actionContainer}>
@@ -342,13 +358,27 @@ export default function RecoScreen({ navigation }) {
             {/* Choix de la préférence */}
             <View style={styles.modalButtonsContainer}>
               <TouchableOpacity
-                style={[styles.preferenceButton, modalPreference === "Alcoolisée" ? styles.activeButton : null]}
-                onPress={() => setModalPreference("Alcoolisée")}
+                disabled={userMode === false}
+                style={[
+                  styles.preferenceButton,
+                  modalPreference === "Alcoolisé" ? styles.activeButton : null,
+                  userMode === false ? styles.disabledButton : null,
+                ]}
+                onPress={() => {
+                  if (userMode !== false) {
+                    setModalPreference("Alcoolisé");
+                  }
+                }}
               >
-                <Text style={styles.preferenceText}>Alcoolisée</Text>
+                <Text style={[styles.preferenceText, userMode === false ? styles.disabledText : null]}>
+                  Alcoolisé
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.preferenceButton, modalPreference === "Sans alcool" ? styles.activeButton : null]}
+                style={[
+                  styles.preferenceButton,
+                  modalPreference === "Sans alcool" ? styles.activeButton : null,
+                ]}
                 onPress={() => setModalPreference("Sans alcool")}
               >
                 <Text style={styles.preferenceText}>Sans alcool</Text>
@@ -404,9 +434,6 @@ export default function RecoScreen({ navigation }) {
                 setDesiredCategory(finalDesiredCategory);
                 setTopN(parseInt(modalTopN));
                 setIsFilterVisible(false);
-                // setTimeout(() => {
-                //   handleCombinedRecommendation();
-                // }, 100);
               }}
             >
               <Text style={styles.validateButtonText}>Valider les filtres</Text>
@@ -483,7 +510,6 @@ const styles = StyleSheet.create({
   filterText:{
     fontSize: 16,
     color: "#fff",
-  
   },
   preferenceButton: {
     width: "45%",
@@ -501,6 +527,13 @@ const styles = StyleSheet.create({
   preferenceText: {
     fontSize: 16,
     color: "#fff",
+  },
+  // Nouveaux styles pour désactiver le bouton "Alcoolisé" en mode mineur
+  disabledButton: {
+    backgroundColor: "#ccc",
+  },
+  disabledText: {
+    color: "#888",
   },
   modalContainer: {
     flex: 1,
@@ -593,15 +626,12 @@ const styles = StyleSheet.create({
   },
   favoritesContainer: {
     width: "100%",
-    
   },
   favoritesTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#fff", // Même couleur que dans SearchScreen
-    
+    color: "#fff",
   },
-  
 });
 
 const searchStyles = StyleSheet.create({
@@ -622,17 +652,14 @@ const searchStyles = StyleSheet.create({
     color: "#fff",
   },
   separator: {
-    width: 2,            // Épaisseur du séparateur
-    height: 60, 
+    width: 2,
+    height: 60,
     backgroundColor: "#fff",
     marginHorizontal: 10,
     alignSelf: "center",
   },
 });
 
-
-
-// Styles pour les cartes (mêmes que ceux utilisés dans HomeScreen)
 const cardStyles = StyleSheet.create({
   container: {
     backgroundColor: "#ebbcb7",
@@ -645,7 +672,7 @@ const cardStyles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 10,
-    width : 150,
+    width: 150,
     minHeight: 230,
     position: "relative",
   },

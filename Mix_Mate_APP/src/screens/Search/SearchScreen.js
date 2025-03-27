@@ -68,14 +68,7 @@ export default function SearchScreen({ navigation }) {
       style={{ flex: 1 }}
     >
       <View style={styles.container}>
-        {/* Bannière affichée en haut si le mode mineur est activé */}
-        {isAdult === false && (
-          <View style={{ backgroundColor: "#F28A1A", paddingVertical: 5 }}>
-            <Text style={{ textAlign: "center", color: "#fff", fontSize: 12 }}>
-              Mode mineur activé
-            </Text>
-          </View>
-        )}
+
 
         {/* Barre de recherche */}
         <SearchBar onSearch={handleSearch} placeholder="Rechercher un cocktail..." />

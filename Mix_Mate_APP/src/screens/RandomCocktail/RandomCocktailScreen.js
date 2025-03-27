@@ -67,14 +67,7 @@ export default function RandomCocktailScreen() {
       style={{ flex: 1 }}
     >
       <ScrollView style={styles.container}>
-        {/* Bannière identique à celle de HomeScreen */}
-        {isAdult === false && (
-          <View style={{ backgroundColor: "#F28A1A", paddingVertical: 5 }}>
-            <Text style={{ textAlign: "center", color: "#fff", fontSize: 12 }}>
-              Mode mineur activé
-            </Text>
-          </View>
-        )}
+        
         <View style={styles.cocktailContainer}>
           <Image
             source={{ uri: cocktail.strDrinkThumb }}
