@@ -117,7 +117,7 @@ export default function RecoScreen({ navigation }) {
     // Ajout du console.log pour vérifier le payload envoyé
     console.log("Payload pour API (CB):", payload);
     try {
-      const response = await fetch("http://192.168.1.49:5000/api/CB_recommendations", {
+      const response = await fetch("http://10.4.245.217:5000/api/CB_recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -170,7 +170,7 @@ export default function RecoScreen({ navigation }) {
     // Ajout du console.log pour vérifier le payload envoyé
     console.log("Payload pour API (FC):", payload);
     try {
-      const response = await fetch("http://192.168.1.49:5000/api/FC_recommendations", {
+      const response = await fetch("http://10.4.245.217:5000/api/FC_recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

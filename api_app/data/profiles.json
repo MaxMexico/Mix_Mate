@@ -79,5 +79,25 @@
       "Ace"
     ],
     "profileImage": "Profile1.png"
+  },
+  {
+    "name": "Jossua",
+    "username": "Joss",
+    "email": "\u00e0",
+    "favoriteCocktails": [
+      "Sex on the Beach"
+    ],
+    "profileImage": "Profile4.png"
+  },
+  {
+    "name": "Coralie Rouveyrol ",
+    "username": "Coco",
+    "email": "Lachieuse@gmail.com",
+    "favoriteCocktails": [
+      "A Piece of Ass",
+      "Tequila Sunrise",
+      "Espresso Martini"
+    ],
+    "profileImage": "Profile4.png"
   }
 ]
