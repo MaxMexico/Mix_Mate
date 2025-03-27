@@ -140,7 +140,7 @@ export default function HomeScreen(props) {
                 <>
                   <Image source={IconAbus} style={{ width: 100, height: 100, marginBottom: 20 }} />
                   <Text style={{ marginBottom: 20, textAlign: "center", fontSize: 16 }}>
-                    L'abus d'alcool est dangereux pour la santé. À consommer avec modération.
+                    L'abus d'alcool est dangereux pour la santé.{"\n"} À consommer avec modération.
                   </Text>
                   <TouchableOpacity onPress={() => setShowModal(false)}>
                     <Text style={{ fontSize: 16, color: "#F28A1A" }}>OK</Text>
@@ -151,7 +151,7 @@ export default function HomeScreen(props) {
                 <>
                   <Image source={IconMineur} style={{ width: 100, height: 100, marginBottom: 20 }} />
                   <Text style={{ marginBottom: 20, textAlign: "center", fontSize: 16 }}>
-                    Accès à l'alcool interdit. Mode mineur activé.
+                    Accès à l'alcool interdit. {"\n"}Mode mineur activé.
                   </Text>
                   <TouchableOpacity onPress={() => setShowModal(false)}>
                     <Text style={{ fontSize: 16, color: "#F28A1A" }}>OK</Text>
