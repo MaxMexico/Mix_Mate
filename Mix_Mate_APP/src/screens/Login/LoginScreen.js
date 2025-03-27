@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
     const [error, setError] = useState('');
 
     const handleLogin = async () => {
-        if (username === 'demo' && password === 'password') {
+        if (username === 'Demo' && password === 'password') {
             await AsyncStorage.setItem('isLoggedIn', 'true');
             navigation.replace('Drawer');
         } else {
